@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/79-99/cs107-FinalProject.svg?token=NY52fXtysbRAJ9UcMZek&branch=master)](https://travis-ci.com/79-99/cs107-FinalProject)
+
 ### Group Number 4
 
 Group Members
