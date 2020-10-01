@@ -5,5 +5,7 @@ language:
 compiler:
   - g++
 script:
-  - cd ${TRAVIS_BUILD_DIR}
-  - make && ./hello.out
+  - ./build.sh
+  - ./get_code_cov.sh
+after_success: 
+  - bash <(curl -s https://codecov.io/bash)
