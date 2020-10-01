@@ -36,6 +36,7 @@
 *.gcda
 *.gcno
 *qmake_gcov
+*.stash
 travis_qmake_gcc_cpp98_gcov
 travis_qmake_gcc_cpp98_gcov
 travis_qmake_gcc_cpp98_gcov_gcov
