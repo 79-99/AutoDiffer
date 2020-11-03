@@ -20,7 +20,7 @@ after_success:
 - cd MyAwesomeLibrary 
 - bash coverage.sh
 # Uploading to CodeCov
-- bash <(curl -s https://codecov.io/bash) -f ./coverage/AWESOME_COV.info || echo "Codecov did not collect coverage reports"
+- bash <(curl -s https://codecov.io/bash) -f ./coverage/AWESOME_COV.info -t 008ccf6f-e7b1-411c-8ded-1f9f154b38f3 || echo "Codecov did not collect coverage reports"
 - cd ..
 
 notifications:
