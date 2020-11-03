@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/MyAwesomeLibrary.hpp
+stdio.h
+-
+
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/core/src/MyAwesomeLibrary.cpp
+MyAwesomeLibrary.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/core/src/MyAwesomeLibrary.hpp
+
