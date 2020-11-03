@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/79-99/cs107-FinalProject.svg?token=NY52fXtysbRAJ9UcMZek&branch=master)](https://travis-ci.com/79-99/cs107-FinalProject)
 
-[![codecov](https://codecov.io/gh/79-99/cs107-FinalProject/branch/master/graph/badge.svg?token=KJFBZT01H3)](undefined)
+[![codecov](https://codecov.io/gh/79-99/cs107-FinalProject/branch/master/graph/badge.svg?token=KJFBZT01H3)](https://codecov.io/gh/79-99/cs107-FinalProject)
 
 ### Group Number 4
 
