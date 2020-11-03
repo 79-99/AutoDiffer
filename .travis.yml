@@ -7,8 +7,6 @@ addons:
     packages:
     - lcov
 
-before_script:
-- cd skeleton-project
 
 script:
 - cd 3PL
