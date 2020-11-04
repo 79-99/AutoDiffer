@@ -286,14 +286,14 @@ Skeleton-App_SOURCE_DIR:STATIC=/Users/michaelneuder/Dropbox/github/cs107-FinalPr
 //Enable unit testing
 UNIT_TEST:BOOL=ON
 
-//MyAwesomeLibrary path e.g. <awesome_dir>/<awesome_so>
-awesome_dir:PATH=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install
+//AutoDiffer path e.g. <awesome_dir>/<awesome_so>
+awesome_dir:PATH=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install
 
 //Path to a library.
-awesome_lb:FILEPATH=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/lib/libMyAwesomeLibrary.dylib
+awesome_lb:FILEPATH=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/lib/libAutoDiffer.dylib
 
 //Awesome shared object name
-awesome_so:STRING=MyAwesomeLibrary
+awesome_so:STRING=AutoDiffer
 
 //Path to a library.
 gtest:FILEPATH=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/lib/libgtest.a

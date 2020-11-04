@@ -1,7 +1,6 @@
 /**
  * \file    test_vars.h
  * \ingroup tests_group
- * \author  akirby
  */
 
 #ifndef TEST_VARS_H

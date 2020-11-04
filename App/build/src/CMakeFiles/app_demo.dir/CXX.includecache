@@ -11,10 +11,10 @@ stdio.h
 -
 iostream
 -
-MyAwesomeLibrary.hpp
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/src/MyAwesomeLibrary.hpp
+AutoDiffer.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/src/AutoDiffer.hpp
 
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/include/MyAwesomeLibrary.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include/AutoDiffer.hpp
 stdio.h
 -
 

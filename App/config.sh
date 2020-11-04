@@ -3,7 +3,7 @@
 # ================
 # project_root
 #   install            # install directory
-#   MyAwesomeLibrary   # source code
+#   AutoDiffer         # source code
 #     core             # location of source code
 
 set -euo pipefail
@@ -20,8 +20,8 @@ cd ${CURRENT_PATH}
 # =============== #
 # library sources
 # =============== #
-MAL_DIRECTORY=${PROJECT_ROOT}/MyAwesomeLibrary/install
-MAL_SO_NAME=MyAwesomeLibrary
+MAL_DIRECTORY=${PROJECT_ROOT}/AutoDiffer/install
+MAL_SO_NAME=AutoDiffer
 
 # =========== #
 # App sources 
@@ -277,7 +277,7 @@ fi
 # ====================== #
 if [ ! -d "${MAL_DIRECTORY}" ]; then
   echo " "
-  echo -e "${rC}Error:${eC} ${MAL_DIRECTORY} does not exist. Please build MyAwesomeLibrary First!"
+  echo -e "${rC}Error:${eC} ${MAL_DIRECTORY} does not exist. Please build AutoDiffer First!"
   exit 1
 fi
 
@@ -285,7 +285,7 @@ fi
 COMPILE_FAIL=0
 if [ $BUILD_MAL == 1 ]; then
   echo " "
-  echo -e "${mC} ========== Building MyAwesomeLibrary ========= ${eC}"
+  echo -e "${mC} ========== Building AutoDiffer ========= ${eC}"
   echo "   Compiling Options:"
   echo "          Build Type: ${BUILD_TYPE}"
   echo "    Install Location: ${COMPILE_INSTALL_DIRECTORY}"

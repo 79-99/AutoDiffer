@@ -20,8 +20,8 @@ endif()
 # ======================================= #
 # Library paths
 set(gtest_dir   "" CACHE PATH "GTest install directory location")
-set(awesome_dir "" CACHE PATH "MyAwesomeLibrary path e.g. <awesome_dir>/<awesome_so>")
-set(awesome_so MyAwesomeLibrary CACHE STRING "Awesome shared object name")
+set(awesome_dir "" CACHE PATH "AutoDiffer path e.g. <awesome_dir>/<awesome_so>")
+set(awesome_so AutoDiffer CACHE STRING "Awesome shared object name")
 # ======================================= #
 
 # ======================================= #

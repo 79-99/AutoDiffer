@@ -99,7 +99,7 @@ App_Unit_Test_EXTERNAL_OBJECTS =
 bin/App.Unit.Test: tests/CMakeFiles/App.Unit.Test.dir/test_main.cpp.o
 bin/App.Unit.Test: tests/CMakeFiles/App.Unit.Test.dir/build.make
 bin/App.Unit.Test: lib/libAppTest.dylib
-bin/App.Unit.Test: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/lib/libMyAwesomeLibrary.dylib
+bin/App.Unit.Test: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/lib/libAutoDiffer.dylib
 bin/App.Unit.Test: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/lib/libgtest.a
 bin/App.Unit.Test: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/lib/libgtest_main.a
 bin/App.Unit.Test: tests/CMakeFiles/App.Unit.Test.dir/link.txt

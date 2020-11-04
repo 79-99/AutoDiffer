@@ -3,7 +3,7 @@
 
 tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: ../tests/src/test_app.cpp
 tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: ../tests/src/test_vars.h
-tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/include/MyAwesomeLibrary.hpp
+tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include/AutoDiffer.hpp
 tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/include/gtest/gtest-death-test.h
 tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/include/gtest/gtest-message.h
 tests/src/CMakeFiles/AppTest.dir/test_app.cpp.o: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/include/gtest/gtest-param-test.h

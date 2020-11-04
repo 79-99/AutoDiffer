@@ -1,2 +1,0 @@
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/lib/libMyAwesomeLibrary.dylib
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/include/MyAwesomeLibrary.hpp

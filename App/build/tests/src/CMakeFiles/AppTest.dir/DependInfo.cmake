@@ -15,7 +15,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/include"
+  "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include"
   ".././include"
   "../src"
   "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/include"

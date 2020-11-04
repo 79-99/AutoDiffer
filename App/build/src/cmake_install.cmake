@@ -42,13 +42,13 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/app_demo" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/app_demo")
     execute_process(COMMAND /usr/bin/install_name_tool
-      -delete_rpath "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/lib"
+      -delete_rpath "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/lib"
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/app_demo")
     execute_process(COMMAND /usr/bin/install_name_tool
       -add_rpath "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/install/lib"
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/app_demo")
     execute_process(COMMAND /usr/bin/install_name_tool
-      -add_rpath "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/lib"
+      -add_rpath "/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/lib"
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/app_demo")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" -u -r "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/app_demo")

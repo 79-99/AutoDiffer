@@ -12,12 +12,12 @@ script:
 - cd 3PL
 - bash build_3PL.sh
 - cd ..
-- cd MyAwesomeLibrary
+- cd AutoDiffer
 - bash config.sh
 - cd ..
 
 after_success:
-- cd MyAwesomeLibrary 
+- cd AutoDiffer 
 - bash coverage.sh
 # Uploading to CodeCov
 - bash <(curl -s https://codecov.io/bash) -f ./coverage/AWESOME_COV.info -t 008ccf6f-e7b1-411c-8ded-1f9f154b38f3 || echo "Codecov did not collect coverage reports"

@@ -13,14 +13,14 @@ stdio.h
 -
 gtest/gtest.h
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/tests/src/gtest/gtest.h
-MyAwesomeLibrary.hpp
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/tests/src/MyAwesomeLibrary.hpp
+AutoDiffer.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/tests/src/AutoDiffer.hpp
 test_vars.h
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/tests/src/test_vars.h
 
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/tests/src/test_vars.h
 
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/include/MyAwesomeLibrary.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include/AutoDiffer.hpp
 stdio.h
 -
 

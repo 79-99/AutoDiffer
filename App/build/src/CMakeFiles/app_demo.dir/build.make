@@ -98,7 +98,7 @@ app_demo_EXTERNAL_OBJECTS =
 
 bin/app_demo: src/CMakeFiles/app_demo.dir/main.cpp.o
 bin/app_demo: src/CMakeFiles/app_demo.dir/build.make
-bin/app_demo: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/MyAwesomeLibrary/install/lib/libMyAwesomeLibrary.dylib
+bin/app_demo: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/lib/libAutoDiffer.dylib
 bin/app_demo: src/CMakeFiles/app_demo.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../bin/app_demo"
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/App/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/app_demo.dir/link.txt --verbose=$(VERBOSE)
