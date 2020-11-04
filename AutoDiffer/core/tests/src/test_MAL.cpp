@@ -16,7 +16,7 @@ void AutoDiffer_testcheck(){
 TEST(Getter,int){
     int value = 3;
     int seed = 7;
-    AutoDiffer<int> x1(value,seed);
+    ADValue<int> x1(value,seed);
 
     /* test getters */
     EXPECT_EQ(x1.val(),value);  // note: EXECT_EQ used only for integers
@@ -26,7 +26,7 @@ TEST(Getter,int){
 TEST(Getter,float){
     float value = 9.8f;
     float seed = 1.0f;
-    AutoDiffer<float> x(value,seed);
+    ADValue<float> x(value,seed);
 
     /* test getters */
     EXPECT_NEAR(x.val(), value, DTOL);
@@ -36,7 +36,7 @@ TEST(Getter,float){
 TEST(Getter,double){
     double value = 9.8;
     double seed = 1.0;
-    AutoDiffer<double> x(value,seed);
+    ADValue<double> x(value,seed);
 
     /* test getters */
     EXPECT_NEAR(x.val(), value, DTOL);
@@ -46,7 +46,7 @@ TEST(Getter,double){
 TEST(Setter,int){
     int value = 2;
     int seed = 1;
-    AutoDiffer<int> x(value,seed);
+    ADValue<int> x(value,seed);
 
     /* test getters */
     x.setval(3);
@@ -56,7 +56,7 @@ TEST(Setter,int){
 TEST(Setter,float){
     float value = 1.8f;
     float seed = 1.2f;
-    AutoDiffer<float> x(value,seed);
+    ADValue<float> x(value,seed);
 
     /* test getters */
     x.setval(3.3);
@@ -66,7 +66,7 @@ TEST(Setter,float){
 TEST(Setter,double){
     double value = 1.8;
     double seed = 1.2;
-    AutoDiffer<double> x(value,seed);
+    ADValue<double> x(value,seed);
 
     /* test getters */
     x.setval(3.3);
@@ -77,11 +77,11 @@ TEST(Operators,Add_double){
     double seed1 = 1.9;
     double seed2 = 4.4;
 
-    AutoDiffer<double> x1(1.0,seed1);
-    AutoDiffer<double> x2(2.0,seed2);
+    ADValue<double> x1(1.0,seed1);
+    ADValue<double> x2(2.0,seed2);
 
     /* add operator */
-    AutoDiffer<double> c = x1 + x2;
+    ADValue<double> c = x1 + x2;
 
     EXPECT_NEAR(c.val(), 3.0, 1E-6);
     EXPECT_NEAR(c.dval(), 6.3, 1E-6);

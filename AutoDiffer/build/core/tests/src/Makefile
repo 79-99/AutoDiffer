@@ -75,18 +75,6 @@ CMAKE_BINARY_DIR = /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDi
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
@@ -120,6 +108,18 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -176,6 +176,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+core/tests/src/CMakeFiles/ADNodeTest.dir/rule:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/ADNodeTest.dir/rule
+.PHONY : core/tests/src/CMakeFiles/ADNodeTest.dir/rule
+
+# Convenience name for target.
+ADNodeTest: core/tests/src/CMakeFiles/ADNodeTest.dir/rule
+
+.PHONY : ADNodeTest
+
+# fast build rule for target.
+ADNodeTest/fast:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/build
+.PHONY : ADNodeTest/fast
+
+# Convenience name for target.
 core/tests/src/CMakeFiles/MALTest.dir/rule:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/MALTest.dir/rule
 .PHONY : core/tests/src/CMakeFiles/MALTest.dir/rule
@@ -189,6 +204,33 @@ MALTest: core/tests/src/CMakeFiles/MALTest.dir/rule
 MALTest/fast:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/build
 .PHONY : MALTest/fast
+
+test_ADNode.o: test_ADNode.cpp.o
+
+.PHONY : test_ADNode.o
+
+# target to build an object file
+test_ADNode.cpp.o:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/test_ADNode.cpp.o
+.PHONY : test_ADNode.cpp.o
+
+test_ADNode.i: test_ADNode.cpp.i
+
+.PHONY : test_ADNode.i
+
+# target to preprocess a source file
+test_ADNode.cpp.i:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/test_ADNode.cpp.i
+.PHONY : test_ADNode.cpp.i
+
+test_ADNode.s: test_ADNode.cpp.s
+
+.PHONY : test_ADNode.s
+
+# target to generate assembly for a file
+test_ADNode.cpp.s:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/test_ADNode.cpp.s
+.PHONY : test_ADNode.cpp.s
 
 test_MAL.o: test_MAL.cpp.o
 
@@ -229,7 +271,11 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... ADNodeTest"
 	@echo "... MALTest"
+	@echo "... test_ADNode.o"
+	@echo "... test_ADNode.i"
+	@echo "... test_ADNode.s"
 	@echo "... test_MAL.o"
 	@echo "... test_MAL.i"
 	@echo "... test_MAL.s"

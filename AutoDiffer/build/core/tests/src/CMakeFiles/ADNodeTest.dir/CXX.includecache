@@ -14,7 +14,7 @@ stdio.h
 vector
 -
 
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_MAL.cpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_ADNode.cpp
 stdlib.h
 -
 stdio.h

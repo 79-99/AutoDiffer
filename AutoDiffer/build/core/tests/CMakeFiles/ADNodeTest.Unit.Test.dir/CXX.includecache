@@ -6,27 +6,13 @@
 
 #IncludeRegexTransform: 
 
-../include/AutoDiffer.hpp
-math.h
--
-stdio.h
--
-vector
--
+../core/tests/src/test_vars.h
 
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_MAL.cpp
-stdlib.h
--
-stdio.h
--
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/test_main.cpp
 gtest/gtest.h
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/gtest/gtest.h
-AutoDiffer.hpp
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/AutoDiffer.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/gtest/gtest.h
 test_vars.h
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_vars.h
-
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_vars.h
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/test_vars.h
 
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/include/gtest/gtest-death-test.h
 gtest/internal/gtest-death-test-internal.h

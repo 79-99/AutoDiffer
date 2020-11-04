@@ -345,6 +345,19 @@ ExperimentalTest/fast:
 .PHONY : ExperimentalTest/fast
 
 #=============================================================================
+# Target rules for targets named ADNodeTest.Unit.Test
+
+# Build rule for target.
+ADNodeTest.Unit.Test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADNodeTest.Unit.Test
+.PHONY : ADNodeTest.Unit.Test
+
+# fast build rule for target.
+ADNodeTest.Unit.Test/fast:
+	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build
+.PHONY : ADNodeTest.Unit.Test/fast
+
+#=============================================================================
 # Target rules for targets named NightlySubmit
 
 # Build rule for target.
@@ -566,6 +579,19 @@ Experimental/fast:
 .PHONY : Experimental/fast
 
 #=============================================================================
+# Target rules for targets named ADNodeTest
+
+# Build rule for target.
+ADNodeTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADNodeTest
+.PHONY : ADNodeTest
+
+# fast build rule for target.
+ADNodeTest/fast:
+	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/build
+.PHONY : ADNodeTest/fast
+
+#=============================================================================
 # Target rules for targets named MALTest
 
 # Build rule for target.
@@ -618,6 +644,8 @@ help:
 	@echo "... NightlySubmit"
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
+	@echo "... ADNodeTest"
+	@echo "... ADNodeTest.Unit.Test"
 	@echo "... AutoDiffer"
 	@echo "... MALTest"
 	@echo "... MALTest.Unit.Test"

@@ -7,17 +7,21 @@
 
 /* header files */
 
+
 /* system header files */
 #ifndef DOXYGEN_IGNORE
-#  include <stdio.h>
+# include <math.h>
+# include <stdio.h>
+# include <vector>
 #endif
 
+enum class Operation {
+  addition = 1,
+  power = 2,
+};
 
-/* =============== */
-/* Data Structures */
-/* =============== */
 template <class T>
-class AutoDiffer {
+class ADValue {
   private:
     T v;    /**< value */
     T dv;   /**< derivative value */
@@ -25,8 +29,8 @@ class AutoDiffer {
   public:
 
     /* constructors */
-    AutoDiffer(){};
-    AutoDiffer(T val,T dval) : v(val),dv(dval) {};
+    ADValue(){};
+    ADValue(T val,T dval) : v(val),dv(dval) {};
 
     /* getters */
     T val() const {return v;};
@@ -41,15 +45,59 @@ class AutoDiffer {
     /* ==================== */
     /* overloaded operators */
     /* ==================== */
-    const AutoDiffer<T> operator+(const AutoDiffer<T> &other) const{
-        return AutoDiffer<T>(v + other.val(), dv + other.dval());
+    const ADValue<T> operator+(const ADValue<T> &other) const{
+        return ADValue<T>(v + other.val(), dv + other.dval());
     }
 
-    AutoDiffer<T>& operator+=(const AutoDiffer<T> &other){
+    ADValue<T>& operator+=(const ADValue<T> &other){
         v += other.val();
         dv += other.dval();
         return *this;
     }
+
+    ADValue<T> power(double exponent) {
+        T new_v = pow(v, exponent);
+        T new_dv = exponent * pow(v, exponent - 1) * dv;
+        return ADValue<T>(new_v, new_dv);
+    }
 };
+
+template <class T>
+class ADNode {
+  private:
+    ADValue<T> self_vertex_;
+    ADValue<T> aux_vertex_;
+    Operation op_;
+  
+  public:
+    ADNode(ADValue<T> self, ADValue<T> aux, Operation op) : 
+                           self_vertex_(self), 
+                           aux_vertex_(aux),
+                           op_(op) {}
+    
+    ADValue<T> Evaluate() {
+      switch(op_) {
+        case Operation::addition : {
+          return self_vertex_ + aux_vertex_;
+        }
+
+        case Operation::power : {
+          return self_vertex_.power(aux_vertex_.val());
+        }
+      }
+    }
+};
+
+
+
+// template <class T>
+// class AutoDiffer {
+//   private:
+
+//   public:
+
+// };
+
+
 
 #endif /* AUTODIFFER_H */

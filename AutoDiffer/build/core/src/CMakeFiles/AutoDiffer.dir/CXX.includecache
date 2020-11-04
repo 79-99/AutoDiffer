@@ -7,7 +7,11 @@
 #IncludeRegexTransform: 
 
 ../include/AutoDiffer.hpp
+math.h
+-
 stdio.h
+-
+vector
 -
 
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.cpp

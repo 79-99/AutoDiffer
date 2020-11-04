@@ -34,6 +34,7 @@
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ExperimentalStart.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ContinuousSubmit.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ExperimentalTest.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/NightlySubmit.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/NightlyMemCheck.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ExperimentalConfigure.dir
@@ -52,10 +53,11 @@
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ExperimentalMemCheck.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/Continuous.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/Experimental.dir
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install/local.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install/strip.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/list_install_components.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install/local.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/ADNodeTest.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/rebuild_cache.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/edit_cache.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/MALTest.dir

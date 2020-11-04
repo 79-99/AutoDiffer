@@ -356,6 +356,21 @@ ExperimentalTest/fast:
 .PHONY : ExperimentalTest/fast
 
 # Convenience name for target.
+core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/rule:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/rule
+.PHONY : core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/rule
+
+# Convenience name for target.
+ADNodeTest.Unit.Test: core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/rule
+
+.PHONY : ADNodeTest.Unit.Test
+
+# fast build rule for target.
+ADNodeTest.Unit.Test/fast:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build
+.PHONY : ADNodeTest.Unit.Test/fast
+
+# Convenience name for target.
 core/tests/CMakeFiles/NightlySubmit.dir/rule:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/NightlySubmit.dir/rule
 .PHONY : core/tests/CMakeFiles/NightlySubmit.dir/rule
@@ -616,6 +631,7 @@ test_main.o: test_main.cpp.o
 
 # target to build an object file
 test_main.cpp.o:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.o
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/test_main.cpp.o
 .PHONY : test_main.cpp.o
 
@@ -625,6 +641,7 @@ test_main.i: test_main.cpp.i
 
 # target to preprocess a source file
 test_main.cpp.i:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.i
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/test_main.cpp.i
 .PHONY : test_main.cpp.i
 
@@ -634,6 +651,7 @@ test_main.s: test_main.cpp.s
 
 # target to generate assembly for a file
 test_main.cpp.s:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.s
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/test_main.cpp.s
 .PHONY : test_main.cpp.s
 
@@ -677,6 +695,7 @@ help:
 	@echo "... NightlySubmit"
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
+	@echo "... ADNodeTest.Unit.Test"
 	@echo "... MALTest.Unit.Test"
 	@echo "... test_main.o"
 	@echo "... test_main.i"
