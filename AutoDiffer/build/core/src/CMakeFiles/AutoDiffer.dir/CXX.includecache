@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/AutoDiffer.hpp
+math.h
+-
+stdio.h
+-
+vector
+-
+
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.cpp
+AutoDiffer.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.hpp
+

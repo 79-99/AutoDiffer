@@ -6,7 +6,7 @@
 #include "gtest/gtest.h"
 
 /* header files */
-#include "MyAwesomeLibrary.hpp"
+#include "AutoDiffer.hpp"
 #include "test_vars.h"
 
 void App_testcheck(){
@@ -16,7 +16,7 @@ void App_testcheck(){
 TEST(App,getter_int){
     int value = 3;
     int seed = 7;
-    AutoDiff<int> x1(value,seed);
+    AutoDiffer<int> x1(value,seed);
 
     /* test getters */
     EXPECT_EQ(x1.val(),value);  // note: EXECT_EQ used only for integers
@@ -26,7 +26,7 @@ TEST(App,getter_int){
 TEST(App,getter_double){
     double value = 9.8;
     double seed = 1.0;
-    AutoDiff<double> x(value,seed);
+    AutoDiffer<double> x(value,seed);
 
     /* test getters */
     EXPECT_NEAR(x.val(), value, DTOL);
