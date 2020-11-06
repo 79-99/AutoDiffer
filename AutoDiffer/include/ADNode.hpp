@@ -1,9 +1,9 @@
 /**
- * @file Autodiffer.h
+ * @file ADNode.h
  */
 
-#ifndef AUTODIFFER_H
-#define AUTODIFFER_H
+#ifndef ADNODE_H
+#define ADNODE_H
 
 /* header files */
 #include "ADValue.hpp"
@@ -47,15 +47,4 @@ class ADNode {
 };
 
 
-
-// template <class T>
-// class AutoDiffer {
-//   private:
-
-//   public:
-
-// };
-
-
-
-#endif /* AUTODIFFER_H */
+#endif /* ADNODE_H */

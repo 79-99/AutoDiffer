@@ -28,6 +28,7 @@ extern "C" {
 /** Display testing information */
 void ADNode_testcheck();
 void ADValue_testcheck();
+void Parser_testcheck();
 
 
 #ifdef __cplusplus
