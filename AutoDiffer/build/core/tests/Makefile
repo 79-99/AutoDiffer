@@ -99,16 +99,6 @@ install/local/fast: preinstall/fast
 	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -119,6 +109,16 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target install
 install: preinstall
@@ -174,6 +174,21 @@ preinstall/fast:
 depend:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule
+.PHONY : core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule
+
+# Convenience name for target.
+ADValueTest.Unit.Test: core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule
+
+.PHONY : ADValueTest.Unit.Test
+
+# fast build rule for target.
+ADValueTest.Unit.Test/fast:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build
+.PHONY : ADValueTest.Unit.Test/fast
 
 # Convenience name for target.
 core/tests/CMakeFiles/ContinuousCoverage.dir/rule:
@@ -431,21 +446,6 @@ NightlyCoverage/fast:
 .PHONY : NightlyCoverage/fast
 
 # Convenience name for target.
-core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule
-.PHONY : core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule
-
-# Convenience name for target.
-MALTest.Unit.Test: core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule
-
-.PHONY : MALTest.Unit.Test
-
-# fast build rule for target.
-MALTest.Unit.Test/fast:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/build
-.PHONY : MALTest.Unit.Test/fast
-
-# Convenience name for target.
 core/tests/CMakeFiles/NightlyTest.dir/rule:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/NightlyTest.dir/rule
 .PHONY : core/tests/CMakeFiles/NightlyTest.dir/rule
@@ -631,8 +631,8 @@ test_main.o: test_main.cpp.o
 
 # target to build an object file
 test_main.cpp.o:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/test_main.cpp.o
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.o
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/test_main.cpp.o
 .PHONY : test_main.cpp.o
 
 test_main.i: test_main.cpp.i
@@ -641,8 +641,8 @@ test_main.i: test_main.cpp.i
 
 # target to preprocess a source file
 test_main.cpp.i:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/test_main.cpp.i
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.i
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/test_main.cpp.i
 .PHONY : test_main.cpp.i
 
 test_main.s: test_main.cpp.s
@@ -651,8 +651,8 @@ test_main.s: test_main.cpp.s
 
 # target to generate assembly for a file
 test_main.cpp.s:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/test_main.cpp.s
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.s
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/test_main.cpp.s
 .PHONY : test_main.cpp.s
 
 # Help Target
@@ -696,7 +696,7 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... ADNodeTest.Unit.Test"
-	@echo "... MALTest.Unit.Test"
+	@echo "... ADValueTest.Unit.Test"
 	@echo "... test_main.o"
 	@echo "... test_main.i"
 	@echo "... test_main.s"

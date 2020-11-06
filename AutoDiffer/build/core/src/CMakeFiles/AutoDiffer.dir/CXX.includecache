@@ -6,7 +6,9 @@
 
 #IncludeRegexTransform: 
 
-../include/AutoDiffer.hpp
+../include/ADNode.hpp
+ADValue.hpp
+../include/ADValue.hpp
 math.h
 -
 stdio.h
@@ -14,7 +16,15 @@ stdio.h
 vector
 -
 
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.cpp
-AutoDiffer.hpp
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.hpp
+../include/ADValue.hpp
+math.h
+-
+stdio.h
+-
+vector
+-
+
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/ADValue.cpp
+ADNode.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/ADNode.hpp
 

@@ -19,8 +19,9 @@
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src/CMakeFiles/AutoDiffer.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/install/strip.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/install/local.dir
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/list_install_components.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/rebuild_cache.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/list_install_components.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ADValueTest.Unit.Test.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ContinuousCoverage.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ContinuousTest.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ContinuousBuild.dir
@@ -39,7 +40,6 @@
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/NightlyMemCheck.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ExperimentalConfigure.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/NightlyCoverage.dir
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/MALTest.Unit.Test.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/NightlyTest.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/ContinuousMemCheck.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/CMakeFiles/NightlyBuild.dir
@@ -56,8 +56,8 @@
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install/strip.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/list_install_components.dir
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install/local.dir
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/ADNodeTest.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/ADValueTest.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/rebuild_cache.dir
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/edit_cache.dir
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/MALTest.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/install/local.dir
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/tests/src/CMakeFiles/ADNodeTest.dir

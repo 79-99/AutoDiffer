@@ -76,27 +76,27 @@ include core/src/CMakeFiles/AutoDiffer.dir/progress.make
 # Include the compile flags for this target's objects.
 include core/src/CMakeFiles/AutoDiffer.dir/flags.make
 
-core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o: core/src/CMakeFiles/AutoDiffer.dir/flags.make
-core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o: ../core/src/AutoDiffer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o"
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o -c /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.cpp
+core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.o: core/src/CMakeFiles/AutoDiffer.dir/flags.make
+core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.o: ../core/src/ADValue.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.o"
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AutoDiffer.dir/ADValue.cpp.o -c /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/ADValue.cpp
 
-core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.i"
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.cpp > CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.i
+core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AutoDiffer.dir/ADValue.cpp.i"
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/ADValue.cpp > CMakeFiles/AutoDiffer.dir/ADValue.cpp.i
 
-core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.s"
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/AutoDiffer.cpp -o CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.s
+core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AutoDiffer.dir/ADValue.cpp.s"
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/core/src && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/src/ADValue.cpp -o CMakeFiles/AutoDiffer.dir/ADValue.cpp.s
 
 # Object files for target AutoDiffer
 AutoDiffer_OBJECTS = \
-"CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o"
+"CMakeFiles/AutoDiffer.dir/ADValue.cpp.o"
 
 # External object files for target AutoDiffer
 AutoDiffer_EXTERNAL_OBJECTS =
 
-lib/libAutoDiffer.dylib: core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o
+lib/libAutoDiffer.dylib: core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.o
 lib/libAutoDiffer.dylib: core/src/CMakeFiles/AutoDiffer.dir/build.make
 lib/libAutoDiffer.dylib: core/src/CMakeFiles/AutoDiffer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library ../../lib/libAutoDiffer.dylib"

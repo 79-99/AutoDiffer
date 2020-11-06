@@ -24,15 +24,13 @@ stdio.h
 vector
 -
 
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_ADNode.cpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/test_ADValue.cpp
 stdlib.h
 -
 stdio.h
 -
 gtest/gtest.h
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/gtest/gtest.h
-ADValue.hpp
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/ADValue.hpp
 ADNode.hpp
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/core/tests/src/ADNode.hpp
 test_vars.h

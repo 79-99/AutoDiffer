@@ -64,6 +64,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "core/src/CMakeFiles/AutoDiffer.dir/DependInfo.cmake"
+  "core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/ContinuousCoverage.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/ContinuousTest.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/ContinuousBuild.dir/DependInfo.cmake"
@@ -81,7 +82,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "core/tests/CMakeFiles/NightlyMemCheck.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/ExperimentalConfigure.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/NightlyCoverage.dir/DependInfo.cmake"
-  "core/tests/CMakeFiles/MALTest.Unit.Test.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/NightlyTest.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/ContinuousMemCheck.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/NightlyBuild.dir/DependInfo.cmake"
@@ -94,6 +94,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "core/tests/CMakeFiles/ExperimentalMemCheck.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/Continuous.dir/DependInfo.cmake"
   "core/tests/CMakeFiles/Experimental.dir/DependInfo.cmake"
+  "core/tests/src/CMakeFiles/ADValueTest.dir/DependInfo.cmake"
   "core/tests/src/CMakeFiles/ADNodeTest.dir/DependInfo.cmake"
-  "core/tests/src/CMakeFiles/MALTest.dir/DependInfo.cmake"
   )

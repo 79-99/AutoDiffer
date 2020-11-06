@@ -1,10 +1,10 @@
 /**
- * @file    AutoDiffer.cpp
- * @brief   AutoDiffer implementations.
+ * @file    ADNode.cpp
+ * @brief   ADNode implementations.
  */
 
 /* header files */
-#include "AutoDiffer.hpp"
+#include "ADNode.hpp"
 
 template <class T>
 void ADValue<T>::print_hello() const {

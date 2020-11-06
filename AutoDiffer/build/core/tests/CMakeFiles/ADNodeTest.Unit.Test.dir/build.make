@@ -99,6 +99,7 @@ ADNodeTest_Unit_Test_EXTERNAL_OBJECTS =
 bin/ADNodeTest.Unit.Test: core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/test_main.cpp.o
 bin/ADNodeTest.Unit.Test: core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make
 bin/ADNodeTest.Unit.Test: lib/libADNodeTest.dylib
+bin/ADNodeTest.Unit.Test: lib/libADValueTest.dylib
 bin/ADNodeTest.Unit.Test: lib/libAutoDiffer.dylib
 bin/ADNodeTest.Unit.Test: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/lib/libgtest.a
 bin/ADNodeTest.Unit.Test: /Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/lib/libgtest_main.a

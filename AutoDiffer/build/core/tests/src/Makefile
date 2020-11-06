@@ -109,18 +109,6 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -142,6 +130,18 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.18.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -176,6 +176,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+core/tests/src/CMakeFiles/ADValueTest.dir/rule:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/ADValueTest.dir/rule
+.PHONY : core/tests/src/CMakeFiles/ADValueTest.dir/rule
+
+# Convenience name for target.
+ADValueTest: core/tests/src/CMakeFiles/ADValueTest.dir/rule
+
+.PHONY : ADValueTest
+
+# fast build rule for target.
+ADValueTest/fast:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/build
+.PHONY : ADValueTest/fast
+
+# Convenience name for target.
 core/tests/src/CMakeFiles/ADNodeTest.dir/rule:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/ADNodeTest.dir/rule
 .PHONY : core/tests/src/CMakeFiles/ADNodeTest.dir/rule
@@ -189,21 +204,6 @@ ADNodeTest: core/tests/src/CMakeFiles/ADNodeTest.dir/rule
 ADNodeTest/fast:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/build
 .PHONY : ADNodeTest/fast
-
-# Convenience name for target.
-core/tests/src/CMakeFiles/MALTest.dir/rule:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/MALTest.dir/rule
-.PHONY : core/tests/src/CMakeFiles/MALTest.dir/rule
-
-# Convenience name for target.
-MALTest: core/tests/src/CMakeFiles/MALTest.dir/rule
-
-.PHONY : MALTest
-
-# fast build rule for target.
-MALTest/fast:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/build
-.PHONY : MALTest/fast
 
 test_ADNode.o: test_ADNode.cpp.o
 
@@ -232,32 +232,32 @@ test_ADNode.cpp.s:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/test_ADNode.cpp.s
 .PHONY : test_ADNode.cpp.s
 
-test_MAL.o: test_MAL.cpp.o
+test_ADValue.o: test_ADValue.cpp.o
 
-.PHONY : test_MAL.o
+.PHONY : test_ADValue.o
 
 # target to build an object file
-test_MAL.cpp.o:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/test_MAL.cpp.o
-.PHONY : test_MAL.cpp.o
+test_ADValue.cpp.o:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/test_ADValue.cpp.o
+.PHONY : test_ADValue.cpp.o
 
-test_MAL.i: test_MAL.cpp.i
+test_ADValue.i: test_ADValue.cpp.i
 
-.PHONY : test_MAL.i
+.PHONY : test_ADValue.i
 
 # target to preprocess a source file
-test_MAL.cpp.i:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/test_MAL.cpp.i
-.PHONY : test_MAL.cpp.i
+test_ADValue.cpp.i:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/test_ADValue.cpp.i
+.PHONY : test_ADValue.cpp.i
 
-test_MAL.s: test_MAL.cpp.s
+test_ADValue.s: test_ADValue.cpp.s
 
-.PHONY : test_MAL.s
+.PHONY : test_ADValue.s
 
 # target to generate assembly for a file
-test_MAL.cpp.s:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/test_MAL.cpp.s
-.PHONY : test_MAL.cpp.s
+test_ADValue.cpp.s:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/test_ADValue.cpp.s
+.PHONY : test_ADValue.cpp.s
 
 # Help Target
 help:
@@ -272,13 +272,13 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... ADNodeTest"
-	@echo "... MALTest"
+	@echo "... ADValueTest"
 	@echo "... test_ADNode.o"
 	@echo "... test_ADNode.i"
 	@echo "... test_ADNode.s"
-	@echo "... test_MAL.o"
-	@echo "... test_MAL.i"
-	@echo "... test_MAL.s"
+	@echo "... test_ADValue.o"
+	@echo "... test_ADValue.i"
+	@echo "... test_ADValue.s"
 .PHONY : help
 
 
