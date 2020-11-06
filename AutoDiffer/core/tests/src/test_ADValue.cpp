@@ -6,11 +6,11 @@
 #include "gtest/gtest.h"
 
 /* header files */
-#include "AutoDiffer.hpp"
+#include "ADNode.hpp"
 #include "test_vars.h"
 
-void AutoDiffer_testcheck(){
-    printf("Starting AutoDiffer Library tests...\n");
+void ADValue_testcheck(){
+    printf("Starting ADNode Library tests...\n");
 }
 
 TEST(Getter,int){

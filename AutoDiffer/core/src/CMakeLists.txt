@@ -1,13 +1,13 @@
-file(GLOB MAL_H *.h)
+file(GLOB AUTODIFFER_H *.h)
 
-set(MAL_SRC
-    AutoDiffer.cpp
+set(AUTODIFFER_SRC
+    ADValue.cpp
 )
 
 # ==================== #
 # Build shared library #
 # ==================== #
-add_library(AutoDiffer SHARED ${MAL_SRC} ${MAL_H})
+add_library(AutoDiffer SHARED ${AUTODIFFER_SRC} ${AUTODIFFER_H})
 
 # Install targets into specific directories
 install(TARGETS AutoDiffer 
@@ -16,7 +16,7 @@ install(TARGETS AutoDiffer
 	ARCHIVE DESTINATION lib/
 )
 
-install(FILES ${MAL_H} DESTINATION include)
+install(FILES ${AUTODIFFER_H} DESTINATION include)
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
     DESTINATION include

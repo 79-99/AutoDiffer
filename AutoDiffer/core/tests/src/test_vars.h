@@ -26,7 +26,8 @@ extern "C" {
 
 
 /** Display testing information */
-void AutoDiffer_testcheck();
+void ADNode_testcheck();
+void ADValue_testcheck();
 
 
 #ifdef __cplusplus

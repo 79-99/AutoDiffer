@@ -1,2 +1,3 @@
 /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/lib/libAutoDiffer.dylib
-/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include/AutoDiffer.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include/ADNode.hpp
+/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/install/include/ADValue.hpp

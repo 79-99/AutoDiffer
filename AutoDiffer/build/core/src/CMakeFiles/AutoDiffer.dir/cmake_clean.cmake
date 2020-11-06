@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "../../lib/libAutoDiffer.dylib"
   "../../lib/libAutoDiffer.pdb"
-  "CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o"
+  "CMakeFiles/AutoDiffer.dir/ADValue.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

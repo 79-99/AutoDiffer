@@ -189,6 +189,19 @@ AutoDiffer/fast:
 .PHONY : AutoDiffer/fast
 
 #=============================================================================
+# Target rules for targets named ADValueTest.Unit.Test
+
+# Build rule for target.
+ADValueTest.Unit.Test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADValueTest.Unit.Test
+.PHONY : ADValueTest.Unit.Test
+
+# fast build rule for target.
+ADValueTest.Unit.Test/fast:
+	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build
+.PHONY : ADValueTest.Unit.Test/fast
+
+#=============================================================================
 # Target rules for targets named ContinuousCoverage
 
 # Build rule for target.
@@ -410,19 +423,6 @@ NightlyCoverage/fast:
 .PHONY : NightlyCoverage/fast
 
 #=============================================================================
-# Target rules for targets named MALTest.Unit.Test
-
-# Build rule for target.
-MALTest.Unit.Test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MALTest.Unit.Test
-.PHONY : MALTest.Unit.Test
-
-# fast build rule for target.
-MALTest.Unit.Test/fast:
-	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/build
-.PHONY : MALTest.Unit.Test/fast
-
-#=============================================================================
 # Target rules for targets named NightlyTest
 
 # Build rule for target.
@@ -579,6 +579,19 @@ Experimental/fast:
 .PHONY : Experimental/fast
 
 #=============================================================================
+# Target rules for targets named ADValueTest
+
+# Build rule for target.
+ADValueTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADValueTest
+.PHONY : ADValueTest
+
+# fast build rule for target.
+ADValueTest/fast:
+	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/build
+.PHONY : ADValueTest/fast
+
+#=============================================================================
 # Target rules for targets named ADNodeTest
 
 # Build rule for target.
@@ -590,19 +603,6 @@ ADNodeTest: cmake_check_build_system
 ADNodeTest/fast:
 	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/build
 .PHONY : ADNodeTest/fast
-
-#=============================================================================
-# Target rules for targets named MALTest
-
-# Build rule for target.
-MALTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MALTest
-.PHONY : MALTest
-
-# fast build rule for target.
-MALTest/fast:
-	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/build
-.PHONY : MALTest/fast
 
 # Help Target
 help:
@@ -646,9 +646,9 @@ help:
 	@echo "... NightlyUpdate"
 	@echo "... ADNodeTest"
 	@echo "... ADNodeTest.Unit.Test"
+	@echo "... ADValueTest"
+	@echo "... ADValueTest.Unit.Test"
 	@echo "... AutoDiffer"
-	@echo "... MALTest"
-	@echo "... MALTest.Unit.Test"
 .PHONY : help
 
 

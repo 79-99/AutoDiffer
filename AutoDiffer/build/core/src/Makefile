@@ -190,32 +190,32 @@ AutoDiffer/fast:
 	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/build
 .PHONY : AutoDiffer/fast
 
-AutoDiffer.o: AutoDiffer.cpp.o
+ADValue.o: ADValue.cpp.o
 
-.PHONY : AutoDiffer.o
+.PHONY : ADValue.o
 
 # target to build an object file
-AutoDiffer.cpp.o:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.o
-.PHONY : AutoDiffer.cpp.o
+ADValue.cpp.o:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.o
+.PHONY : ADValue.cpp.o
 
-AutoDiffer.i: AutoDiffer.cpp.i
+ADValue.i: ADValue.cpp.i
 
-.PHONY : AutoDiffer.i
+.PHONY : ADValue.i
 
 # target to preprocess a source file
-AutoDiffer.cpp.i:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.i
-.PHONY : AutoDiffer.cpp.i
+ADValue.cpp.i:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.i
+.PHONY : ADValue.cpp.i
 
-AutoDiffer.s: AutoDiffer.cpp.s
+ADValue.s: ADValue.cpp.s
 
-.PHONY : AutoDiffer.s
+.PHONY : ADValue.s
 
 # target to generate assembly for a file
-AutoDiffer.cpp.s:
-	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/AutoDiffer.cpp.s
-.PHONY : AutoDiffer.cpp.s
+ADValue.cpp.s:
+	cd /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build && $(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/ADValue.cpp.s
+.PHONY : ADValue.cpp.s
 
 # Help Target
 help:
@@ -230,9 +230,9 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... AutoDiffer"
-	@echo "... AutoDiffer.o"
-	@echo "... AutoDiffer.i"
-	@echo "... AutoDiffer.s"
+	@echo "... ADValue.o"
+	@echo "... ADValue.i"
+	@echo "... ADValue.s"
 .PHONY : help
 
 

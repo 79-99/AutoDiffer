@@ -129,8 +129,8 @@ core/src/clean: core/src/CMakeFiles/AutoDiffer.dir/clean
 # Directory level rules for directory core/tests
 
 # Recursive "all" directory target.
+core/tests/all: core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/all
 core/tests/all: core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/all
-core/tests/all: core/tests/CMakeFiles/MALTest.Unit.Test.dir/all
 core/tests/all: core/tests/src/all
 
 .PHONY : core/tests/all
@@ -141,6 +141,7 @@ core/tests/preinstall: core/tests/src/preinstall
 .PHONY : core/tests/preinstall
 
 # Recursive "clean" directory target.
+core/tests/clean: core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/clean
 core/tests/clean: core/tests/CMakeFiles/ContinuousCoverage.dir/clean
 core/tests/clean: core/tests/CMakeFiles/ContinuousTest.dir/clean
 core/tests/clean: core/tests/CMakeFiles/ContinuousBuild.dir/clean
@@ -158,7 +159,6 @@ core/tests/clean: core/tests/CMakeFiles/NightlySubmit.dir/clean
 core/tests/clean: core/tests/CMakeFiles/NightlyMemCheck.dir/clean
 core/tests/clean: core/tests/CMakeFiles/ExperimentalConfigure.dir/clean
 core/tests/clean: core/tests/CMakeFiles/NightlyCoverage.dir/clean
-core/tests/clean: core/tests/CMakeFiles/MALTest.Unit.Test.dir/clean
 core/tests/clean: core/tests/CMakeFiles/NightlyTest.dir/clean
 core/tests/clean: core/tests/CMakeFiles/ContinuousMemCheck.dir/clean
 core/tests/clean: core/tests/CMakeFiles/NightlyBuild.dir/clean
@@ -179,8 +179,8 @@ core/tests/clean: core/tests/src/clean
 # Directory level rules for directory core/tests/src
 
 # Recursive "all" directory target.
+core/tests/src/all: core/tests/src/CMakeFiles/ADValueTest.dir/all
 core/tests/src/all: core/tests/src/CMakeFiles/ADNodeTest.dir/all
-core/tests/src/all: core/tests/src/CMakeFiles/MALTest.dir/all
 
 .PHONY : core/tests/src/all
 
@@ -190,8 +190,8 @@ core/tests/src/preinstall:
 .PHONY : core/tests/src/preinstall
 
 # Recursive "clean" directory target.
+core/tests/src/clean: core/tests/src/CMakeFiles/ADValueTest.dir/clean
 core/tests/src/clean: core/tests/src/CMakeFiles/ADNodeTest.dir/clean
-core/tests/src/clean: core/tests/src/CMakeFiles/MALTest.dir/clean
 
 .PHONY : core/tests/src/clean
 
@@ -202,7 +202,7 @@ core/tests/src/clean: core/tests/src/CMakeFiles/MALTest.dir/clean
 core/src/CMakeFiles/AutoDiffer.dir/all:
 	$(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=5,6 "Built target AutoDiffer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=9,10 "Built target AutoDiffer"
 .PHONY : core/src/CMakeFiles/AutoDiffer.dir/all
 
 # Build rule for subdir invocation for target.
@@ -221,6 +221,35 @@ AutoDiffer: core/src/CMakeFiles/AutoDiffer.dir/rule
 core/src/CMakeFiles/AutoDiffer.dir/clean:
 	$(MAKE) $(MAKESILENT) -f core/src/CMakeFiles/AutoDiffer.dir/build.make core/src/CMakeFiles/AutoDiffer.dir/clean
 .PHONY : core/src/CMakeFiles/AutoDiffer.dir/clean
+
+#=============================================================================
+# Target rules for target core/tests/CMakeFiles/ADValueTest.Unit.Test.dir
+
+# All Build rule for target.
+core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/all: core/src/CMakeFiles/AutoDiffer.dir/all
+core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/all: core/tests/src/CMakeFiles/ADValueTest.dir/all
+core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/all: core/tests/src/CMakeFiles/ADNodeTest.dir/all
+	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=7,8 "Built target ADValueTest.Unit.Test"
+.PHONY : core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/all
+
+# Build rule for subdir invocation for target.
+core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 0
+.PHONY : core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule
+
+# Convenience name for target.
+ADValueTest.Unit.Test: core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/rule
+
+.PHONY : ADValueTest.Unit.Test
+
+# clean rule for target.
+core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/clean
+.PHONY : core/tests/CMakeFiles/ADValueTest.Unit.Test.dir/clean
 
 #=============================================================================
 # Target rules for target core/tests/CMakeFiles/ContinuousCoverage.dir
@@ -551,6 +580,7 @@ core/tests/CMakeFiles/ExperimentalTest.dir/clean:
 
 # All Build rule for target.
 core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/all: core/src/CMakeFiles/AutoDiffer.dir/all
+core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/all: core/tests/src/CMakeFiles/ADValueTest.dir/all
 core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/all: core/tests/src/CMakeFiles/ADNodeTest.dir/all
 	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/depend
 	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build.make core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/build
@@ -559,7 +589,7 @@ core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/all: core/tests/src/CMakeFiles/AD
 
 # Build rule for subdir invocation for target.
 core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 0
 .PHONY : core/tests/CMakeFiles/ADNodeTest.Unit.Test.dir/rule
@@ -681,34 +711,6 @@ NightlyCoverage: core/tests/CMakeFiles/NightlyCoverage.dir/rule
 core/tests/CMakeFiles/NightlyCoverage.dir/clean:
 	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/NightlyCoverage.dir/build.make core/tests/CMakeFiles/NightlyCoverage.dir/clean
 .PHONY : core/tests/CMakeFiles/NightlyCoverage.dir/clean
-
-#=============================================================================
-# Target rules for target core/tests/CMakeFiles/MALTest.Unit.Test.dir
-
-# All Build rule for target.
-core/tests/CMakeFiles/MALTest.Unit.Test.dir/all: core/src/CMakeFiles/AutoDiffer.dir/all
-core/tests/CMakeFiles/MALTest.Unit.Test.dir/all: core/tests/src/CMakeFiles/MALTest.dir/all
-	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/depend
-	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=9,10 "Built target MALTest.Unit.Test"
-.PHONY : core/tests/CMakeFiles/MALTest.Unit.Test.dir/all
-
-# Build rule for subdir invocation for target.
-core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/CMakeFiles/MALTest.Unit.Test.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 0
-.PHONY : core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule
-
-# Convenience name for target.
-MALTest.Unit.Test: core/tests/CMakeFiles/MALTest.Unit.Test.dir/rule
-
-.PHONY : MALTest.Unit.Test
-
-# clean rule for target.
-core/tests/CMakeFiles/MALTest.Unit.Test.dir/clean:
-	$(MAKE) $(MAKESILENT) -f core/tests/CMakeFiles/MALTest.Unit.Test.dir/build.make core/tests/CMakeFiles/MALTest.Unit.Test.dir/clean
-.PHONY : core/tests/CMakeFiles/MALTest.Unit.Test.dir/clean
 
 #=============================================================================
 # Target rules for target core/tests/CMakeFiles/NightlyTest.dir
@@ -1035,6 +1037,33 @@ core/tests/CMakeFiles/Experimental.dir/clean:
 .PHONY : core/tests/CMakeFiles/Experimental.dir/clean
 
 #=============================================================================
+# Target rules for target core/tests/src/CMakeFiles/ADValueTest.dir
+
+# All Build rule for target.
+core/tests/src/CMakeFiles/ADValueTest.dir/all:
+	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/depend
+	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=5,6 "Built target ADValueTest"
+.PHONY : core/tests/src/CMakeFiles/ADValueTest.dir/all
+
+# Build rule for subdir invocation for target.
+core/tests/src/CMakeFiles/ADValueTest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/ADValueTest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 0
+.PHONY : core/tests/src/CMakeFiles/ADValueTest.dir/rule
+
+# Convenience name for target.
+ADValueTest: core/tests/src/CMakeFiles/ADValueTest.dir/rule
+
+.PHONY : ADValueTest
+
+# clean rule for target.
+core/tests/src/CMakeFiles/ADValueTest.dir/clean:
+	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADValueTest.dir/build.make core/tests/src/CMakeFiles/ADValueTest.dir/clean
+.PHONY : core/tests/src/CMakeFiles/ADValueTest.dir/clean
+
+#=============================================================================
 # Target rules for target core/tests/src/CMakeFiles/ADNodeTest.dir
 
 # All Build rule for target.
@@ -1060,33 +1089,6 @@ ADNodeTest: core/tests/src/CMakeFiles/ADNodeTest.dir/rule
 core/tests/src/CMakeFiles/ADNodeTest.dir/clean:
 	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/ADNodeTest.dir/build.make core/tests/src/CMakeFiles/ADNodeTest.dir/clean
 .PHONY : core/tests/src/CMakeFiles/ADNodeTest.dir/clean
-
-#=============================================================================
-# Target rules for target core/tests/src/CMakeFiles/MALTest.dir
-
-# All Build rule for target.
-core/tests/src/CMakeFiles/MALTest.dir/all:
-	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/depend
-	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles --progress-num=7,8 "Built target MALTest"
-.PHONY : core/tests/src/CMakeFiles/MALTest.dir/all
-
-# Build rule for subdir invocation for target.
-core/tests/src/CMakeFiles/MALTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core/tests/src/CMakeFiles/MALTest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/michaelneuder/Dropbox/github/cs107-FinalProject/AutoDiffer/build/CMakeFiles 0
-.PHONY : core/tests/src/CMakeFiles/MALTest.dir/rule
-
-# Convenience name for target.
-MALTest: core/tests/src/CMakeFiles/MALTest.dir/rule
-
-.PHONY : MALTest
-
-# clean rule for target.
-core/tests/src/CMakeFiles/MALTest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f core/tests/src/CMakeFiles/MALTest.dir/build.make core/tests/src/CMakeFiles/MALTest.dir/clean
-.PHONY : core/tests/src/CMakeFiles/MALTest.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
