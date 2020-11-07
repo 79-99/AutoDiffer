@@ -9,6 +9,7 @@ int main(int argc,char **argv){
     /* this forces the testing library to link */
     ADNode_testcheck();
     ADValue_testcheck();
+    Parser_testcheck();
 
     /* Run Tests */
     return RUN_ALL_TESTS();

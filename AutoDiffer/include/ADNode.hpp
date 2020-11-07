@@ -1,9 +1,9 @@
 /**
- * @file Autodiffer.h
+ * @file ADNode.h
  */
 
-#ifndef AUTODIFFER_H
-#define AUTODIFFER_H
+#ifndef ADNODE_H
+#define ADNODE_H
 
 /* header files */
 #include "ADValue.hpp"
@@ -18,6 +18,7 @@
 enum class Operation {
   addition = 1,
   power = 2,
+  // division, mult, subtraction, exp, trig, negation
 };
 
 template <class T>
@@ -47,15 +48,4 @@ class ADNode {
 };
 
 
-
-// template <class T>
-// class AutoDiffer {
-//   private:
-
-//   public:
-
-// };
-
-
-
-#endif /* AUTODIFFER_H */
+#endif /* ADNODE_H */
