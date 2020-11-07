@@ -18,6 +18,7 @@
 enum class Operation {
   addition = 1,
   power = 2,
+  // division, mult, subtraction, exp, trig, negation
 };
 
 template <class T>

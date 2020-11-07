@@ -68,7 +68,6 @@ template <class T>
 void Parser<T>::Next() {
     std::string sub_str = equation_.substr(
         left_cursor_+1, right_cursor_ - (left_cursor_+1));
-    std::cout << equation_ << ' ' << sub_str << std::endl;
     int op_index = -1;
     Operation op;
     for (int i = 0; i < sub_str.length(); ++i) {
