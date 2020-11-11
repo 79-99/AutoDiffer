@@ -46,6 +46,20 @@ TEST(parser_test2, int){
     EXPECT_EQ(res.dval(), 55503144);
 }
 
+TEST(parser_negation, int){
+    std::string equation = "(-x)";
+    Parser<int> parser(equation);
+
+    ADValue<int> seed_value(/*value=*/7, /*seed=*/1);
+    std::pair<std::string, ADValue<int>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
+    parser.Init(seeds);
+    
+    ADValue<int> res = parser.Run();
+    EXPECT_EQ(res.val(), -7);
+    EXPECT_EQ(res.dval(), -1);
+}
+
 TEST(parser_test_float, float){
     std::string equation = "((x+4.2)^2.0)";
     Parser<float> parser(equation);

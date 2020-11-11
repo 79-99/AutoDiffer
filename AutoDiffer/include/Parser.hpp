@@ -31,7 +31,8 @@ class Parser {
     bool SetCursor();
     ADValue<T> GetValue(const std::string& key);
 
-    std::set<char> operations = { '+', '^' }; 
+    // This will need to change to include trig 
+    std::set<char> operations = { '+','^','-'}; 
 
   public:
     Parser(std::string equation) : equation_(equation) {}
@@ -78,17 +79,46 @@ void Parser<T>::Next() {
                 op = Operation::addition;
             } else if (op_char == '^') {
                 op = Operation::power;
-            }
+            } else if (op_char == '-') {
+		        op = Operation::subtraction;
+	        }
             op_index = i;
             break;
         }
     }
-    if (op_index == -1) {/* Throw error in here.*/}
+
+    if (op_index == -1) {
+    /* Throw error in here if not trig operation.*/
+        if (left_cursor_ < 3) {
+            // throw error
+        } else {
+            // peek at preceding chars
+            std::string trig_substr = equation_.substr(left_cursor_ - 3, 3); 
+            if (trig_substr.compare("sin") == 0) {
+                op = Operation::sin; 
+            } else if (trig_substr.compare("cos") == 0) {
+                op = Operation::cos; 
+            } else if (trig_substr.compare("tan") == 0) {
+                op = Operation::tan; 
+            } else {
+                // Throw error if no 
+            }
+        }
+    }
 
     std::string LHS = sub_str.substr(0,op_index);
     std::string RHS = sub_str.substr(op_index+1);
-    ADValue<T> left_val = GetValue(LHS);
+
+    ADValue<T> left_val; 
     ADValue<T> right_val = GetValue(RHS);
+
+    // if LHS empty and op is sub, then negation
+    if (op == Operation::subtraction && LHS.empty()) {
+        std::cout << "Caught LHS empty" << std::endl; 
+        left_val = GetValue("0"); 
+    } else {
+        left_val = GetValue(LHS); 
+    }
     
     ADNode<T> cur_node(left_val, right_val, op);
     ADValue<T> cur_value = cur_node.Evaluate();

@@ -37,4 +37,9 @@ TEST(functionality, int){
 
     EXPECT_EQ(v4.val(), 512);
     EXPECT_EQ(v4.dval(), 192);
+
+    ADNode<int> node3(x1, v1, Operation::subtraction);
+    ADValue<int> v5 = node1.Evaluate();
+    EXPECT_EQ(v5.val(), -2);
+    EXPECT_EQ(v5.dval(), 1);
 }
