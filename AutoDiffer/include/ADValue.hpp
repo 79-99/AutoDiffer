@@ -79,9 +79,9 @@ class ADValue {
     }
 
     ADValue<T> ADtan() {
-        // T new_v = pow(v, exponent);
-        // T new_dv = exponent * pow(v, exponent - 1) * dv;
-        // return ADValue<T>(new_v, new_dv);
+        T new_v = tan(this->val());
+        T new_dv = (1/(pow(cos(this->val()), 2)))*this->dval();
+        return ADValue<T>(new_v, new_dv);
     }
 
 };
