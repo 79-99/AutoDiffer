@@ -67,15 +67,15 @@ class ADValue {
     }
 
     ADValue<T> ADsin() {
-        // T new_v = pow();
-        // T new_dv = exponent * pow(v, exponent - 1) * dv;
-        // return ADValue<T>(new_v, new_dv);
+        T new_v = sin(this->val());
+        T new_dv = cos(this->val()) * this->dval(); 
+        return ADValue<T>(new_v, new_dv);
     }
 
     ADValue<T> ADcos() {
-        // T new_v = pow(v, exponent);
-        // T new_dv = exponent * pow(v, exponent - 1) * dv;
-        // return ADValue<T>(new_v, new_dv);
+        T new_v = cos(this->val());
+        T new_dv = -sin(this->val()) * this->dval(); 
+        return ADValue<T>(new_v, new_dv);
     }
 
     ADValue<T> ADtan() {

@@ -1,9 +1,9 @@
 /**
- * @file Autodiffer.h
+ * @file ADNode.h
  */
 
-#ifndef AUTODIFFER_H
-#define AUTODIFFER_H
+#ifndef ADNODE_H
+#define ADNODE_H
 
 /* header files */
 #include "ADValue.hpp"
@@ -18,6 +18,11 @@
 enum class Operation {
   addition = 1,
   power = 2,
+  subtraction = 3,
+  sin = 4, 
+  cos = 5, 
+  tan = 6
+  // division, mult, subtraction, exp, trig, negation
 };
 
 template <class T>
@@ -42,20 +47,25 @@ class ADNode {
         case Operation::power : {
           return self_vertex_.power(aux_vertex_.val());
         }
+
+        case Operation::subtraction : {
+          return self_vertex_ - aux_vertex_; 
+        }
+
+        case Operation::sin : {
+          return self_vertex_.ADsin(); 
+        }
+
+        case Operation::cos : {
+          return self_vertex_.ADcos(); 
+        }
+
+        case Operation::tan : {
+          return self_vertex_.ADtan(); 
+        }
       }
     }
 };
 
 
-
-// template <class T>
-// class AutoDiffer {
-//   private:
-
-//   public:
-
-// };
-
-
-
-#endif /* AUTODIFFER_H */
+#endif /* ADNODE_H */

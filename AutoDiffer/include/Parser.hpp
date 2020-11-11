@@ -87,37 +87,46 @@ void Parser<T>::Next() {
         }
     }
 
-    if (op_index == -1) {
-    /* Throw error in here if not trig operation.*/
-        if (left_cursor_ < 3) {
-            // throw error
-        } else {
-            // peek at preceding chars
-            std::string trig_substr = equation_.substr(left_cursor_ - 3, 3); 
-            if (trig_substr.compare("sin") == 0) {
-                op = Operation::sin; 
-            } else if (trig_substr.compare("cos") == 0) {
-                op = Operation::cos; 
-            } else if (trig_substr.compare("tan") == 0) {
-                op = Operation::tan; 
-            } else {
-                // Throw error if no 
-            }
-        }
-    }
-
-    std::string LHS = sub_str.substr(0,op_index);
-    std::string RHS = sub_str.substr(op_index+1);
-
     ADValue<T> left_val; 
-    ADValue<T> right_val = GetValue(RHS);
+    ADValue<T> right_val; 
 
-    // if LHS empty and op is sub, then negation
-    if (op == Operation::subtraction && LHS.empty()) {
-        std::cout << "Caught LHS empty" << std::endl; 
-        left_val = GetValue("0"); 
+    if (op_index == -1) {
+        std::cout << "made it to op index = -1" << std::endl; 
+        // Check if trig function
+        // deal with (x)
+        if (values_.find(sub_str) != values_.end()) {
+            left_val = values_.find(sub_str)->second; 
+            right_val = GetValue("0");
+            op = Operation::addition; 
+        } else if (sub_str.length() > 3) {
+            std::string trig_str = sub_str.substr(0,3); 
+            if (trig_str.compare("sin") == 0) {
+                op = Operation::sin; 
+                left_val = (values_.find(sub_str.substr(3)))->second; 
+                right_val = GetValue("0"); 
+            } else if (trig_str.compare("cos") == 0) {
+                op = Operation::cos; 
+                left_val = (values_.find(sub_str.substr(2)))->second; 
+                right_val = GetValue("0"); 
+            } else if (trig_str.compare("tan") == 0) {
+                op = Operation::tan; 
+                left_val = (values_.find(sub_str.substr(2)))->second; 
+                right_val = GetValue("0"); 
+            }
+        } 
     } else {
-        left_val = GetValue(LHS); 
+        // Operations including negation, + , - , ^
+        std::string LHS = sub_str.substr(0,op_index);
+        std::string RHS = sub_str.substr(op_index+1);
+        
+        right_val = GetValue(RHS);
+
+        if (op == Operation::subtraction && LHS.empty()) {
+            left_val = GetValue("0"); 
+        // When op and two sides
+        } else {
+            left_val = GetValue(LHS); 
+        }
     }
     
     ADNode<T> cur_node(left_val, right_val, op);
@@ -143,8 +152,6 @@ ADValue<T> Parser<T>::GetValue(const std::string& key) {
     ss >> num;
     return ADValue<T>(num, 0);
 }
-
-
 
 template <class T>
 bool Parser<T>::SetCursor() {
