@@ -62,7 +62,7 @@ TEST(parser_negation, int){
 }
 
 TEST(parser_sin, float){
-    std::string equation = "(2+(sin(x)))";
+    std::string equation = "(3+(sin(x)))";
     Parser<float> parser(equation);
 
     ADValue<float> seed_value(/*value=*/M_PI/6, /*seed=*/1);
@@ -71,7 +71,7 @@ TEST(parser_sin, float){
     parser.Init(seeds);
     
     ADValue<float> res = parser.Run();
-    EXPECT_NEAR(res.val(), 2.5, 0.001);
+    EXPECT_NEAR(res.val(), 3.5, 0.001);
     EXPECT_NEAR(res.dval(), 0.866, 0.001);
 }
 
