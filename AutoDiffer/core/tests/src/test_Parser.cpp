@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <math.h>
 
 /* googletest header files */
 #include "gtest/gtest.h"
@@ -44,6 +45,34 @@ TEST(parser_test2, int){
     ADValue<int> res = parser.Run();
     EXPECT_EQ(res.val(), 68707521);
     EXPECT_EQ(res.dval(), 55503144);
+}
+
+TEST(parser_negation, int){
+    std::string equation = "(-x)";
+    Parser<int> parser(equation);
+
+    ADValue<int> seed_value(/*value=*/7, /*seed=*/1);
+    std::pair<std::string, ADValue<int>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
+    parser.Init(seeds);
+    
+    ADValue<int> res = parser.Run();
+    EXPECT_EQ(res.val(), -7);
+    EXPECT_EQ(res.dval(), -1);
+}
+
+TEST(parser_sin, float){
+    std::string equation = "(3+(sin(x)))";
+    Parser<float> parser(equation);
+
+    ADValue<float> seed_value(/*value=*/M_PI/6, /*seed=*/1);
+    std::pair<std::string, ADValue<float>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
+    parser.Init(seeds);
+    
+    ADValue<float> res = parser.Run();
+    EXPECT_NEAR(res.val(), 3.5, 0.001);
+    EXPECT_NEAR(res.dval(), 0.866, 0.001);
 }
 
 TEST(parser_test_float, float){

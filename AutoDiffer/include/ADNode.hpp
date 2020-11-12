@@ -18,6 +18,10 @@
 enum class Operation {
   addition = 1,
   power = 2,
+  subtraction = 3,
+  sin = 4, 
+  cos = 5, 
+  tan = 6
   // division, mult, subtraction, exp, trig, negation
 };
 
@@ -42,6 +46,22 @@ class ADNode {
 
         case Operation::power : {
           return self_vertex_.power(aux_vertex_.val());
+        }
+
+        case Operation::subtraction : {
+          return self_vertex_ - aux_vertex_; 
+        }
+
+        case Operation::sin : {
+          return self_vertex_.ADsin(); 
+        }
+
+        case Operation::cos : {
+          return self_vertex_.ADcos(); 
+        }
+
+        case Operation::tan : {
+          return self_vertex_.ADtan(); 
         }
       }
     }

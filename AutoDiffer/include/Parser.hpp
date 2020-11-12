@@ -31,7 +31,8 @@ class Parser {
     bool SetCursor();
     ADValue<T> GetValue(const std::string& key);
 
-    std::set<char> operations = { '+', '^' }; 
+    // This will need to change to include trig 
+    std::set<char> operations = { '+','^','-'}; 
 
   public:
     Parser(std::string equation) : equation_(equation) {}
@@ -78,17 +79,54 @@ void Parser<T>::Next() {
                 op = Operation::addition;
             } else if (op_char == '^') {
                 op = Operation::power;
-            }
+            } else if (op_char == '-') {
+		        op = Operation::subtraction;
+	        }
             op_index = i;
             break;
         }
     }
-    if (op_index == -1) {/* Throw error in here.*/}
 
-    std::string LHS = sub_str.substr(0,op_index);
-    std::string RHS = sub_str.substr(op_index+1);
-    ADValue<T> left_val = GetValue(LHS);
-    ADValue<T> right_val = GetValue(RHS);
+    ADValue<T> left_val; 
+    ADValue<T> right_val; 
+
+    if (op_index == -1) {
+        // Check if trig function
+        // deal with (x)
+        if (values_.find(sub_str) != values_.end()) {
+            left_val = values_.find(sub_str)->second; 
+            right_val = GetValue("0");
+            op = Operation::addition; 
+        } else if (sub_str.length() > 3) {
+            std::string trig_str = sub_str.substr(0,3); 
+            if (trig_str.compare("sin") == 0) {
+                op = Operation::sin; 
+                left_val = (values_.find(sub_str.substr(3)))->second; 
+                right_val = GetValue("0"); 
+            } else if (trig_str.compare("cos") == 0) {
+                op = Operation::cos; 
+                left_val = (values_.find(sub_str.substr(2)))->second; 
+                right_val = GetValue("0"); 
+            } else if (trig_str.compare("tan") == 0) {
+                op = Operation::tan; 
+                left_val = (values_.find(sub_str.substr(2)))->second; 
+                right_val = GetValue("0"); 
+            }
+        } 
+    } else {
+        // Operations including negation, + , - , ^
+        std::string LHS = sub_str.substr(0,op_index);
+        std::string RHS = sub_str.substr(op_index+1);
+        
+        right_val = GetValue(RHS);
+
+        if (op == Operation::subtraction && LHS.empty()) {
+            left_val = GetValue("0"); 
+        // When op and two sides
+        } else {
+            left_val = GetValue(LHS); 
+        }
+    }
     
     ADNode<T> cur_node(left_val, right_val, op);
     ADValue<T> cur_value = cur_node.Evaluate();
@@ -113,8 +151,6 @@ ADValue<T> Parser<T>::GetValue(const std::string& key) {
     ss >> num;
     return ADValue<T>(num, 0);
 }
-
-
 
 template <class T>
 bool Parser<T>::SetCursor() {
