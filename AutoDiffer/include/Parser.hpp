@@ -91,7 +91,6 @@ void Parser<T>::Next() {
     ADValue<T> right_val; 
 
     if (op_index == -1) {
-        std::cout << "made it to op index = -1" << std::endl; 
         // Check if trig function
         // deal with (x)
         if (values_.find(sub_str) != values_.end()) {
