@@ -1,0 +1,9 @@
+﻿Katrina Gonzalez
+1.       Tasks assigned: Multiplication (dvision as a subcase), subtraction (negation as a subcase), and trig operations. 
+2.       Work done: Finished subtraction and negation, as well as sin, cos, and tan trig functions. Added parser tests to ensure correctness since parsing these functions was slightly different than parsing an addition. Currently adding more unit tests and will work on multiplication. 
+Chenguang Li
+1.       Tasks assigned: (Note: has no C++ experience while both other teammates do, so work was distributed accordingly.) Handling error cases for input and adding more unit testing edge cases. Writing documentation for Newton’s method extension.
+2.       Work done: Organized meeting for work distribution and set up milestone doc.
+Michael Neuder
+1.       Tasks assigned: Begin error handling on parser input. Add documentation for core classes.
+2.       Work done: Built minimum working example to demonstrate entire flow from parsing to output using addition and power operations. Implemented core classes of ADValue, ADNode, and Parser.
