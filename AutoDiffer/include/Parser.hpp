@@ -21,14 +21,14 @@
 #endif
 
 enum class ReturnCode {
-  SUCCESS = 1,
-  PARSE_ERROR = 2,
+  success = 1,
+  parse_error = 2,
   // other errors.
 };
 
 struct Status {
-    ReturnCode code;
-    std::string message;
+  ReturnCode code = ReturnCode::success;
+  std::string message = "";
 };
 
 template <class T>
@@ -42,46 +42,47 @@ class Parser {
     bool SetCursor();
     ADValue<T> GetValue(const std::string& key);
 
-    // This will need to change to include trig 
-    std::set<char> operations = { '+','^','-'}; 
+    std::set<char> operations = { '+','^','-' }; 
 
   public:
     Parser(std::string equation) : equation_(equation) {}
     Status Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
-    void Next();
-    ADValue<T> Run();
+    Status Next();
+    std::pair<Status,ADValue<T>> Run();
 };
 
 
 /* Implementation */
 template <class T>
-ADValue<T> Parser<T>::Run() {
+std::pair<Status,ADValue<T>> Parser<T>::Run() {
+    Status status;
     while (equation_.find('(') != std::string::npos) {
-        Next();
+        status = Next();
     }
     std::string out = 'x' + std::to_string(--v_idx_);
-    return values_[out];
+    return std::pair<Status,ADValue<T>>(status,values_[out]);
 }
 
 
 template <class T>
-Status Parser<T>::Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values) {
-    Status status;
-    status.code = ReturnCode::SUCCESS;
-    status.message = "";
-    
+Status Parser<T>::Init(
+    std::vector<std::pair<std::string, ADValue<T>>> seed_values) {
     // Setting seed values in hash table.
     for (auto& seed_val : seed_values) {
         values_[seed_val.first] = seed_val.second;
     }
-    
+    Status status;
     if (!SetCursor()) {
-        return;
+        status.code = ReturnCode::parse_error;
+        status.message = "No left parentheses found.";
+        return status;
     }
+    return status;
 }
 
 template <class T>
-void Parser<T>::Next() {
+Status Parser<T>::Next() {
+    Status status;
     std::string sub_str = equation_.substr(
         left_cursor_+1, right_cursor_ - (left_cursor_+1));
     int op_index = -1;
@@ -151,8 +152,9 @@ void Parser<T>::Next() {
         left_cursor_, right_cursor_ - left_cursor_ + 1, new_val_name);
     equation_ = new_str;
     if (!SetCursor()) {
-        return;
+        return status;
     }
+    return status;
 }
 
 template <class T>
