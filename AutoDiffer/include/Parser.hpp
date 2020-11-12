@@ -20,6 +20,17 @@
 #include <vector>
 #endif
 
+enum class ReturnCode {
+  SUCCESS = 1,
+  PARSE_ERROR = 2,
+  // other errors.
+};
+
+struct Status {
+    ReturnCode code;
+    std::string message;
+};
+
 template <class T>
 class Parser {
   private:
@@ -36,7 +47,7 @@ class Parser {
 
   public:
     Parser(std::string equation) : equation_(equation) {}
-    void Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
+    Status Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
     void Next();
     ADValue<T> Run();
 };
@@ -54,7 +65,11 @@ ADValue<T> Parser<T>::Run() {
 
 
 template <class T>
-void Parser<T>::Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values) {
+Status Parser<T>::Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values) {
+    Status status;
+    status.code = ReturnCode::SUCCESS;
+    status.message = "";
+    
     // Setting seed values in hash table.
     for (auto& seed_val : seed_values) {
         values_[seed_val.first] = seed_val.second;
