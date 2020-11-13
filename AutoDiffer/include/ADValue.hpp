@@ -66,6 +66,24 @@ class ADValue {
         return ADValue<T>(new_v, new_dv);
     }
 
+    ADValue<T> ADmul(const ADValue<T> &other) {
+        T new_v = v * other.val();
+        T new_dv = dv*other.val() + v*other.dval();
+        return ADValue<T>(new_v, new_dv);
+    }
+
+    ADValue<T> ADdiv(const ADValue<T> &other) {
+        T new_v = v / other.val();
+        T new_dv = (dv*other.val() - other.dval()*v)/ pow(other.val(), 2);
+        return ADValue<T>(new_v, new_dv);
+    }
+
+    ADValue<T> ADexp() {
+        T new_v = exp(this->val());
+        T new_dv = exp(this->val()) * this->dval();
+        return ADValue<T>(new_v, new_dv);
+    }
+
     ADValue<T> ADsin() {
         T new_v = sin(this->val());
         T new_dv = cos(this->val()) * this->dval(); 
