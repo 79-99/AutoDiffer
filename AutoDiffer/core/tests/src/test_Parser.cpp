@@ -26,11 +26,14 @@ TEST(parser_test, int){
     ADValue<int> seed_value(/*value=*/3, /*seed=*/1);
     std::pair<std::string, ADValue<int>> seed("x", seed_value);
     std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
-    parser.Init(seeds);
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    ADValue<int> res = parser.Run();
-    EXPECT_EQ(res.val(), 512);
-    EXPECT_EQ(res.dval(), 192);
+    std::pair<Status,ADValue<int>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<int> output = res.second;
+    EXPECT_EQ(output.val(), 512);
+    EXPECT_EQ(output.dval(), 192);
 }
 
 TEST(parser_test2, int){
@@ -40,11 +43,14 @@ TEST(parser_test2, int){
     ADValue<int> seed_value(/*value=*/7, /*seed=*/1);
     std::pair<std::string, ADValue<int>> seed("x", seed_value);
     std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
-    parser.Init(seeds);
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    ADValue<int> res = parser.Run();
-    EXPECT_EQ(res.val(), 68707521);
-    EXPECT_EQ(res.dval(), 55503144);
+    std::pair<Status,ADValue<int>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<int> output = res.second;
+    EXPECT_EQ(output.val(), 68707521);
+    EXPECT_EQ(output.dval(), 55503144);
 }
 
 TEST(parser_negation, int){
@@ -54,11 +60,14 @@ TEST(parser_negation, int){
     ADValue<int> seed_value(/*value=*/7, /*seed=*/1);
     std::pair<std::string, ADValue<int>> seed("x", seed_value);
     std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
-    parser.Init(seeds);
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    ADValue<int> res = parser.Run();
-    EXPECT_EQ(res.val(), -7);
-    EXPECT_EQ(res.dval(), -1);
+    std::pair<Status,ADValue<int>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<int> output = res.second;
+    EXPECT_EQ(output.val(), -7);
+    EXPECT_EQ(output.dval(), -1);
 }
 
 TEST(parser_sin, float){
@@ -68,11 +77,14 @@ TEST(parser_sin, float){
     ADValue<float> seed_value(/*value=*/M_PI/6, /*seed=*/1);
     std::pair<std::string, ADValue<float>> seed("x", seed_value);
     std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
-    parser.Init(seeds);
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    ADValue<float> res = parser.Run();
-    EXPECT_NEAR(res.val(), 3.5, 0.001);
-    EXPECT_NEAR(res.dval(), 0.866, 0.001);
+    std::pair<Status,ADValue<float>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<float> output = res.second;
+    EXPECT_NEAR(output.val(), 3.5, 0.001);
+    EXPECT_NEAR(output.dval(), 0.866, 0.001);
 }
 
 TEST(parser_test_float, float){
@@ -82,11 +94,14 @@ TEST(parser_test_float, float){
     ADValue<float> seed_value(/*value=*/2.4, /*seed=*/1.0);
     std::pair<std::string, ADValue<float>> seed("x", seed_value);
     std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
-    parser.Init(seeds);
-    
-    ADValue<float> res = parser.Run();
-    EXPECT_NEAR(res.val(), 43.56, 0.001);
-    EXPECT_NEAR(res.dval(), 13.2, 0.001);
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+
+    std::pair<Status,ADValue<float>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<float> output = res.second;
+    EXPECT_NEAR(output.val(), 43.56, 0.001);
+    EXPECT_NEAR(output.dval(), 13.2, 0.001);
 }
 
 
@@ -97,9 +112,12 @@ TEST(parser_test_double, double){
     ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
     std::pair<std::string, ADValue<double>> seed("x", seed_value);
     std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
-    parser.Init(seeds);
-    
-    ADValue<double> res = parser.Run();
-    EXPECT_NEAR(res.val(), 6.15615, 0.001);
-    EXPECT_NEAR(res.dval(), 1.8098, 0.001);
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<double> output = res.second;
+    EXPECT_NEAR(output.val(), 6.15615, 0.001);
+    EXPECT_NEAR(output.dval(), 1.8098, 0.001);
 }
