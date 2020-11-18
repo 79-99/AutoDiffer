@@ -84,7 +84,7 @@ TEST(functionality, double){
     ADNode<double> node3(x1, v1, Operation::power);
     ADValue<double> v4 = node3.Evaluate();
     EXPECT_NEAR(v4.val(), pow(3.2,5.8), 1e-6);
-    EXPECT_NEAR(v4.dval(), 1696.44808823, 1e-6);
+    EXPECT_NEAR(v4.dval(), -480.9036001769, 1e-6);
 
     // Multiplication and division tests
     ADNode<double> node4(x1, v1, Operation::multiplication);
