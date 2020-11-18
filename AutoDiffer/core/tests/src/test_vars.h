@@ -29,6 +29,7 @@ extern "C" {
 void ADNode_testcheck();
 void ADValue_testcheck();
 void Parser_testcheck();
+void AutoDiffer_testcheck();
 
 
 #ifdef __cplusplus
