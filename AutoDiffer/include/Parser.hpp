@@ -117,16 +117,48 @@ Status Parser<T>::Next() {
             std::string trig_str = sub_str.substr(0,3); 
             if (trig_str.compare("sin") == 0) {
                 op = Operation::sin; 
-                left_val = (values_.find(sub_str.substr(3)))->second; 
+                auto stored_val = values_.find(sub_str.substr(3)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to sin"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
                 right_val = GetValue("0"); 
             } else if (trig_str.compare("cos") == 0) {
                 op = Operation::cos; 
-                left_val = (values_.find(sub_str.substr(2)))->second; 
+                auto stored_val = values_.find(sub_str.substr(3)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to cos"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
                 right_val = GetValue("0"); 
             } else if (trig_str.compare("tan") == 0) {
                 op = Operation::tan; 
-                left_val = (values_.find(sub_str.substr(2)))->second; 
+                auto stored_val = values_.find(sub_str.substr(3)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to tan"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
                 right_val = GetValue("0"); 
+            } else if (trig_str.compare("exp") == 0) {
+                op = Operation::exp; 
+                auto stored_val = values_.find(sub_str.substr(3)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to tan"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
+                right_val = GetValue("0");                 
+            } else {
+                status.code = ReturnCode::parse_error; 
+                status.message = "Invalid argument to tan"; 
+                return status;                 
             }
         } 
     } else {
