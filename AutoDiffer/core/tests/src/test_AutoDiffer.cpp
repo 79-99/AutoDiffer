@@ -28,3 +28,21 @@ TEST(autodiffer_test, int){
     ASSERT_EQ(res.first.code, ReturnCode::success);
     EXPECT_EQ(res.second, 432);
 }
+
+TEST(autodiffer_test, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/7, /*dval=*/1);
+
+    std::pair<Status, double> res = ad.Derive("(x/3)");
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 0.3333, 0.001);
+}
+
+TEST(autodiffer_test2, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(tan((x/3)))");
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 1.5, 0.001);
+}
