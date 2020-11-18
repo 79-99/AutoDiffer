@@ -61,9 +61,9 @@ class ADValue {
         return *this;
     }
 
-    ADValue<T> power(double exponent) {
-        T new_v = pow(v, exponent);
-        T new_dv = exponent * pow(v, exponent - 1) * dv;
+    ADValue<T> power(const ADValue<T> &other) {
+        T new_v = pow(v, other.val());
+        T new_dv = new_v * (other.dval()*log(v) + other.val() * dv / v);
         return ADValue<T>(new_v, new_dv);
     }
 
