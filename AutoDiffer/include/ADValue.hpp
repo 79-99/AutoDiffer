@@ -10,6 +10,7 @@
 
 /* system header files */
 #ifndef DOXYGEN_IGNORE
+# include <iostream>
 # include <math.h>
 # include <stdio.h>
 # include <vector>

@@ -42,7 +42,7 @@ class Parser {
     bool SetCursor();
     ADValue<T> GetValue(const std::string& key);
 
-    std::set<char> operations = { '+','^','-' }; 
+    std::set<char> operations = { '+','^','-','/','*' }; 
 
   public:
     Parser(std::string equation) : equation_(equation) {}
@@ -97,6 +97,10 @@ Status Parser<T>::Next() {
                 op = Operation::power;
             } else if (op_char == '-') {
 		        op = Operation::subtraction;
+	        } else if (op_char == '/') {
+		        op = Operation::division;
+	        } else if (op_char == '*') {
+		        op = Operation::multiplication;
 	        }
             op_index = i;
             break;
@@ -126,7 +130,7 @@ Status Parser<T>::Next() {
                 left_val = stored_val->second; 
                 right_val = GetValue("0"); 
             } else if (trig_str.compare("cos") == 0) {
-                op = Operation::cos; 
+                op = Operation::cos;
                 auto stored_val = values_.find(sub_str.substr(3)); 
                 if (stored_val == values_.end()) {
                     status.code = ReturnCode::parse_error; 
@@ -150,14 +154,14 @@ Status Parser<T>::Next() {
                 auto stored_val = values_.find(sub_str.substr(3)); 
                 if (stored_val == values_.end()) {
                     status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to tan"; 
+                    status.message = "Invalid argument to exp"; 
                     return status; 
                 }
                 left_val = stored_val->second; 
                 right_val = GetValue("0");                 
             } else {
                 status.code = ReturnCode::parse_error; 
-                status.message = "Invalid argument to tan"; 
+                status.message = "Invalid argument"; 
                 return status;                 
             }
         } 
