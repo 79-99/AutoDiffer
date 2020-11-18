@@ -20,5 +20,17 @@ int main(){
     std::cout << "Expected Result = 432; AutoDiffer Result = " << res.second 
         << std::endl;
 
+    AutoDiffer<double> ad_double;
+    ad_double.SetSeed("x", /*value=*/1.0, /*dval=*/1.0);
+    std::pair<Status, double> res_double = ad_double.Derive(
+        "(x^2)");
+    
+    std::cout << "AutoDiffer of function f(x) = x^2 at x=1" << std::endl;
+    std::cout << "Expected Result = 2; AutoDiffer Result = " << res_double.second 
+        << std::endl;
+    
+    
+
+
     return 0;
 }
