@@ -14,47 +14,47 @@ void ADNode_testcheck(){
     printf("Starting ADNode Library tests...\n");
 }
 
-TEST(functionality, int){
-    int value = 3;
-    int seed = 1;
-    ADValue<int> x1(value, seed);
+TEST(functionality, float){
+    float value = 3;
+    float seed = 1;
+    ADValue<float> x1(value, seed);
 
-    int value2 = 5;
-    int seed2 = 0;
-    ADValue<int> v1(value2, seed2);
+    float value2 = 5;
+    float seed2 = 0;
+    ADValue<float> v1(value2, seed2);
 
-    ADNode<int> node1(x1, v1, Operation::addition);
-    ADValue<int> v2 = node1.Evaluate();
+    ADNode<float> node1(x1, v1, Operation::addition);
+    ADValue<float> v2 = node1.Evaluate();
     EXPECT_EQ(v2.val(), 8);
     EXPECT_EQ(v2.dval(), 1);
 
-    int value3 = 3;
-    int seed3 = 0;
-    ADValue<int> v3(value3, seed3);
+    float value3 = 3;
+    float seed3 = 0;
+    ADValue<float> v3(value3, seed3);
 
-    ADNode<int> node2(v2, v3, Operation::power);
-    ADValue<int> v4 = node2.Evaluate();
+    ADNode<float> node2(v2, v3, Operation::power);
+    ADValue<float> v4 = node2.Evaluate();
 
     EXPECT_EQ(v4.val(), 512);
     EXPECT_EQ(v4.dval(), 192);
 
-    ADNode<int> node3(x1, v1, Operation::subtraction);
-    ADValue<int> v5 = node3.Evaluate();
+    ADNode<float> node3(x1, v1, Operation::subtraction);
+    ADValue<float> v5 = node3.Evaluate();
     EXPECT_EQ(v5.val(), -2);
     EXPECT_EQ(v5.dval(), 1);
 
-    // Multiplication and division tests for int case
-    ADNode<int> node4(x1, v2, Operation::multiplication);
-    ADValue<int> v6 = node4.Evaluate();
+    // Multiplication and division tests for float case
+    ADNode<float> node4(x1, v2, Operation::multiplication);
+    ADValue<float> v6 = node4.Evaluate();
     EXPECT_EQ(v6.val(), 24);
     EXPECT_EQ(v6.dval(), 11);
 
-    int value7 = 3;
-    int seed7 = 7;
-    ADValue<int> v7(value7,seed7);
+    float value7 = 3;
+    float seed7 = 7;
+    ADValue<float> v7(value7,seed7);
 
-    ADNode<int> node5(x1, v7, Operation::division);
-    ADValue<int> v8 = node5.Evaluate();
+    ADNode<float> node5(x1, v7, Operation::division);
+    ADValue<float> v8 = node5.Evaluate();
     EXPECT_EQ(v8.val(), 1);
     EXPECT_EQ(v8.dval(), -2);
 
