@@ -28,9 +28,6 @@ int main(){
     std::cout << "AutoDiffer of function f(x) = x^2 at x=1" << std::endl;
     std::cout << "Expected Result = 2; AutoDiffer Result = " << res_double.second 
         << std::endl;
-    
-    
-
 
     return 0;
 }
