@@ -18,12 +18,18 @@ set(PARSER_TEST_SRC
     test_Parser.cpp
 )
 
+set(AUTODIFFER_TEST_SRC
+    test_AutoDiffer.cpp
+)
+
 add_library(ADValueTest SHARED ${ADVALUE_TEST_SRC} ${TEST_H})
 add_library(ADNodeTest SHARED ${ADNODE_TEST_SRC} ${TEST_H})
 add_library(ParserTest SHARED ${PARSER_TEST_SRC} ${TEST_H})
+add_library(AutoDifferTest SHARED ${AUTODIFFER_TEST_SRC} ${TEST_H})
 
 if(APPLE)
   target_link_libraries(ADValueTest gtest gtest_main)
   target_link_libraries(ADNodeTest gtest gtest_main)
   target_link_libraries(ParserTest gtest gtest_main)
+  target_link_libraries(AutoDifferTest gtest gtest_main)
 endif()

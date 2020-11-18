@@ -10,6 +10,7 @@ int main(int argc,char **argv){
     ADNode_testcheck();
     ADValue_testcheck();
     Parser_testcheck();
+    AutoDiffer_testcheck();
 
     /* Run Tests */
     return RUN_ALL_TESTS();
