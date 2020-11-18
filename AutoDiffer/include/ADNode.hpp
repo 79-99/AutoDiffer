@@ -55,7 +55,7 @@ class ADNode {
         }
 
         case Operation::power : {
-          return self_vertex_.power(aux_vertex_.val());
+          return self_vertex_.power(aux_vertex_);
         }
 
         case Operation::subtraction : {

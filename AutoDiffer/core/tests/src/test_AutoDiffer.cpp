@@ -20,11 +20,11 @@ void AutoDiffer_testcheck(){
     printf("Starting AutoDiffer tests...\n");
 }
 
-TEST(autodiffer_test, int){
-    AutoDiffer<int> ad;
+TEST(autodiffer_test, float){
+    AutoDiffer<float> ad;
     ad.SetSeed("x", /*value=*/7, /*dval=*/1);
 
-    std::pair<Status, int> res = ad.Derive("((x+5)^3)");
+    std::pair<Status, float> res = ad.Derive("((x+5)^3)");
     ASSERT_EQ(res.first.code, ReturnCode::success);
     EXPECT_EQ(res.second, 432);
 }
@@ -44,5 +44,23 @@ TEST(autodiffer_test2, double){
 
     std::pair<Status, double> res = ad.Derive("(tan((x/3)))");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 1.5, 0.001);
+    EXPECT_NEAR(res.second, 0.37329, 0.001);
+}
+
+TEST(autodiffer_test3, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("((sin((2*x)/3))/(x^2))");
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, -0.712814, 0.001);
+}
+
+TEST(autodiffer_test4, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(2^x)");
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 1.3863, 0.001);
 }

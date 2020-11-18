@@ -166,7 +166,7 @@ Status Parser<T>::Next() {
             }
         } 
     } else {
-        // Operations including negation, + , - , ^
+        // Operations including negation, + , - , ^, *
         std::string LHS = sub_str.substr(0,op_index);
         std::string RHS = sub_str.substr(op_index+1);
         

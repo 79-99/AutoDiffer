@@ -19,53 +19,53 @@ void Parser_testcheck(){
     printf("Starting Parser tests...\n");
 }
 
-TEST(parser_test, int){
+TEST(parser_test, float){
     std::string equation = "((x+5)^3)";
-    Parser<int> parser(equation);
+    Parser<float> parser(equation);
 
-    ADValue<int> seed_value(/*value=*/3, /*seed=*/1);
-    std::pair<std::string, ADValue<int>> seed("x", seed_value);
-    std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
+    ADValue<float> seed_value(/*value=*/3, /*seed=*/1);
+    std::pair<std::string, ADValue<float>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
     ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    std::pair<Status,ADValue<int>> res = parser.Run();
+    std::pair<Status,ADValue<float>> res = parser.Run();
     ASSERT_EQ(res.first.code, ReturnCode::success);
 
-    ADValue<int> output = res.second;
+    ADValue<float> output = res.second;
     EXPECT_EQ(output.val(), 512);
     EXPECT_EQ(output.dval(), 192);
 }
 
-TEST(parser_test2, int){
+TEST(parser_test2, float){
     std::string equation = "((((x+5)^3)+((x+2)^4))^2)";
-    Parser<int> parser(equation);
+    Parser<float> parser(equation);
 
-    ADValue<int> seed_value(/*value=*/7, /*seed=*/1);
-    std::pair<std::string, ADValue<int>> seed("x", seed_value);
-    std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
+    ADValue<float> seed_value(/*value=*/7, /*seed=*/1);
+    std::pair<std::string, ADValue<float>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
     ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    std::pair<Status,ADValue<int>> res = parser.Run();
+    std::pair<Status,ADValue<float>> res = parser.Run();
     ASSERT_EQ(res.first.code, ReturnCode::success);
 
-    ADValue<int> output = res.second;
+    ADValue<float> output = res.second;
     EXPECT_EQ(output.val(), 68707521);
     EXPECT_EQ(output.dval(), 55503144);
 }
 
-TEST(parser_negation, int){
+TEST(parser_negation, float){
     std::string equation = "(-x)";
-    Parser<int> parser(equation);
+    Parser<float> parser(equation);
 
-    ADValue<int> seed_value(/*value=*/7, /*seed=*/1);
-    std::pair<std::string, ADValue<int>> seed("x", seed_value);
-    std::vector<std::pair<std::string, ADValue<int>>> seeds = { seed };
+    ADValue<float> seed_value(/*value=*/7, /*seed=*/1);
+    std::pair<std::string, ADValue<float>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
     ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     
-    std::pair<Status,ADValue<int>> res = parser.Run();
+    std::pair<Status,ADValue<float>> res = parser.Run();
     ASSERT_EQ(res.first.code, ReturnCode::success);
 
-    ADValue<int> output = res.second;
+    ADValue<float> output = res.second;
     EXPECT_EQ(output.val(), -7);
     EXPECT_EQ(output.dval(), -1);
 }
