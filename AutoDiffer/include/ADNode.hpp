@@ -25,7 +25,6 @@ enum class Operation {
   cos = 7, 
   tan = 8,
   exp = 9,
-  // division, mult, subtraction, exp, trig, negation
 };
 
 template <class T>

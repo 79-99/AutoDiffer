@@ -42,7 +42,7 @@ class Parser {
     bool SetCursor();
     ADValue<T> GetValue(const std::string& key);
 
-    std::set<char> operations = { '+','^','-' }; 
+    std::set<char> operations = { '+','^','-','/','*' }; 
 
   public:
     Parser(std::string equation) : equation_(equation) {}
@@ -97,6 +97,10 @@ Status Parser<T>::Next() {
                 op = Operation::power;
             } else if (op_char == '-') {
 		        op = Operation::subtraction;
+	        } else if (op_char == '/') {
+		        op = Operation::division;
+	        } else if (op_char == '*') {
+		        op = Operation::multiplication;
 	        }
             op_index = i;
             break;
@@ -121,11 +125,11 @@ Status Parser<T>::Next() {
                 right_val = GetValue("0"); 
             } else if (trig_str.compare("cos") == 0) {
                 op = Operation::cos; 
-                left_val = (values_.find(sub_str.substr(2)))->second; 
+                left_val = (values_.find(sub_str.substr(3)))->second; 
                 right_val = GetValue("0"); 
             } else if (trig_str.compare("tan") == 0) {
                 op = Operation::tan; 
-                left_val = (values_.find(sub_str.substr(2)))->second; 
+                left_val = (values_.find(sub_str.substr(3)))->second; 
                 right_val = GetValue("0"); 
             }
         } 
