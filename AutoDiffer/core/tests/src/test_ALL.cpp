@@ -608,3 +608,40 @@ TEST(autodiffer_test_nested_trig_exp, double){
     EXPECT_NEAR(res.second, -0.90000, 0.001);
 }
 
+TEST(autodiffer_test_nested_trig_exp_binary, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("((-2)*((tan(exp(sin(cos(x)))))+x))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, -0.2, 0.001);
+}
+
+TEST(autodiffer_test_nested_trig_complex_in, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(tan(exp(sin(cos((x^(-x))+2)))))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 0.205133, 0.001);
+}
+
+
+TEST(autodiffer_test_nested_trig_exp_div, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 2.31039, 0.001);
+}
+
+TEST(autodiffer_test_nested_trig_exp_div_twice, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 1.50372, 0.001);
+}
+
