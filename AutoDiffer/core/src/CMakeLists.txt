@@ -1,7 +1,7 @@
 file(GLOB AUTODIFFER_H *.h)
 
 set(AUTODIFFER_SRC
-    ADValue.cpp
+    All.cpp
 )
 
 # ==================== #
