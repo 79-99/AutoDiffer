@@ -15,6 +15,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <stack>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -59,6 +60,9 @@ std::pair<Status,ADValue<T>> Parser<T>::Run() {
     Status status;
     while (equation_.find('(') != std::string::npos) {
         status = Next();
+        if (status.code != ReturnCode::success) {
+            break; 
+        }
     }
     std::string out = 'x' + std::to_string(--v_idx_);
     return std::pair<Status,ADValue<T>>(status,values_[out]);
@@ -73,6 +77,29 @@ Status Parser<T>::Init(
         values_[seed_val.first] = seed_val.second;
     }
     Status status;
+
+    // Check for unbalanced parentheses 
+    std::stack<char> paren_stack; 
+    for (char const &c : equation_) {
+        if (c == '(') {
+            paren_stack.push('('); 
+        } else if (c == ')') {
+            if (paren_stack.empty()) {
+                status.code = ReturnCode::parse_error; 
+                status.message = "Unbalanced parentheses"; 
+                return status; 
+            } else {
+                paren_stack.pop(); 
+            }
+        }
+    }
+
+    if (!paren_stack.empty()) {
+        status.code = ReturnCode::parse_error; 
+        status.message = "Unbalanced parentheses"; 
+        return status; 
+    }
+
     if (!SetCursor()) {
         status.code = ReturnCode::parse_error;
         status.message = "No left parentheses found.";
@@ -165,7 +192,14 @@ Status Parser<T>::Next() {
                 status.message = "Invalid argument"; 
                 return status;                 
             }
-        } 
+        } else {
+            // binary / unary ops + , - , * , /
+            // if string does not contain above and is not long enough
+            // to contain sin, cos, tan, or exp throw error
+            status.code = ReturnCode::parse_error; 
+            status.message = "Invalid argument"; 
+            return status;                  
+        }
     } else {
         // Operations including negation, + , - , ^, *
         std::string LHS = sub_str.substr(0,op_index);
@@ -177,6 +211,13 @@ Status Parser<T>::Next() {
             left_val = GetValue("0"); 
         // When op and two sides
         } else {
+            // Check operation requires LHS and RHS
+            // Ensure non-empty strings
+            if (LHS.empty() || RHS.empty()) {
+                status.code = ReturnCode::parse_error; 
+                status.message = "Binary operation requires LHS and RHS"; 
+                return status; 
+            }
             left_val = GetValue(LHS); 
         }
     }
