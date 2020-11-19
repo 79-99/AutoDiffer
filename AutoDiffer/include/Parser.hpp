@@ -41,7 +41,7 @@ class Parser {
     int v_idx_ = 0;
 
     bool SetCursor();
-    ADValue<T> GetValue(const std::string& key);
+    std::pair<Status,ADValue<T>> GetValue(const std::string& key);
 
     std::set<char> operations = { '+','^','-','/','*' }; 
 
@@ -142,7 +142,7 @@ Status Parser<T>::Next() {
         // deal with (x)
         if (values_.find(sub_str) != values_.end()) {
             left_val = values_.find(sub_str)->second; 
-            right_val = GetValue("0");
+            right_val = GetValue("0").second;
             op = Operation::addition; 
         } else if (sub_str.length() > 3) {
             std::string trig_str = sub_str.substr(0,3); 
@@ -155,7 +155,7 @@ Status Parser<T>::Next() {
                     return status; 
                 }
                 left_val = stored_val->second; 
-                right_val = GetValue("0"); 
+                right_val = GetValue("0").second; 
             } else if (trig_str.compare("cos") == 0) {
                 op = Operation::cos;
                 auto stored_val = values_.find(sub_str.substr(3)); 
@@ -165,7 +165,7 @@ Status Parser<T>::Next() {
                     return status; 
                 }
                 left_val = stored_val->second; 
-                right_val = GetValue("0"); 
+                right_val = GetValue("0").second; 
             } else if (trig_str.compare("tan") == 0) {
                 op = Operation::tan; 
                 auto stored_val = values_.find(sub_str.substr(3)); 
@@ -175,7 +175,7 @@ Status Parser<T>::Next() {
                     return status; 
                 }
                 left_val = stored_val->second; 
-                right_val = GetValue("0"); 
+                right_val = GetValue("0").second; 
             } else if (trig_str.compare("exp") == 0) {
                 op = Operation::exp; 
                 auto stored_val = values_.find(sub_str.substr(3)); 
@@ -185,7 +185,7 @@ Status Parser<T>::Next() {
                     return status; 
                 }
                 left_val = stored_val->second; 
-                right_val = GetValue("0");                 
+                right_val = GetValue("0").second;                 
             } else {
                 status.code = ReturnCode::parse_error; 
                 status.message = "Invalid argument"; 
@@ -204,10 +204,14 @@ Status Parser<T>::Next() {
         std::string LHS = sub_str.substr(0,op_index);
         std::string RHS = sub_str.substr(op_index+1);
         
-        right_val = GetValue(RHS);
+        auto res_right = GetValue(RHS);
+        if (res_right.first.code != ReturnCode::success) {
+            return res_right.first;
+        }
+        right_val = res_right.second;
 
         if (op == Operation::subtraction && LHS.empty()) {
-            left_val = GetValue("0"); 
+            left_val = GetValue("0").second; 
         // When op and two sides
         } else {
             // Check operation requires LHS and RHS
@@ -217,7 +221,11 @@ Status Parser<T>::Next() {
                 status.message = "Binary operation requires LHS and RHS"; 
                 return status; 
             }
-            left_val = GetValue(LHS); 
+            auto res_left = GetValue(LHS);
+            if (res_left.first.code != ReturnCode::success) {
+                return res_left.first;
+            }
+            left_val = res_left.second; 
         }
     }
     
@@ -235,15 +243,24 @@ Status Parser<T>::Next() {
 }
 
 template <class T>
-ADValue<T> Parser<T>::GetValue(const std::string& key) {
+std::pair<Status,ADValue<T>> Parser<T>::GetValue(const std::string& key) {
+    Status status;
+    if (key.empty()) {
+        return std::pair<Status, ADValue<T>>(status, ADValue<T>(0, 0));
+    }
     auto it = values_.find(key);
     if (it != values_.end()) {
-        return values_[key];
+        return std::pair<Status, ADValue<T>>(status, values_[key]);
     }
     std::istringstream ss(key);
     T num;
     ss >> num;
-    return ADValue<T>(num, 0);
+    if (!ss.eof() || ss.fail()){
+        status.code = ReturnCode::parse_error;
+        status.message = "Key not found: " + key;
+        return std::pair<Status, ADValue<T>>(status, ADValue<T>(0,0));
+    }
+    return std::pair<Status, ADValue<T>>(status, ADValue<T>(num, 0));
 }
 
 template <class T>
