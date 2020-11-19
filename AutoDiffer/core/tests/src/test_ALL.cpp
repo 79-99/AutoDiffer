@@ -292,6 +292,23 @@ TEST(parser_test_sin, float){
     EXPECT_NEAR(output.dval(), 0.866, 0.001);
 }
 
+TEST(parser_test_cos, float){
+    std::string equation = "(cos(x))";
+    Parser<float> parser(equation);
+
+    ADValue<float> seed_value(/*value=*/6, /*seed=*/1);
+    std::pair<std::string, ADValue<float>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<float>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    
+    std::pair<Status,ADValue<float>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+
+    ADValue<float> output = res.second;
+    EXPECT_NEAR(output.val(), 0.96017, 0.001);
+    EXPECT_NEAR(output.dval(), 0.27942, 0.001);
+}
+
 TEST(parser_test_float_power, float){
     std::string equation = "((x+4.2)^2.0)";
     Parser<float> parser(equation);
@@ -329,6 +346,16 @@ TEST(parser_test_double_power, double){
 
 TEST(parser_test_unbalanced_paren, double){
     std::string equation = "((x^1.4)+3.7";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::parse_error);
+}
+
+TEST(parser_test_unbalanced_paren2, double){
+    std::string equation = "((x^1.4)+3.7))";
     Parser<double> parser(equation);
 
     ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
@@ -397,6 +424,20 @@ TEST(parser_test_incoherent_long, double){
     std::pair<Status,ADValue<double>> res = parser.Run();
     ASSERT_EQ(res.first.code, ReturnCode::parse_error);
 }
+
+TEST(parser_test_invalid_sin, double){
+    std::string equation = "(sin(y))";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+    ASSERT_EQ(res.first.message, "Invalid argument");
+}
+
 /*
  *
  * 
