@@ -121,3 +121,14 @@ TEST(parser_test_double_power, double){
     EXPECT_NEAR(output.val(), 6.15615, 0.001);
     EXPECT_NEAR(output.dval(), 1.8098, 0.001);
 }
+
+// Test for parser handling
+TEST(parser_test_unbalanced_paren, double){
+    std::string equation = "((x^1.4)+3.7";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::parse_error);
+}
