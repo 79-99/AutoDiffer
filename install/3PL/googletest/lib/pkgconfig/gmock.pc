@@ -1,9 +1,0 @@
-libdir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/lib
-includedir=/Users/michaelneuder/Dropbox/github/cs107-FinalProject/install/3PL/googletest/include
-
-Name: gmock
-Description: GoogleMock (without main() function)
-Version: 1.9.0
-URL: https://github.com/google/googletest
-Libs: -L${libdir} -lgmock 
-Cflags: -I${includedir} -DGTEST_HAS_PTHREAD=1 
