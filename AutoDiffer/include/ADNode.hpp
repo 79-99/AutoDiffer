@@ -79,8 +79,6 @@ class ADNode {
         }
       }
     }
-
-  void print_hello() const;
 };
 
 

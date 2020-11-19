@@ -30,7 +30,6 @@ class AutoDiffer {
     }
 
     std::pair<Status,T> Derive(const std::string& equation);
-    void print_hello() const;
 };
 
 
