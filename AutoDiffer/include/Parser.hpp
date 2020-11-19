@@ -59,6 +59,9 @@ std::pair<Status,ADValue<T>> Parser<T>::Run() {
     Status status;
     while (equation_.find('(') != std::string::npos) {
         status = Next();
+        if (status.code != ReturnCode::success) {
+            break; 
+        }
     }
     std::string out = 'x' + std::to_string(--v_idx_);
     return std::pair<Status,ADValue<T>>(status,values_[out]);

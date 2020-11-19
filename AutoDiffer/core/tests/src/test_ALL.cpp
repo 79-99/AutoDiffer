@@ -327,6 +327,76 @@ TEST(parser_test_double_power, double){
     EXPECT_NEAR(output.dval(), 1.8098, 0.001);
 }
 
+TEST(parser_test_unbalanced_paren, double){
+    std::string equation = "((x^1.4)+3.7";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::parse_error);
+}
+
+TEST(parser_test_invalid_unary, double){
+    std::string equation = "((x-)+3.7)";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+}
+
+TEST(parser_test_invalid_binary, double){
+    std::string equation = "((+x)+3.7)";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+}
+
+TEST(parser_test_incoherent_short, double){
+    std::string equation = "(ln(x+3.7))";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+}
+
+TEST(parser_test_incoherent_med, double){
+    std::string equation = "(log(x+3.7))";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+}
+
+TEST(parser_test_incoherent_long, double){
+    std::string equation = "(function(x+3.7))";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+}
 /*
  *
  * 
@@ -407,7 +477,7 @@ TEST(autodiffer_test_complex3, double){
     EXPECT_NEAR(res.second, -0.75849, 0.001);
 }
 
-TEST(autodiffer_tes_xx, double){
+TEST(autodiffer_test_xx, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
