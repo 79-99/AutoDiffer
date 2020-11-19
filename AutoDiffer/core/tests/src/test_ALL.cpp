@@ -486,4 +486,20 @@ TEST(autodiffer_test_xx, double){
     EXPECT_NEAR(res.second, 6.772588, 0.001);
 }
 
+TEST(autodiffer_test_fails_init_broken_parens, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
+    std::pair<Status, double> res = ad.Derive("((x^1.4)+3.7");
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+    ASSERT_EQ(res.first.message, "Unbalanced parentheses");
+}
+
+TEST(autodiffer_test_fails_run_invalid, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("((x-)+3.7)");
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+    ASSERT_EQ(res.first.message, "Binary operation requires LHS and RHS");
+}
