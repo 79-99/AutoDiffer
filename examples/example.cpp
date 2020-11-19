@@ -2,6 +2,10 @@
  * @file    example.cpp
  * @brief   Demonstrates the used of the
  *          templated AutoDiffer class.
+ *
+ *    
+ * To run this example run `make` in this directory, followed by `./example`
+ *
  */
 
 #include <bits/stdc++.h>
