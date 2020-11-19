@@ -245,6 +245,9 @@ Status Parser<T>::Next() {
 template <class T>
 std::pair<Status,ADValue<T>> Parser<T>::GetValue(const std::string& key) {
     Status status;
+    if (key.empty()) {
+        return std::pair<Status, ADValue<T>>(status, ADValue<T>(0, 0));
+    }
     auto it = values_.find(key);
     if (it != values_.end()) {
         return std::pair<Status, ADValue<T>>(status, values_[key]);
