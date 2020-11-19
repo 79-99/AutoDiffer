@@ -571,3 +571,40 @@ TEST(autodiffer_test_fails_wrong_var_name3, double){
     EXPECT_EQ(res.first.code, ReturnCode::parse_error);
     EXPECT_EQ(res.first.message, "Key not found: z");
 }
+
+TEST(autodiffer_test_negation_exp, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(exp(-x))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, -0.135335, 0.001);
+}
+
+TEST(autodiffer_test_negation_trig, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(sin(-x))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, 0.41614, 0.001);
+}
+
+TEST(autodiffer_test_nested_trig, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(sin(cos(x)))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, -0.83169, 0.001);
+}
+
+TEST(autodiffer_test_nested_trig_exp, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive("(tan(exp(sin(cos(x)))))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, -0.90000, 0.001);
+}
+
