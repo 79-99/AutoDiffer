@@ -7,10 +7,7 @@ int main(int argc,char **argv){
     ::testing::InitGoogleTest(&argc,argv);
 
     /* this forces the testing library to link */
-    ADNode_testcheck();
-    ADValue_testcheck();
-    Parser_testcheck();
-    AutoDiffer_testcheck();
+    All_testcheck();
 
     /* Run Tests */
     return RUN_ALL_TESTS();

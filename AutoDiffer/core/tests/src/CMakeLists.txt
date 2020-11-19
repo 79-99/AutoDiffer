@@ -6,30 +6,12 @@ link_directories(${gtest_dir}/lib)
 
 file(GLOB TEST_H *.h *.hpp)
 
-set(ADVALUE_TEST_SRC
-    test_ADValue.cpp
+set(ALL_TEST_SRC
+    test_ALL.cpp
 )
 
-set(ADNODE_TEST_SRC
-    test_ADNode.cpp
-)
-
-set(PARSER_TEST_SRC
-    test_Parser.cpp
-)
-
-set(AUTODIFFER_TEST_SRC
-    test_AutoDiffer.cpp
-)
-
-add_library(ADValueTest SHARED ${ADVALUE_TEST_SRC} ${TEST_H})
-add_library(ADNodeTest SHARED ${ADNODE_TEST_SRC} ${TEST_H})
-add_library(ParserTest SHARED ${PARSER_TEST_SRC} ${TEST_H})
-add_library(AutoDifferTest SHARED ${AUTODIFFER_TEST_SRC} ${TEST_H})
+add_library(AllTest SHARED ${ALL_TEST_SRC} ${TEST_H})
 
 if(APPLE)
-  target_link_libraries(ADValueTest gtest gtest_main)
-  target_link_libraries(ADNodeTest gtest gtest_main)
-  target_link_libraries(ParserTest gtest gtest_main)
-  target_link_libraries(AutoDifferTest gtest gtest_main)
+  target_link_libraries(AllTest gtest gtest_main)
 endif()

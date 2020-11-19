@@ -26,11 +26,7 @@ extern "C" {
 
 
 /** Display testing information */
-void ADNode_testcheck();
-void ADValue_testcheck();
-void Parser_testcheck();
-void AutoDiffer_testcheck();
-
+void All_testcheck();
 
 #ifdef __cplusplus
 }
