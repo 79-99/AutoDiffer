@@ -11,7 +11,7 @@
 #include "../AutoDiffer/install/include/AutoDiffer.hpp"
 
 
-int main(){
+int main() {
     AutoDiffer<int> ad;
     ad.SetSeed("x", /*value=*/7, /*dval=*/1);
     std::pair<Status, int> res = ad.Derive("((x+5)^3)");

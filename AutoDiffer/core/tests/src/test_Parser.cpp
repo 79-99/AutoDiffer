@@ -19,7 +19,7 @@ void Parser_testcheck(){
     printf("Starting Parser tests...\n");
 }
 
-TEST(parser_test, float){
+TEST(parser_test_basic, float){
     std::string equation = "((x+5)^3)";
     Parser<float> parser(equation);
 
@@ -36,7 +36,7 @@ TEST(parser_test, float){
     EXPECT_EQ(output.dval(), 192);
 }
 
-TEST(parser_test2, float){
+TEST(parser_test_nested, float){
     std::string equation = "((((x+5)^3)+((x+2)^4))^2)";
     Parser<float> parser(equation);
 
@@ -53,7 +53,7 @@ TEST(parser_test2, float){
     EXPECT_EQ(output.dval(), 55503144);
 }
 
-TEST(parser_negation, float){
+TEST(parser_test_negation, float){
     std::string equation = "(-x)";
     Parser<float> parser(equation);
 
@@ -70,7 +70,7 @@ TEST(parser_negation, float){
     EXPECT_EQ(output.dval(), -1);
 }
 
-TEST(parser_sin, float){
+TEST(parser_test_sin, float){
     std::string equation = "(3+(sin(x)))";
     Parser<float> parser(equation);
 
@@ -87,7 +87,7 @@ TEST(parser_sin, float){
     EXPECT_NEAR(output.dval(), 0.866, 0.001);
 }
 
-TEST(parser_test_float, float){
+TEST(parser_test_float_power, float){
     std::string equation = "((x+4.2)^2.0)";
     Parser<float> parser(equation);
 
@@ -105,7 +105,7 @@ TEST(parser_test_float, float){
 }
 
 
-TEST(parser_test_double, double){
+TEST(parser_test_double_power, double){
     std::string equation = "((x^1.4)+3.7)";
     Parser<double> parser(equation);
 

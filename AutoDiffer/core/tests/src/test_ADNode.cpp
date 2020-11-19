@@ -14,7 +14,7 @@ void ADNode_testcheck(){
     printf("Starting ADNode Library tests...\n");
 }
 
-TEST(functionality, float){
+TEST(functionality_float, float){
     float value = 3;
     float seed = 1;
     ADValue<float> x1(value, seed);
@@ -60,7 +60,7 @@ TEST(functionality, float){
 
 }
 
-TEST(functionality, double){
+TEST(functionality_double, double){
     // Defining vals to start with 
     double value = 3.2;
     double seed = 1.1;
