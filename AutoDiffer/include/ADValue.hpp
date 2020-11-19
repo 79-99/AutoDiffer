@@ -36,8 +36,6 @@ class ADValue {
     void setval(T val){v = val;}
     void setdval(T dval){dv = dval;}
 
-    void print_hello() const;
-
     /* ==================== */
     /* overloaded operators */
     /* ==================== */

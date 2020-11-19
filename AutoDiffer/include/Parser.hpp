@@ -49,7 +49,6 @@ class Parser {
     Status Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
     Status Next();
     std::pair<Status,ADValue<T>> Run();
-    void print_hello() const;
 };
 
 
