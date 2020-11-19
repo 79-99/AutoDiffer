@@ -23,9 +23,3 @@ template <class T>
 void ADNode<T>::print_hello() const {
     printf("Hello\n");
 }
-
-template <class T>
-void AutoDiffer<T>::print_hello() const {
-    printf("Hello\n");
-}
-
