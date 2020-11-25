@@ -61,7 +61,21 @@ class ADValue {
 
     ADValue<T> power(const ADValue<T> &other) {
         T new_v = pow(v, other.val());
-        T new_dv = new_v * (other.dval()*log(v) + other.val() * dv / v);
+        if (v == 0) {
+            return ADValue<T>(0, 0);    
+        }
+        T new_dv;
+        if (v > 0) {
+            // Use generalized chain rule.
+            new_dv = new_v * (other.dval()*log(v) + other.val() * dv / v);
+        } else {
+            // Other must be a constant.
+            if (other.dval() != 0) {
+                throw std::logic_error("Derivative not defined or complex.");
+            }
+            // Use power rule in this case.
+            new_dv = other.val() * pow(v, other.val() - 1) * dv;
+        }
         return ADValue<T>(new_v, new_dv);
     }
 

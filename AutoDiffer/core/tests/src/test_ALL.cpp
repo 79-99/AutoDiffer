@@ -645,3 +645,13 @@ TEST(autodiffer_test_nested_trig_exp_div_twice, double){
     EXPECT_NEAR(res.second, 1.50372, 0.001);
 }
 
+TEST(autodiffer_hayoun, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, double> res = ad.Derive(
+        "((exp(sin(x)))-((cos(x^0.5))*(sin((((cos(x))^2)+(x^2))^0.5))))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second, -0.63952, 0.001);
+}
+
