@@ -35,7 +35,7 @@ TEST(Getter,int){
 
     /* test getters */
     EXPECT_EQ(x1.val(),value);  // note: EXECT_EQ used only for integers
-    EXPECT_EQ(x1.dval(),seed);
+    EXPECT_EQ(x1.dval(0),seed);
 }
 
 TEST(Getter,float){
@@ -45,7 +45,7 @@ TEST(Getter,float){
 
     /* test getters */
     EXPECT_NEAR(x.val(), value, DTOL);
-    EXPECT_NEAR(x.dval(), seed, DTOL);
+    EXPECT_NEAR(x.dval(0), seed, DTOL);
 }
 
 TEST(Getter,double){
@@ -55,7 +55,7 @@ TEST(Getter,double){
 
     /* test getters */
     EXPECT_NEAR(x.val(), value, DTOL);
-    EXPECT_NEAR(x.dval(), seed, DTOL);
+    EXPECT_NEAR(x.dval(0), seed, DTOL);
 }
 
 TEST(Setter,int){
@@ -99,7 +99,7 @@ TEST(Operators,Add_double){
     ADValue<double> c = x1 + x2;
 
     EXPECT_NEAR(c.val(), 3.0, 1E-6);
-    EXPECT_NEAR(c.dval(), 6.3, 1E-6);
+    EXPECT_NEAR(c.dval(0), 6.3, 1E-6);
 }
 
 /*
@@ -122,7 +122,7 @@ TEST(adnode_float, float){
     ADNode<float> node1(x1, v1, Operation::addition);
     ADValue<float> v2 = node1.Evaluate();
     EXPECT_EQ(v2.val(), 8);
-    EXPECT_EQ(v2.dval(), 1);
+    EXPECT_EQ(v2.dval(0), 1);
 
     float value3 = 3;
     float seed3 = 0;
@@ -132,18 +132,18 @@ TEST(adnode_float, float){
     ADValue<float> v4 = node2.Evaluate();
 
     EXPECT_EQ(v4.val(), 512);
-    EXPECT_EQ(v4.dval(), 192);
+    EXPECT_EQ(v4.dval(0), 192);
 
     ADNode<float> node3(x1, v1, Operation::subtraction);
     ADValue<float> v5 = node3.Evaluate();
     EXPECT_EQ(v5.val(), -2);
-    EXPECT_EQ(v5.dval(), 1);
+    EXPECT_EQ(v5.dval(0), 1);
 
     // Multiplication and division tests for float case
     ADNode<float> node4(x1, v2, Operation::multiplication);
     ADValue<float> v6 = node4.Evaluate();
     EXPECT_EQ(v6.val(), 24);
-    EXPECT_EQ(v6.dval(), 11);
+    EXPECT_EQ(v6.dval(0), 11);
 
     float value7 = 3;
     float seed7 = 7;
@@ -152,7 +152,7 @@ TEST(adnode_float, float){
     ADNode<float> node5(x1, v7, Operation::division);
     ADValue<float> v8 = node5.Evaluate();
     EXPECT_EQ(v8.val(), 1);
-    EXPECT_EQ(v8.dval(), -2);
+    EXPECT_EQ(v8.dval(0), -2);
 
 }
 
@@ -170,49 +170,49 @@ TEST(adnode_double, double){
     ADNode<double> node1(x1, v1, Operation::addition);
     ADValue<double> v2 = node1.Evaluate();
     EXPECT_NEAR(v2.val(), 9, 1e-6);
-    EXPECT_NEAR(v2.dval(), -1.1, 1e-6);
+    EXPECT_NEAR(v2.dval(0), -1.1, 1e-6);
 
     ADNode<double> node2(x1, v1, Operation::subtraction);
     ADValue<double> v3 = node2.Evaluate();
     EXPECT_NEAR(v3.val(), -2.6, 1e-6);
-    EXPECT_NEAR(v3.dval(), 3.3, 1e-6);
+    EXPECT_NEAR(v3.dval(0), 3.3, 1e-6);
 
     ADNode<double> node3(x1, v1, Operation::power);
     ADValue<double> v4 = node3.Evaluate();
     EXPECT_NEAR(v4.val(), pow(3.2,5.8), 1e-6);
-    EXPECT_NEAR(v4.dval(), -480.9036001769, 1e-6);
+    EXPECT_NEAR(v4.dval(0), -480.9036001769, 1e-6);
 
     // Multiplication and division tests
     ADNode<double> node4(x1, v1, Operation::multiplication);
     ADValue<double> v5 = node4.Evaluate();
     EXPECT_NEAR(v5.val(), 18.56, 1e-6);
-    EXPECT_NEAR(v5.dval(), -.66, 1e-6);
+    EXPECT_NEAR(v5.dval(0), -.66, 1e-6);
 
     ADNode<double> node5(x1, v1, Operation::division);
     ADValue<double> v6 = node5.Evaluate();
     EXPECT_NEAR(v6.val(), 3.2/5.8, 1e-6);
-    EXPECT_NEAR(v6.dval(), 0.3989298, 1e-6);
+    EXPECT_NEAR(v6.dval(0), 0.3989298, 1e-6);
 
     // Trig and exp tests
     ADNode<double> node6(v2, v2, Operation::sin);
     ADValue<double> v7 = node6.Evaluate();
     EXPECT_NEAR(v7.val(), sin(9), 1e-6);
-    EXPECT_NEAR(v7.dval(), cos(9)*v2.dval(), 1e-6);
+    EXPECT_NEAR(v7.dval(0), cos(9)*v2.dval(0), 1e-6);
 
     ADNode<double> node7(v2, v2, Operation::exp);
     ADValue<double> v8 = node7.Evaluate();
     EXPECT_NEAR(v8.val(), exp(9), 1e-6);
-    EXPECT_NEAR(v8.dval(), exp(9)*-1.1, 1e-6);
+    EXPECT_NEAR(v8.dval(0), exp(9)*-1.1, 1e-6);
 
     ADNode<double> node8(v2, v2, Operation::cos);
     ADValue<double> v9 = node8.Evaluate();
     EXPECT_NEAR(v9.val(), cos(9), 1e-6);
-    EXPECT_NEAR(v9.dval(), -sin(9)*v2.dval(), 1e-6);
+    EXPECT_NEAR(v9.dval(0), -sin(9)*v2.dval(0), 1e-6);
 
     ADNode<double> node9(v2, v2, Operation::tan);
     ADValue<double> v10 = node9.Evaluate();
     EXPECT_NEAR(v10.val(), tan(9), 1e-6);
-    EXPECT_NEAR(v10.dval(), -1.3250484, 1e-6);
+    EXPECT_NEAR(v10.dval(0), -1.3250484, 1e-6);
 
 }
 
@@ -238,7 +238,7 @@ TEST(parser_test_basic, float){
 
     ADValue<float> output = res.second;
     EXPECT_EQ(output.val(), 512);
-    EXPECT_EQ(output.dval(), 192);
+    EXPECT_EQ(output.dval(0), 192);
 }
 
 TEST(parser_test_nested, float){
@@ -255,7 +255,7 @@ TEST(parser_test_nested, float){
 
     ADValue<float> output = res.second;
     EXPECT_EQ(output.val(), 68707521);
-    EXPECT_EQ(output.dval(), 55503144);
+    EXPECT_EQ(output.dval(0), 55503144);
 }
 
 TEST(parser_test_negation, float){
@@ -272,7 +272,7 @@ TEST(parser_test_negation, float){
 
     ADValue<float> output = res.second;
     EXPECT_EQ(output.val(), -7);
-    EXPECT_EQ(output.dval(), -1);
+    EXPECT_EQ(output.dval(0), -1);
 }
 
 TEST(parser_test_sin, float){
@@ -289,7 +289,7 @@ TEST(parser_test_sin, float){
 
     ADValue<float> output = res.second;
     EXPECT_NEAR(output.val(), 3.5, 0.001);
-    EXPECT_NEAR(output.dval(), 0.866, 0.001);
+    EXPECT_NEAR(output.dval(0), 0.866, 0.001);
 }
 
 TEST(parser_test_cos, float){
@@ -306,7 +306,7 @@ TEST(parser_test_cos, float){
 
     ADValue<float> output = res.second;
     EXPECT_NEAR(output.val(), 0.96017, 0.001);
-    EXPECT_NEAR(output.dval(), 0.27942, 0.001);
+    EXPECT_NEAR(output.dval(0), 0.27942, 0.001);
 }
 
 TEST(parser_test_float_power, float){
@@ -323,7 +323,7 @@ TEST(parser_test_float_power, float){
 
     ADValue<float> output = res.second;
     EXPECT_NEAR(output.val(), 43.56, 0.001);
-    EXPECT_NEAR(output.dval(), 13.2, 0.001);
+    EXPECT_NEAR(output.dval(0), 13.2, 0.001);
 }
 
 
@@ -341,7 +341,7 @@ TEST(parser_test_double_power, double){
 
     ADValue<double> output = res.second;
     EXPECT_NEAR(output.val(), 6.15615, 0.001);
-    EXPECT_NEAR(output.dval(), 1.8098, 0.001);
+    EXPECT_NEAR(output.dval(0), 1.8098, 0.001);
 }
 
 TEST(parser_test_unbalanced_paren, double){
@@ -450,88 +450,88 @@ TEST(autodiffer_test_basic, float){
     AutoDiffer<float> ad;
     ad.SetSeed("x", /*value=*/7, /*dval=*/1);
 
-    std::pair<Status, float> res = ad.Derive("((x+5)^3)");
+    std::pair<Status, ADValue<float>> res = ad.Derive("((x+5)^3)");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_EQ(res.second, 432);
+    EXPECT_EQ(res.second.dval(0), 432);
 }
 
 TEST(autodiffer_test_basic_division, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/7, /*dval=*/1);
 
-    std::pair<Status, double> res = ad.Derive("(x/3)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(x/3)");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 0.3333, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 0.3333, 0.001);
 }
 
 TEST(autodiffer_test_tan, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(tan(x/3))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(tan(x/3))");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 0.37329, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 0.37329, 0.001);
 }
 
 TEST(autodiffer_test_complex1, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("((sin((2*x)/3))/(x^2))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("((sin((2*x)/3))/(x^2))");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -0.712814, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -0.712814, 0.001);
 }
 
 TEST(autodiffer_test_power_x, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(2^x)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(2^x)");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 1.3863, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 1.3863, 0.001);
 }
 
 TEST(autodiffer_test_exp, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(exp(x))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(exp(x))");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 2.71828, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 2.71828, 0.001);
 }
 
 TEST(autodiffer_test_complex2, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(exp((sin((2*x)/3))/(x^2)))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(exp((sin((2*x)/3))/(x^2)))");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -1.322912, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -1.322912, 0.001);
 }
 
 TEST(autodiffer_test_complex3, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/1., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(2^((sin((2*x)/3))/(x^2)))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(2^((sin((2*x)/3))/(x^2)))");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -0.75849, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -0.75849, 0.001);
 }
 
 TEST(autodiffer_test_xx, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(x^x)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(x^x)");
     ASSERT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 6.772588, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 6.772588, 0.001);
 }
 
 TEST(autodiffer_test_fails_init_broken_parens, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("((x^1.4)+3.7");
+    std::pair<Status, ADValue<double>> res = ad.Derive("((x^1.4)+3.7");
     ASSERT_EQ(res.first.code, ReturnCode::parse_error);
     ASSERT_EQ(res.first.message, "Unbalanced parentheses");
 }
@@ -540,7 +540,7 @@ TEST(autodiffer_test_fails_run_invalid, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("((x-)+3.7)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("((x-)+3.7)");
     ASSERT_EQ(res.first.code, ReturnCode::parse_error);
     ASSERT_EQ(res.first.message, "Binary operation requires LHS and RHS");
 }
@@ -549,7 +549,7 @@ TEST(autodiffer_test_fails_wrong_var_name, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(y^2)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(y^2)");
     EXPECT_EQ(res.first.code, ReturnCode::parse_error);
     EXPECT_EQ(res.first.message, "Key not found: y");
 }
@@ -558,7 +558,7 @@ TEST(autodiffer_test_fails_wrong_var_name2, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(2^z)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(2^z)");
     EXPECT_EQ(res.first.code, ReturnCode::parse_error);
     EXPECT_EQ(res.first.message, "Key not found: z");
 }
@@ -567,7 +567,7 @@ TEST(autodiffer_test_fails_wrong_var_name3, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("((sin(4*(x+2)))^z)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("((sin(4*(x+2)))^z)");
     EXPECT_EQ(res.first.code, ReturnCode::parse_error);
     EXPECT_EQ(res.first.message, "Key not found: z");
 }
@@ -576,54 +576,54 @@ TEST(autodiffer_test_negation_exp, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(exp(-x))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(exp(-x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -0.135335, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -0.135335, 0.001);
 }
 
 TEST(autodiffer_test_negation_trig, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(sin(-x))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(sin(-x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 0.41614, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 0.41614, 0.001);
 }
 
 TEST(autodiffer_test_nested_trig, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(sin(cos(x)))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(sin(cos(x)))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -0.83169, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -0.83169, 0.001);
 }
 
 TEST(autodiffer_test_nested_trig_exp, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(tan(exp(sin(cos(x)))))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(tan(exp(sin(cos(x)))))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -0.90000, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -0.90000, 0.001);
 }
 
 TEST(autodiffer_test_nested_trig_exp_binary, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("((-2)*((tan(exp(sin(cos(x)))))+x))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("((-2)*((tan(exp(sin(cos(x)))))+x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, -0.2, 0.001);
+    EXPECT_NEAR(res.second.dval(0), -0.2, 0.001);
 }
 
 TEST(autodiffer_test_nested_trig_complex_in, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(tan(exp(sin(cos((x^(-x))+2)))))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(tan(exp(sin(cos((x^(-x))+2)))))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 0.205133, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 0.205133, 0.001);
 }
 
 
@@ -631,17 +631,65 @@ TEST(autodiffer_test_nested_trig_exp_div, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("(((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 2.31039, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 2.31039, 0.001);
 }
 
 TEST(autodiffer_test_nested_trig_exp_div_twice, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
-    std::pair<Status, double> res = ad.Derive("((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)");
+    std::pair<Status, ADValue<double>> res = ad.Derive("((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second, 1.50372, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 1.50372, 0.001);
+}
+
+TEST(autodiffer_hayoun, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, ADValue<double>> res = ad.Derive(
+        "((exp(sin(x)))-((cos(x^0.5))*(sin((((cos(x))^2)+(x^2))^0.5))))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.dval(0), -0.63952, 0.001);
+}
+
+/*
+ *
+ * 
+ * AutoDiffer TESTS (vector)
+ * 
+ * 
+*/
+
+TEST(autodiffer_vector_single_func, double){
+    AutoDiffer<double> ad;
+    std::vector<double> x_seed = { 1, 0 };
+    std::vector<double> y_seed = { 0, 1 };
+    ad.SetSeedVector("x", /*value=*/3., /*dvals=*/x_seed);
+    ad.SetSeedVector("y", /*value=*/-1., /*dvals=*/y_seed);
+
+    std::pair<Status, ADValue<double>> res = ad.Derive(
+        "((x^2)+(y^2))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), 10, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 6, 0.001);
+    EXPECT_NEAR(res.second.dval(1), -2, 0.001);
+}
+
+TEST(autodiffer_vector_single_func_trig, double){
+    AutoDiffer<double> ad;
+    std::vector<double> x_seed = { 1, 0 };
+    std::vector<double> y_seed = { 0, 1 };
+    ad.SetSeedVector("x", /*value=*/-1., /*dvals=*/x_seed);
+    ad.SetSeedVector("y", /*value=*/5., /*dvals=*/y_seed);
+
+    std::pair<Status, ADValue<double>> res = ad.Derive(
+        "(((cos(x))^2)*((tan(y))+4))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), 0.1808, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 0.563296, 0.001);
+    EXPECT_NEAR(res.second.dval(1), 3.628029, 0.001);
 }
 
