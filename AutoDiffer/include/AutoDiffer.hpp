@@ -29,25 +29,25 @@ class AutoDiffer {
         seeds_.emplace_back(std::pair<std::string, ADValue<T>>(variable, seed_val));
     }
 
-    std::pair<Status,T> Derive(const std::string& equation);
+    void SetSeedVector(const std::string& variable, T value, 
+                       const std::vector<T>& dvals) {
+        ADValue<T> seed_val(value, dvals);
+        seeds_.emplace_back(std::pair<std::string, ADValue<T>>(variable, seed_val));
+    }
+
+    std::pair<Status,ADValue<T>> Derive(const std::string& equation);
 };
 
 
 /* Implementation */
 template <class T>
-std::pair<Status,T> AutoDiffer<T>::Derive(const std::string& equation) {
+std::pair<Status,ADValue<T>> AutoDiffer<T>::Derive(const std::string& equation) {
     Parser<T> parser(equation);
     Status status = parser.Init(seeds_);
     if (status.code != ReturnCode::success) {
-        return std::pair<Status, T>(status, 0);
+        return std::pair<Status, ADValue<T>>(status, ADValue<T>(0,0));
     }
-    auto res = parser.Run();
-    status = res.first;
-    if (status.code != ReturnCode::success) {
-        return std::pair<Status, T>(status, 0);
-    }
-    return std::pair<Status,T>(status, res.second.dval());
-    
+    return parser.Run();
 }
 
 

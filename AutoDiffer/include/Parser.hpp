@@ -24,7 +24,6 @@
 enum class ReturnCode {
   success = 1,
   parse_error = 2,
-  // other errors.
 };
 
 struct Status {
@@ -39,6 +38,7 @@ class Parser {
     std::unordered_map<std::string, ADValue<T>> values_;
     int left_cursor_, right_cursor_;
     int v_idx_ = 0;
+    int seed_size_;
 
     bool SetCursor();
     std::pair<Status,ADValue<T>> GetValue(const std::string& key);
@@ -71,6 +71,7 @@ std::pair<Status,ADValue<T>> Parser<T>::Run() {
 template <class T>
 Status Parser<T>::Init(
     std::vector<std::pair<std::string, ADValue<T>>> seed_values) {
+    seed_size_ = seed_values.size();
     // Setting seed values in hash table.
     for (auto& seed_val : seed_values) {
         values_[seed_val.first] = seed_val.second;
@@ -260,7 +261,8 @@ std::pair<Status,ADValue<T>> Parser<T>::GetValue(const std::string& key) {
         status.message = "Key not found: " + key;
         return std::pair<Status, ADValue<T>>(status, ADValue<T>(0,0));
     }
-    return std::pair<Status, ADValue<T>>(status, ADValue<T>(num, 0));
+    std::vector<T> zeros(seed_size_, 0);
+    return std::pair<Status, ADValue<T>>(status, ADValue<T>(num, zeros));
 }
 
 template <class T>
