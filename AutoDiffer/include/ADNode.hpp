@@ -25,6 +25,15 @@ enum class Operation {
   cos = 7, 
   tan = 8,
   exp = 9,
+  arcsin = 10,
+  arccos = 11,
+  arctan = 12,
+  sinh = 13,
+  cosh = 14,
+  tanh = 15,
+  logistic = 16,
+  log = 17,
+  sqrt = 18,
 };
 
 template <class T>
@@ -76,6 +85,42 @@ class ADNode {
 
         case Operation::exp : {
           return self_vertex_.ADexp();
+        }
+
+        case Operation::arcsin : {
+          return self_vertex_.ADarcsin();
+        }
+
+        case Operation::arccos : {
+          return self_vertex_.ADarccos();
+        }
+
+        case Operation::arctan : {
+          return self_vertex_.ADarctan();
+        }
+
+        case Operation::sinh : {
+          return self_vertex_.ADsinh();
+        }
+
+        case Operation::cosh : {
+          return self_vertex_.ADcosh();
+        }
+
+        case Operation::tanh : {
+          return self_vertex_.ADtanh();
+        }
+
+        case Operation::logistic : {
+          return self_vertex_.ADlogistic();
+        }
+
+        case Operation::log : {
+          return self_vertex_.ADlog(aux_vertex_);
+        }
+
+        case Operation::sqrt : {
+          return self_vertex_.ADsqrt();
         }
       }
     }

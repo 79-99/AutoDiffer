@@ -43,7 +43,10 @@ class Parser {
     bool SetCursor();
     std::pair<Status,ADValue<T>> GetValue(const std::string& key);
 
-    std::set<char> operations = { '+','^','-','/','*' }; 
+    std::set<char> operations = { '+','^','-','/','*' };
+
+    Status HandleInverseTrig(ADValue<T>& lhs, ADValue<T>& rhs, 
+                             std::string sub_str, Operation& op);
 
   public:
     Parser(std::string equation) : equation_(equation) {}
@@ -146,8 +149,60 @@ Status Parser<T>::Next() {
             right_val = GetValue("0").second;
             op = Operation::addition; 
         } else if (sub_str.length() > 3) {
-            std::string trig_str = sub_str.substr(0,3); 
-            if (trig_str.compare("sin") == 0) {
+            std::string trig_str = sub_str.substr(0,3);
+            std::string hyperbolic_trig_str = sub_str.substr(0,4);
+            std::string logistic_str = sub_str.substr(0,8); 
+            if (hyperbolic_trig_str.compare("sinh") == 0) {
+                op = Operation::sinh; 
+                auto stored_val = values_.find(sub_str.substr(4)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to sinh"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
+                right_val = GetValue("0").second;                 
+            } else if (hyperbolic_trig_str.compare("cosh") == 0) {
+                op = Operation::cosh; 
+                auto stored_val = values_.find(sub_str.substr(4)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to cosh"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
+                right_val = GetValue("0").second;                 
+            } else if (hyperbolic_trig_str.compare("tanh") == 0) {
+                op = Operation::tanh; 
+                auto stored_val = values_.find(sub_str.substr(4)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to cosh"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
+                right_val = GetValue("0").second;                 
+            } else if (hyperbolic_trig_str.compare("sqrt") == 0) {
+                op = Operation::sqrt; 
+                auto stored_val = values_.find(sub_str.substr(4)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to sqrt"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
+                right_val = GetValue("0").second;                 
+            } else if (logistic_str.compare("logistic") == 0) {
+                op = Operation::logistic; 
+                auto stored_val = values_.find(sub_str.substr(8)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to logistic"; 
+                    return status; 
+                }
+                left_val = stored_val->second; 
+                right_val = GetValue("0").second; 
+            } else if (trig_str.compare("sin") == 0) {
                 op = Operation::sin; 
                 auto stored_val = values_.find(sub_str.substr(3)); 
                 if (stored_val == values_.end()) {
@@ -187,6 +242,25 @@ Status Parser<T>::Next() {
                 }
                 left_val = stored_val->second; 
                 right_val = GetValue("0").second;                 
+            } else if(trig_str.compare("arc") == 0) {
+                status = HandleInverseTrig(left_val, right_val, sub_str, op);
+                if (status.code != ReturnCode::success) {
+                    return status;
+                }
+            } else if (trig_str.compare("log") == 0) {
+                op = Operation::log;
+                int right_marker = sub_str.substr(4).find('_');
+                // Get base.
+                right_val = GetValue(
+                    sub_str.substr(4, right_marker)).second;
+                auto stored_val = values_.find(
+                    sub_str.substr(4+right_marker+1)); 
+                if (stored_val == values_.end()) {
+                    status.code = ReturnCode::parse_error; 
+                    status.message = "Invalid argument to log"; 
+                    return status; 
+                }
+                left_val = stored_val->second;
             } else {
                 status.code = ReturnCode::parse_error; 
                 status.message = "Invalid argument"; 
@@ -239,6 +313,48 @@ Status Parser<T>::Next() {
     equation_ = new_str;
     if (!SetCursor()) {
         return status;
+    }
+    return status;
+}
+
+template <class T>
+Status Parser<T>::HandleInverseTrig(ADValue<T>& lhs, ADValue<T>& rhs, 
+                                  std::string sub_str, Operation& op) {
+    Status status;
+    std::string inv_trig_str = sub_str.substr(0,6);
+    if (inv_trig_str.compare("arcsin") == 0) {
+        op = Operation::arcsin; 
+        auto stored_val = values_.find(sub_str.substr(6)); 
+        if (stored_val == values_.end()) {
+            status.code = ReturnCode::parse_error; 
+            status.message = "Invalid argument to arcsin"; 
+            return status; 
+        }
+        lhs = stored_val->second; 
+        rhs = GetValue("0").second; 
+    } else if (inv_trig_str.compare("arccos") == 0) {
+        op = Operation::arccos; 
+        auto stored_val = values_.find(sub_str.substr(6)); 
+        if (stored_val == values_.end()) {
+            status.code = ReturnCode::parse_error; 
+            status.message = "Invalid argument to arccos"; 
+            return status; 
+        }
+        lhs = stored_val->second; 
+        rhs = GetValue("0").second; 
+    } else if (inv_trig_str.compare("arctan") == 0) {
+        op = Operation::arctan; 
+        auto stored_val = values_.find(sub_str.substr(6)); 
+        if (stored_val == values_.end()) {
+            status.code = ReturnCode::parse_error; 
+            status.message = "Invalid argument to arctan"; 
+            return status; 
+        }
+        lhs = stored_val->second; 
+        rhs = GetValue("0").second; 
+    } else {
+        status.code = ReturnCode::parse_error;
+        status.message = "Unable to parse inverse trig function.";
     }
     return status;
 }

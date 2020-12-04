@@ -143,6 +143,88 @@ class ADValue {
         return ADValue<T>(new_v, new_derivs);
     }
 
+    ADValue<T> ADarcsin() {
+        T new_v = asin(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(1/sqrt(1-pow(this->val(), 2))*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADarccos() {
+        T new_v = acos(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(-1/sqrt(1-pow(this->val(), 2))*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADarctan() {
+        T new_v = atan(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(1/(1+pow(this->val(), 2))*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADsinh() {
+        T new_v = sinh(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(cosh(this->val())*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADcosh() {
+        T new_v = cosh(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(sinh(this->val())*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADtanh() {
+        T new_v = tanh(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(1/pow(cosh(this->val()), 2)*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADlogistic() {
+        T new_v = exp(this->val()) / (1 + exp(this->val()));
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(
+                exp(this->val()) / pow(1 + exp(this->val()), 2)*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADlog(const ADValue<T> &other) {
+        T new_v = log(this->val()) / log(other.val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(1/(this->val()*log(other.val()))*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
+    ADValue<T> ADsqrt() {
+        T new_v = sqrt(this->val());
+        std::vector<T> new_derivs;
+        for (int i = 0; i < dvs.size(); ++i) {
+            new_derivs.emplace_back(0.5 * pow(this->val(), -0.5)*this->dval(i));
+        }
+        return ADValue<T>(new_v, new_derivs);
+    }
+
 };
 
 
