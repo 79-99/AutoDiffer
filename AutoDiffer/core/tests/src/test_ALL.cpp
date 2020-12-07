@@ -435,7 +435,6 @@ TEST(parser_test_invalid_sin, double){
     ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
     std::pair<Status,ADValue<double>> res = parser.Run();
     ASSERT_EQ(res.first.code, ReturnCode::parse_error);
-    ASSERT_EQ(res.first.message, "Invalid argument");
 }
 
 /*
@@ -833,11 +832,39 @@ TEST(autodiffer_log_of_func, double) {
     EXPECT_NEAR(res.second.dval(0), 7.88145, 0.001);
 }
 
-TEST(autodiffer_sqrt_of_func, double) {
+TEST(autodiffer_basic_nop, double) {
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
-    std::pair<Status, ADValue<double>> res = ad.Derive("(sqrt(2*x))");
+    std::pair<Status, ADValue<double>> res = ad.Derive("(x)");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_NEAR(res.second.val(), 0.942338, 0.001);
-    EXPECT_NEAR(res.second.dval(0), 1.06119, 0.001);
+    EXPECT_EQ(res.second.val(), 0.444);
+    EXPECT_EQ(res.second.dval(0), 1);
 }
+
+TEST(autodiffer_const_nop, double) {
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
+    std::pair<Status, ADValue<double>> res = ad.Derive("(5)");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_EQ(res.second.val(), 5);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
+TEST(autodiffer_const_nop_long, double) {
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
+    std::pair<Status, ADValue<double>> res = ad.Derive("(6160)");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_EQ(res.second.val(), 6160);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
+TEST(autodiffer_sin_const, double) {
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
+    std::pair<Status, ADValue<double>> res = ad.Derive("(sin(-1))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), -0.8414, 0.001);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
