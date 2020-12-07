@@ -144,11 +144,16 @@ Status Parser<T>::Next() {
     if (op_index == -1) {
         // Check if trig function
         // deal with (x)
-        if (values_.find(sub_str) != values_.end()) {
-            left_val = values_.find(sub_str)->second; 
+        if (sub_str.length() <= 3) {
+            // All of the alpha functions three letters or more
+            auto value_cast_pair = GetValue(sub_str); 
+            if (value_cast_pair.first.code != ReturnCode::success) {
+                return value_cast_pair.first; 
+            }
+            left_val = value_cast_pair.second; 
             right_val = GetValue("0").second;
             op = Operation::addition; 
-        } else if (sub_str.length() > 3) {
+        } else {
             std::string trig_str = sub_str.substr(0,3);
             std::string hyperbolic_trig_str = sub_str.substr(0,4);
             std::string logistic_str = sub_str.substr(0,8); 
@@ -262,18 +267,16 @@ Status Parser<T>::Next() {
                 }
                 left_val = stored_val->second;
             } else {
-                status.code = ReturnCode::parse_error; 
-                status.message = "Invalid argument"; 
-                return status;                 
+                // sub_str > 3, no alpha operation
+                auto value_cast_pair = GetValue(sub_str); 
+                if (value_cast_pair.first.code != ReturnCode::success) {
+                    return value_cast_pair.first; 
+                }
+                left_val = value_cast_pair.second; 
+                right_val = GetValue("0").second;
+                op = Operation::addition;                            
             }
-        } else {
-            // binary / unary ops + , - , * , /
-            // if string does not contain above and is not long enough
-            // to contain sin, cos, tan, or exp throw error
-            status.code = ReturnCode::parse_error; 
-            status.message = "Invalid argument"; 
-            return status;                  
-        }
+        } 
     } else {
         // Operations including negation, + , - , ^, *
         std::string LHS = sub_str.substr(0,op_index);
@@ -366,9 +369,11 @@ std::pair<Status,ADValue<T>> Parser<T>::GetValue(const std::string& key) {
         return std::pair<Status, ADValue<T>>(status, ADValue<T>(0, 0));
     }
     auto it = values_.find(key);
+    // Look in values table for key
     if (it != values_.end()) {
         return std::pair<Status, ADValue<T>>(status, values_[key]);
     }
+
     std::istringstream ss(key);
     T num;
     ss >> num;
