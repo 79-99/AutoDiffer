@@ -11,6 +11,7 @@
 
 /* system header files */
 #ifndef DOXYGEN_IGNORE
+#include <algorithm>
 #include <iostream>
 #include <set>
 #include <sstream>
@@ -34,19 +35,179 @@ struct Status {
 template <class T>
 class Parser {
   private:
+    // The string used to represent the equation.
     std::string equation_;
+
+    // A map of variable names to ADValues.
     std::unordered_map<std::string, ADValue<T>> values_;
+    
+    // Cursors to keep track of current substring.
     int left_cursor_, right_cursor_;
+
+    // The index of the intermediate values. This will be incremented to 
+    // construct unique variable names (e.g., x0, x1, x2,...).
     int v_idx_ = 0;
+
+    // The size of the seed vector. This will be 1 for scalar functions.
     int seed_size_;
 
-    bool SetCursor();
-    std::pair<Status,ADValue<T>> GetValue(const std::string& key);
-
+    // The special characters representing the elementary operations that we
+    // parse for.
     std::set<char> operations = { '+','^','-','/','*' };
 
-    Status HandleInverseTrig(ADValue<T>& lhs, ADValue<T>& rhs, 
-                             std::string sub_str, Operation& op);
+    /**
+     * Sets the cursors based on the deepest value of parentheses. This function
+     * traverses the current value of equation_ to find the most inner nested
+     * operation to be executed. 
+     *
+     * @return: bool describing whether or not the cursor was successfully set.
+     */
+    bool SetCursor();
+
+    /**
+     * Gets the value of a current key. This can either be a variable (e.g., "x")
+     * or a positive constant value that can be cast to type T (e.g., "5.32").
+     * This function is used by to fetch the intermediate ADValues as they are
+     * created (e.g., GetValue("x0") will fetch the first constructed 
+     * intermediate value).
+     *
+     * @param key: the string containing the id to be retrieved.
+     * @return: a pair with a status as the first object and an ADValue as the
+     *          second. One should check that that Status.code == success
+     *          before using the ADValue. 
+     */
+    std::pair<Status,ADValue<T>> GetValue(const std::string& key);
+
+    /**
+     * Gets the index of the operation if it belongs to the single character
+     * operation set (+,^,-,/,*). The Operation& parameter is also set to the 
+     * matching enum value.
+     *
+     * @param sub_str: the current view of the equation from within the left and
+     * right cursor.
+     * @param op: a refernce to an op that can be set if an operation is found.
+     * @return: the index inside the sub_str of the op. 
+     */
+    int GetOpIndex(const std::string& sub_str, Operation& op);
+
+    /**
+     * Handles any ops that are a single character (e.g., +,^,-,/,*).
+     * The left and right ADValue references that are passed along with the 
+     * operation reference will be set by this function.
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param sub_str: the current substring within the left and right cursor.
+     * @param op: a reference to the outer operation that will be set by this
+     * function.
+     * @param op_index: the index of the op within the sub_str to avoid finding 
+     * it a second time.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status HandleCharOps(ADValue<T>& left_val, ADValue<T>& right_val, 
+                         std::string sub_str, Operation& op, int op_index);
+
+    /**
+     * Handles any ops that are not single character (e.g., sin, arcsin, ...).
+     * The function works by figuring out how many letters the operation has and
+     * delegating the processing to HandleThreeLetterOps, HandleFourLetterOps,
+     * HandleSixLetterOps, or HandleLogisticOp. The left and right ADValue 
+     * references that are passed along with the operation reference will be set
+     * by this function.  
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param sub_str: the current substring within the left and right cursor.
+     * @param op: a reference to the outer operation that will be set by this
+     * function.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status HandleStringOps(ADValue<T>& left_val, ADValue<T>& right_val, 
+                           std::string sub_str, Operation& op);
+
+    /**
+     * Handles any 3 letter ops (sin, cos, tan, exp, log). Called by 
+     * HandleStringOps.
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param sub_str: the current substring within the left and right cursor.
+     * @param op: a reference to the outer operation that will be set by this
+     * function.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status HandleThreeLetterOps(ADValue<T>& left_val, ADValue<T>& right_val, 
+                                std::string sub_str, Operation& op);  
+    
+    /**
+     * Handles any 4 letter ops (sinh, cosh, tanh, sqrt). Called by 
+     * HandleStringOps.
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param sub_str: the current substring within the left and right cursor.
+     * @param op: a reference to the outer operation that will be set by this
+     * function.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status HandleFourLetterOps(ADValue<T>& left_val, ADValue<T>& right_val, 
+                               std::string sub_str, Operation& op);
+    
+    /**
+     * Handles any 6 letter ops (arcsin, arccos, arctan). Called by 
+     * HandleStringOps.
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param sub_str: the current substring within the left and right cursor.
+     * @param op: a reference to the outer operation that will be set by this
+     * function.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status HandleSixLetterOps(ADValue<T>& left_val, ADValue<T>& right_val, 
+                               std::string sub_str, Operation& op);
+    
+    /**
+     * Handles the logistic operation. Called by HandleStringOps.
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param sub_str: the current substring within the left and right cursor.
+     * @param op: a reference to the outer operation that will be set by this
+     * function.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status HandleLogisticOp(ADValue<T>& left_val, ADValue<T>& right_val, 
+                            std::string sub_str, Operation& op);
+
+    /**
+     * Checks if an argument to a string operations (e.g., sin) is valid.
+     *
+     * @param left_val: a reference to the left value of the ADNode. This will
+     * be updated.
+     * @param right_val: a reference to the right value. In unary operations,
+     * this will be set to 0.
+     * @param op_name: the name of the op to check for validity (e.g., "sin").
+     * @param sub_str: the current substring within the left and right cursor.
+     * function.
+     * @returns: a status containing either an success or failure with a message
+     */
+    Status CheckValidArgument(ADValue<T>& left_val, 
+                              ADValue<T>& right_val, 
+                              const std::string& op_name, 
+                              const std::string& sub_str);
 
   public:
     Parser(std::string equation) : equation_(equation) {}
@@ -57,15 +218,20 @@ class Parser {
 
 
 /* Implementation */
+
 template <class T>
 std::pair<Status,ADValue<T>> Parser<T>::Run() {
+    // Initialize to OK status.
     Status status;
+    // Continue while there still remain parentheses in the equation_.
     while (equation_.find('(') != std::string::npos) {
         status = Next();
         if (status.code != ReturnCode::success) {
             break; 
         }
     }
+    // The output variable is xn where n is v_idx - 1. Construct the string here
+    // to retrieve the final ADValue from the values_ map.
     std::string out = 'x' + std::to_string(--v_idx_);
     return std::pair<Status,ADValue<T>>(status,values_[out]);
 }
@@ -81,7 +247,8 @@ Status Parser<T>::Init(
     }
     Status status;
 
-    // Check for unbalanced parentheses 
+    // Check for unbalanced parentheses where there are more left parens '(' 
+    // than right ')'.
     std::stack<char> paren_stack; 
     for (char const &c : equation_) {
         if (c == '(') {
@@ -89,35 +256,33 @@ Status Parser<T>::Init(
         } else if (c == ')') {
             if (paren_stack.empty()) {
                 status.code = ReturnCode::parse_error; 
-                status.message = "Unbalanced parentheses"; 
+                status.message = "Unbalanced parentheses -- too many \')\'"; 
                 return status; 
             } else {
                 paren_stack.pop(); 
             }
         }
     }
-
+    // Case where there are more left than right parens.
     if (!paren_stack.empty()) {
         status.code = ReturnCode::parse_error; 
-        status.message = "Unbalanced parentheses"; 
+        status.message = "Unbalanced parentheses -- too many \'(\'"; 
         return status; 
     }
 
+    // Try to set cursor. If no parentheses are found return an error status.
     if (!SetCursor()) {
         status.code = ReturnCode::parse_error;
-        status.message = "No left parentheses found.";
+        status.message = "No parentheses found.";
         return status;
     }
     return status;
 }
 
-template <class T>
-Status Parser<T>::Next() {
-    Status status;
-    std::string sub_str = equation_.substr(
-        left_cursor_+1, right_cursor_ - (left_cursor_+1));
+template <class T> 
+int Parser<T>::GetOpIndex(const std::string& sub_str, Operation& op) {
     int op_index = -1;
-    Operation op;
+    // Iterate sub_str until an op character is found. If none retrun -1.
     for (int i = 0; i < sub_str.length(); ++i) {
         std::set<char>::iterator it = operations.find(sub_str[i]);
         if (it != operations.end()) {
@@ -137,227 +302,270 @@ Status Parser<T>::Next() {
             break;
         }
     }
+    return op_index;
+}
 
-    ADValue<T> left_val; 
-    ADValue<T> right_val; 
-
-    if (op_index == -1) {
-        // Check if trig function
-        // deal with (x)
-        if (sub_str.length() <= 3) {
-            // All of the alpha functions three letters or more
-            auto value_cast_pair = GetValue(sub_str); 
-            if (value_cast_pair.first.code != ReturnCode::success) {
-                return value_cast_pair.first; 
-            }
-            left_val = value_cast_pair.second; 
-            right_val = GetValue("0").second;
-            op = Operation::addition; 
-        } else {
-            std::string trig_str = sub_str.substr(0,3);
-            std::string hyperbolic_trig_str = sub_str.substr(0,4);
-            std::string logistic_str = sub_str.substr(0,8); 
-            if (hyperbolic_trig_str.compare("sinh") == 0) {
-                op = Operation::sinh; 
-                auto stored_val = values_.find(sub_str.substr(4)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to sinh"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second;                 
-            } else if (hyperbolic_trig_str.compare("cosh") == 0) {
-                op = Operation::cosh; 
-                auto stored_val = values_.find(sub_str.substr(4)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to cosh"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second;                 
-            } else if (hyperbolic_trig_str.compare("tanh") == 0) {
-                op = Operation::tanh; 
-                auto stored_val = values_.find(sub_str.substr(4)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to cosh"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second;                 
-            } else if (hyperbolic_trig_str.compare("sqrt") == 0) {
-                op = Operation::sqrt; 
-                auto stored_val = values_.find(sub_str.substr(4)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to sqrt"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second;                 
-            } else if (logistic_str.compare("logistic") == 0) {
-                op = Operation::logistic; 
-                auto stored_val = values_.find(sub_str.substr(8)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to logistic"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second; 
-            } else if (trig_str.compare("sin") == 0) {
-                op = Operation::sin; 
-                auto stored_val = values_.find(sub_str.substr(3)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to sin"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second; 
-            } else if (trig_str.compare("cos") == 0) {
-                op = Operation::cos;
-                auto stored_val = values_.find(sub_str.substr(3)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to cos"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second; 
-            } else if (trig_str.compare("tan") == 0) {
-                op = Operation::tan; 
-                auto stored_val = values_.find(sub_str.substr(3)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to tan"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second; 
-            } else if (trig_str.compare("exp") == 0) {
-                op = Operation::exp; 
-                auto stored_val = values_.find(sub_str.substr(3)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to exp"; 
-                    return status; 
-                }
-                left_val = stored_val->second; 
-                right_val = GetValue("0").second;                 
-            } else if(trig_str.compare("arc") == 0) {
-                status = HandleInverseTrig(left_val, right_val, sub_str, op);
-                if (status.code != ReturnCode::success) {
-                    return status;
-                }
-            } else if (trig_str.compare("log") == 0) {
-                op = Operation::log;
-                int right_marker = sub_str.substr(4).find('_');
-                // Get base.
-                right_val = GetValue(
-                    sub_str.substr(4, right_marker)).second;
-                auto stored_val = values_.find(
-                    sub_str.substr(4+right_marker+1)); 
-                if (stored_val == values_.end()) {
-                    status.code = ReturnCode::parse_error; 
-                    status.message = "Invalid argument to log"; 
-                    return status; 
-                }
-                left_val = stored_val->second;
-            } else {
-                // sub_str > 3, no alpha operation
-                auto value_cast_pair = GetValue(sub_str); 
-                if (value_cast_pair.first.code != ReturnCode::success) {
-                    return value_cast_pair.first; 
-                }
-                left_val = value_cast_pair.second; 
-                right_val = GetValue("0").second;
-                op = Operation::addition;                            
-            }
-        } 
-    } else {
-        // Operations including negation, + , - , ^, *
-        std::string LHS = sub_str.substr(0,op_index);
-        std::string RHS = sub_str.substr(op_index+1);
-        
-        auto res_right = GetValue(RHS);
-        if (res_right.first.code != ReturnCode::success) {
-            return res_right.first;
-        }
-        right_val = res_right.second;
-
-        if (op == Operation::subtraction && LHS.empty()) {
-            left_val = GetValue("0").second; 
-        // When op and two sides
-        } else {
-            // Check operation requires LHS and RHS
-            // Ensure non-empty strings
-            if (LHS.empty() || RHS.empty()) {
-                status.code = ReturnCode::parse_error; 
-                status.message = "Binary operation requires LHS and RHS"; 
-                return status; 
-            }
-            auto res_left = GetValue(LHS);
-            if (res_left.first.code != ReturnCode::success) {
-                return res_left.first;
-            }
-            left_val = res_left.second; 
-        }
-    }
+template <class T>
+Status Parser<T>::HandleCharOps(ADValue<T>& left_val, ADValue<T>& right_val, 
+                                std::string sub_str, Operation& op, 
+                                int op_index) {
+    Status status;
+    // Operations including negation, + , - , ^, *
+    std::string LHS = sub_str.substr(0,op_index);
+    std::string RHS = sub_str.substr(op_index+1);
     
-    ADNode<T> cur_node(left_val, right_val, op);
-    ADValue<T> cur_value = cur_node.Evaluate();
-    std::string new_val_name = 'x' + std::to_string(v_idx_++);
-    values_[new_val_name] = cur_value;
-    std::string new_str = equation_.replace(
-        left_cursor_, right_cursor_ - left_cursor_ + 1, new_val_name);
-    equation_ = new_str;
-    if (!SetCursor()) {
-        return status;
+    // Get value of variable or constant for RHS.
+    auto res_right = GetValue(RHS);
+    if (res_right.first.code != ReturnCode::success) {
+        return res_right.first;
+    }
+    right_val = res_right.second;
+
+    // Handle negation operation as a subcase of subtraction.
+    if (op == Operation::subtraction && LHS.empty()) {
+        left_val = GetValue("0").second; 
+    // When op has two sides.
+    } else {
+        // Check operation requires LHS and RHS
+        // Ensure non-empty strings
+        if (LHS.empty() || RHS.empty()) {
+            status.code = ReturnCode::parse_error; 
+            status.message = "Binary operation requires LHS and RHS"; 
+            return status; 
+        }
+        auto res_left = GetValue(LHS);
+        if (res_left.first.code != ReturnCode::success) {
+            return res_left.first;
+        }
+        left_val = res_left.second; 
     }
     return status;
 }
 
 template <class T>
-Status Parser<T>::HandleInverseTrig(ADValue<T>& lhs, ADValue<T>& rhs, 
+Status Parser<T>::HandleStringOps(ADValue<T>& left_val, ADValue<T>& right_val, 
                                   std::string sub_str, Operation& op) {
+    Status status;
+    // Check if trig function
+    // deal with (x)
+    if (sub_str.length() <= 3) {
+        // All of the alpha functions are three letters or more.
+        auto value_cast_pair = GetValue(sub_str); 
+        if (value_cast_pair.first.code != ReturnCode::success) {
+            return value_cast_pair.first; 
+        }
+        left_val = value_cast_pair.second; 
+        right_val = GetValue("0").second;
+        op = Operation::addition; 
+    } else {
+        // Get each of the potential sub strings.
+        std::string three_letter = sub_str.substr(0,3);
+        std::string four_letter = sub_str.substr(0,4);
+        std::string six_letter = sub_str.substr(0,6);
+        std::string eight_letter = sub_str.substr(0,8); 
+
+        // These are the operations that we support.
+        std::vector<std::string> four_letter_ops = {
+            "sinh", "cosh", "tanh", "sqrt"};
+        std::vector<std::string> three_letter_ops = {
+            "sin", "cos", "tan", "exp", "log"};
+        std::vector<std::string> six_letter_ops = {
+            "arcsin", "arccos", "arctan"};
+        
+        // Logistic is the only 8 letter op.
+        if (eight_letter.compare("logistic") == 0) {
+            return HandleLogisticOp(left_val, right_val, sub_str, op);
+        }
+        // Check if the four letter op is supported. This must come before the
+        // three letter checks to avoid confusion between sin and sinh.
+        if (std::find(four_letter_ops.begin(), 
+                      four_letter_ops.end(), 
+                      four_letter) != four_letter_ops.end()) {
+            return HandleFourLetterOps(left_val, right_val, sub_str, op);
+        }
+        // Check if the six letter op is supported.
+        if (std::find(six_letter_ops.begin(), 
+                      six_letter_ops.end(), 
+                      six_letter) != six_letter_ops.end()) {
+            return HandleSixLetterOps(left_val, right_val, sub_str, op);
+        }
+        // Check if the three letter op is supported.
+        if (std::find(three_letter_ops.begin(), 
+                      three_letter_ops.end(), 
+                      three_letter) != three_letter_ops.end()) {
+            return HandleThreeLetterOps(left_val, right_val, sub_str, op);
+        }
+    
+        // sub_str > 3, no alpha operation. Try to cast as into type T.
+        auto value_cast_pair = GetValue(sub_str); 
+        if (value_cast_pair.first.code != ReturnCode::success) {
+            return value_cast_pair.first; 
+        }
+        left_val = value_cast_pair.second; 
+        right_val = GetValue("0").second;
+        op = Operation::addition;                            
+    } 
+    return status;
+}
+
+template <class T>
+Status Parser<T>::CheckValidArgument(ADValue<T>& left_val, 
+                                     ADValue<T>& right_val, 
+                                     const std::string& op_name,
+                                     const std::string& sub_str) {
+    Status status;
+    auto stored_val = values_.find(sub_str.substr(op_name.length())); 
+    if (stored_val == values_.end()) {
+        status.code = ReturnCode::parse_error; 
+        status.message = "Invalid argument to " + op_name; 
+        return status; 
+    }
+    left_val = stored_val->second; 
+    right_val = GetValue("0").second;
+    return status;
+}
+
+template <class T>
+Status Parser<T>::HandleThreeLetterOps(ADValue<T>& left_val, 
+                                       ADValue<T>& right_val, 
+                                       std::string sub_str, 
+                                       Operation& op) {
+    Status status;
+    std::string three_letter = sub_str.substr(0,3);
+    if (three_letter.compare("sin") == 0) {
+        op = Operation::sin;
+        return CheckValidArgument(left_val, right_val, "sin", sub_str);
+    } else if (three_letter.compare("cos") == 0) {
+        op = Operation::cos;
+        return CheckValidArgument(left_val, right_val, "cos", sub_str);
+    } else if (three_letter.compare("tan") == 0) {
+        op = Operation::tan; 
+        return CheckValidArgument(left_val, right_val, "tan", sub_str);
+    } else if (three_letter.compare("exp") == 0) {
+        op = Operation::exp; 
+        return CheckValidArgument(left_val, right_val, "exp", sub_str);
+    } else if (three_letter.compare("log") == 0) {
+        // Log is more complicated because we need to parse the base.
+        op = Operation::log;
+        int right_marker = sub_str.substr(4).find('_');
+        // Get base.
+        right_val = GetValue(
+            sub_str.substr(4, right_marker)).second;
+        auto stored_val = values_.find(
+            sub_str.substr(4+right_marker+1)); 
+        if (stored_val == values_.end()) {
+            status.code = ReturnCode::parse_error; 
+            status.message = "Invalid argument to log"; 
+            return status; 
+        }
+        left_val = stored_val->second;
+    } else {
+        status.code = ReturnCode::parse_error; 
+        status.message = "Unrecognized three letter operation: " + three_letter; 
+    }
+    return status; 
+}
+
+template <class T>
+Status Parser<T>::HandleFourLetterOps(ADValue<T>& left_val, 
+                                      ADValue<T>& right_val, 
+                                      std::string sub_str, 
+                                      Operation& op) {
+    Status status;
+    std::string four_letter = sub_str.substr(0,4);
+    if (four_letter.compare("sinh") == 0) {
+        op = Operation::sinh; 
+        return CheckValidArgument(left_val, right_val, "sinh", sub_str);
+    } else if (four_letter.compare("cosh") == 0) {
+        op = Operation::cosh; 
+        return CheckValidArgument(left_val, right_val, "cosh", sub_str);               
+    } else if (four_letter.compare("tanh") == 0) {
+        op = Operation::tanh; 
+        return CheckValidArgument(left_val, right_val, "tanh", sub_str);               
+    } else if (four_letter.compare("sqrt") == 0) {
+        op = Operation::sqrt; 
+        return CheckValidArgument(left_val, right_val, "sqrt", sub_str);                
+    } else {
+        status.code = ReturnCode::parse_error; 
+        status.message = "Unrecognized four letter operation: " + four_letter;  
+    }
+    return status;
+}
+
+template <class T>
+Status Parser<T>::HandleSixLetterOps(ADValue<T>& left_val, 
+            ADValue<T>& right_val, std::string sub_str, Operation& op) {
     Status status;
     std::string inv_trig_str = sub_str.substr(0,6);
     if (inv_trig_str.compare("arcsin") == 0) {
         op = Operation::arcsin; 
-        auto stored_val = values_.find(sub_str.substr(6)); 
-        if (stored_val == values_.end()) {
-            status.code = ReturnCode::parse_error; 
-            status.message = "Invalid argument to arcsin"; 
-            return status; 
-        }
-        lhs = stored_val->second; 
-        rhs = GetValue("0").second; 
+        return CheckValidArgument(left_val, right_val, "arcsin", sub_str);
     } else if (inv_trig_str.compare("arccos") == 0) {
         op = Operation::arccos; 
-        auto stored_val = values_.find(sub_str.substr(6)); 
-        if (stored_val == values_.end()) {
-            status.code = ReturnCode::parse_error; 
-            status.message = "Invalid argument to arccos"; 
-            return status; 
-        }
-        lhs = stored_val->second; 
-        rhs = GetValue("0").second; 
+        return CheckValidArgument(left_val, right_val, "arccos", sub_str);
     } else if (inv_trig_str.compare("arctan") == 0) {
         op = Operation::arctan; 
-        auto stored_val = values_.find(sub_str.substr(6)); 
-        if (stored_val == values_.end()) {
-            status.code = ReturnCode::parse_error; 
-            status.message = "Invalid argument to arctan"; 
-            return status; 
-        }
-        lhs = stored_val->second; 
-        rhs = GetValue("0").second; 
+        return CheckValidArgument(left_val, right_val, "arctan", sub_str);
     } else {
         status.code = ReturnCode::parse_error;
-        status.message = "Unable to parse inverse trig function.";
+        status.message = "Unable to parse six letter function.";
+    }
+    return status;
+}
+
+template <class T>
+Status Parser<T>::HandleLogisticOp(ADValue<T>& left_val, ADValue<T>& right_val, 
+                                   std::string sub_str, Operation& op) {
+    op = Operation::logistic; 
+    return CheckValidArgument(left_val, right_val, "logistic", sub_str);
+}
+
+template <class T>
+Status Parser<T>::Next() {
+    Status status;
+    // We only focus on the part of the equation between the left and right 
+    // cursor.
+    std::string sub_str = equation_.substr(
+        left_cursor_+1, right_cursor_ - (left_cursor_+1));
+    Operation op;
+    int op_index = GetOpIndex(sub_str, op);
+
+    // The values to be used by the ADNode. In unary operation case the right
+    // val will be set to 0.
+    ADValue<T> left_val; 
+    ADValue<T> right_val; 
+
+    // Case where the operation is a string instead of a character.
+    if (op_index == -1) {
+        status = HandleStringOps(left_val, right_val, sub_str, op);
+        if (status.code != ReturnCode::success) {
+            return status;
+        }
+    } else {
+        status = HandleCharOps(left_val, right_val, sub_str, op, op_index);
+        if (status.code != ReturnCode::success) {
+            return status;
+        }
+    }
+
+    // Create node with our left and right values. In unary case, right is 0.
+    ADNode<T> cur_node(left_val, right_val, op);
+
+    // Combine value(s) and operation to get subsequent value.
+    ADValue<T> cur_value = cur_node.Evaluate();
+    
+    // Get new intermediate name for the variable (e.g.,"x3").
+    std::string new_val_name = 'x' + std::to_string(v_idx_++);
+    values_[new_val_name] = cur_value;
+
+    // Replace the old cursor contents with just this new value name.
+    std::string new_str = equation_.replace(
+        left_cursor_, right_cursor_ - left_cursor_ + 1, new_val_name);
+    
+    // Update equation.
+    equation_ = new_str;
+    if (!SetCursor()) {
+        return status;
     }
     return status;
 }

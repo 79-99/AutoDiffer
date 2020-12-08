@@ -27,18 +27,22 @@ class AutoDiffer {
 
     void SetSeed(const std::string& variable, T value, T dval=1) {
         ADValue<T> seed_val(value, dval);
-        seeds_.emplace_back(std::pair<std::string, ADValue<T>>(variable, seed_val));
+        seeds_.emplace_back(
+            std::pair<std::string, ADValue<T>>(variable, seed_val));
     }
 
     void SetSeedVector(const std::string& variable, T value, 
                        const std::vector<T>& dvals) {
         ADValue<T> seed_val(value, dvals);
-        seeds_.emplace_back(std::pair<std::string, ADValue<T>>(variable, seed_val));
+        seeds_.emplace_back(
+            std::pair<std::string, ADValue<T>>(variable, seed_val));
     }
 
     std::pair<Status,ADValue<T>> Derive(const std::string& equation);
-    std::vector<std::pair<Status,ADValue<T>>> Derive(std::vector<std::string> equation);
-    std::vector<std::pair<Status,ADValue<T>>> Derive(const std::string&, std::vector<std::vector<std::pair<std::string, ADValue<T>>>> seeds); 
+    std::vector<std::pair<Status,ADValue<T>>> Derive(
+        std::vector<std::string> equation);
+    std::vector<std::pair<Status,ADValue<T>>> Derive(
+        const std::string&, std::vector<std::vector<std::pair<std::string, ADValue<T>>>> seeds); 
 };
 
 
