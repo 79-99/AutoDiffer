@@ -19,10 +19,16 @@ set(libs
 )
 
 add_subdirectory(${TEST_SRC_PATH})
-
 add_executable(${TEST_EXE} test_main.cpp)
 target_link_libraries(${TEST_EXE} AllTest AutoDiffer ${libs})
 target_link_libraries(${TEST_EXE} pthread)
+
+OPTION(THREAD "Link against openmp" OFF)
+if(THREAD)
+	find_package(OpenMP REQUIRED)
+	target_link_libraries(${TEST_EXE} OpenMP::OpenMP_CXX)
+	target_compile_definitions(${TEST_EXE} PUBLIC USE_THREAD)
+endif()
 
 add_test(NAME ${TEST_EXE}
          COMMAND $<TARGET_FILE:${TEST_EXE}>)
