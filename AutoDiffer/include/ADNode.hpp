@@ -10,6 +10,7 @@
 
 /* system header files */
 #ifndef DOXYGEN_IGNORE
+# include <algorithm>
 # include <math.h>
 # include <stdio.h>
 # include <vector>
@@ -41,13 +42,34 @@ class ADNode {
   private:
     ADValue<T> self_vertex_;
     ADValue<T> aux_vertex_;
+    bool aux_exists_;
     Operation op_;
   
   public:
     ADNode(ADValue<T> self, ADValue<T> aux, Operation op) : 
-                           self_vertex_(self), 
-                           aux_vertex_(aux),
+                           self_vertex_(self),
+                           aux_vertex_(aux), 
+                           aux_exists_(true),
                            op_(op) {}
+    
+    ADNode(ADValue<T> self, Operation op) : 
+                           self_vertex_(self),
+                           aux_exists_(false),
+                           op_(op) {
+      // List of ops that require an auxiliary node.
+      std::vector<Operation> binary_ops = { 
+            Operation::addition,
+            Operation::subtraction,
+            Operation::multiplication,
+            Operation::division,
+            Operation::log,
+      }; 
+      // Check if this is a binary op, and if so throw an error because we
+      // need an auxilary node.
+      if (std::find(binary_ops.begin(), binary_ops.end(), op) != binary_ops.end()) {
+        throw std::logic_error("Auxilary node is needed for binary op.");
+      }
+    }
     
     ADValue<T> Evaluate() {
       switch(op_) {

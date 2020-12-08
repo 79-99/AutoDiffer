@@ -69,6 +69,7 @@ help() {
     echo "      C_FLAGS=<arg>    c_flags=<arg>    sets the C compiler flags"
     echo "    CXX_FLAGS=<arg>  cxx_flags=<arg>    sets the C++ compiler flags"
     echo "     FC_FLAGS=<arg>   fc_flags=<arg>    sets the Fortran compiler flags"
+    echo "      --thread compiles with OpenMP"
     echo " "
     echo "  [Intel Flags]:"
     echo "     --avx     -avx         sets Intel AVX Instructions"
@@ -128,6 +129,10 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_TYPE=1
 
+  elif [ "$var" == "--thread" -o "$var" == "-thread" ]; then
+    echo -e "Found known argument: ${gC}$var${eC}"
+    BUILD_TYPE=2
+
   elif [ "$var" == "--clean" -o "$var" == "-clean" -o "$var" == "-c" -o \
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
          "${var:0:3}" == "CC=" -o "${var:0:3}" == "cc=" -o \
@@ -176,6 +181,38 @@ fi
 # =================================================================== #
 
 # =================================================================== #
+if [ $BUILD_TYPE == 2 -a $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
+  echo "================================================"
+  echo "Building the GTest, AutoDiffer, and App with OpenMP..."
+  echo "================================================"
+  echo " "
+
+  cd 3PL
+
+  # build 3PL libraries
+  ./build_3PL.sh $cmd_args
+
+  cd ..
+  cd AutoDiffer
+
+  # build library with OpenMP flag
+  ./config.sh --fopenmp $cmd_args
+
+  cd ..
+  cd App
+
+  # build app
+  ./config.sh $cmd_args
+
+  cd ..
+
+  echo
+  echo "================================================"
+  echo -e "${gC} Finished Successfully...${eC}"
+  echo "================================================"
+  exit 0
+fi
+
 if [ $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
   echo "================================================"
   echo "Building the GTest, AutoDiffer, and App..."

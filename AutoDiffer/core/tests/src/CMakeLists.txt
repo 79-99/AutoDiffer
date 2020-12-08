@@ -12,6 +12,13 @@ set(ALL_TEST_SRC
 
 add_library(AllTest SHARED ${ALL_TEST_SRC} ${TEST_H})
 
+OPTION(THREAD "Link against openmp" OFF)
+if(THREAD)
+	find_package(OpenMP REQUIRED)
+	target_link_libraries(AllTest OpenMP::OpenMP_CXX)
+	target_compile_definitions(AllTest PUBLIC USE_THREAD)
+endif()
+
 if(APPLE)
   target_link_libraries(AllTest gtest gtest_main)
 endif()
