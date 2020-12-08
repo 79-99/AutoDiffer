@@ -10,6 +10,7 @@
 
 /* system header files */
 #ifndef DOXYGEN_IGNORE
+# include <algorithm>
 # include <math.h>
 # include <stdio.h>
 # include <vector>
@@ -55,7 +56,7 @@ class ADNode {
                            self_vertex_(self),
                            aux_exists_(false),
                            op_(op) {
-      // List of ops that requiry an auxiliary node.
+      // List of ops that require an auxiliary node.
       std::vector<Operation> binary_ops = { 
             Operation::addition,
             Operation::subtraction,
@@ -63,6 +64,8 @@ class ADNode {
             Operation::division,
             Operation::log,
       }; 
+      // Check if this is a binary op, and if so throw an error because we
+      // need an auxilary node.
       if (std::find(binary_ops.begin(), binary_ops.end(), op) != binary_ops.end()) {
         throw std::logic_error("Auxilary node is needed for binary op.");
       }
