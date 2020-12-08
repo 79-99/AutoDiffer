@@ -7,7 +7,13 @@ link_directories(${gtest_dir}/lib)
 file(GLOB TEST_H *.h *.hpp)
 
 set(ALL_TEST_SRC
-    test_ALL.cpp
+	test_ADNode.cpp
+	test_ADValue.cpp
+	test_Parser.cpp
+	test_AutoDiffer_vector.cpp
+	test_AutoDiffer_correctness.cpp
+	test_AutoDiffer_multithread.cpp
+	test_AutoDiffer_invalid.cpp
 )
 
 add_library(AllTest SHARED ${ALL_TEST_SRC} ${TEST_H})
