@@ -41,33 +41,45 @@ class ADNode {
   private:
     ADValue<T> self_vertex_;
     ADValue<T> aux_vertex_;
+    bool aux_exists_;
     Operation op_;
   
   public:
     ADNode(ADValue<T> self, ADValue<T> aux, Operation op) : 
-                           self_vertex_(self), 
-                           aux_vertex_(aux),
+                           self_vertex_(self),
+                           aux_vertex_(aux), 
+                           aux_exists_(true),
+                           op_(op) {}
+    
+    ADNode(ADValue<T> self, Operation op) : 
+                           self_vertex_(self),
+                           aux_exists_(false),
                            op_(op) {}
     
     ADValue<T> Evaluate() {
       switch(op_) {
         case Operation::addition : {
+          assert(aux_exists_);
           return self_vertex_ + aux_vertex_;
         }
 
         case Operation::multiplication : {
+          assert(aux_exists_);
           return self_vertex_.ADmul(aux_vertex_);
         }
 
         case Operation::division : {
+          assert(aux_exists_);
           return self_vertex_.ADdiv(aux_vertex_);
         }
 
         case Operation::power : {
+          assert(aux_exists_);
           return self_vertex_.power(aux_vertex_);
         }
 
         case Operation::subtraction : {
+          assert(aux_exists_);
           return self_vertex_ - aux_vertex_; 
         }
 
@@ -116,6 +128,7 @@ class ADNode {
         }
 
         case Operation::log : {
+          assert(aux_exists_);
           return self_vertex_.ADlog(aux_vertex_);
         }
 
