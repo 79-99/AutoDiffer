@@ -25,13 +25,31 @@
 */
 
 
-TEST(autodiffer_test_fails_init_broken_parens, double){
+TEST(autodiffer_test_fails_init_broken_parens_left, double){
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
 
     std::pair<Status, ADValue<double>> res = ad.Derive("((x^1.4)+3.7");
     ASSERT_EQ(res.first.code, ReturnCode::parse_error);
-    ASSERT_EQ(res.first.message, "Unbalanced parentheses");
+    ASSERT_EQ(res.first.message, "Unbalanced parentheses -- too many \'(\'");
+}
+
+TEST(autodiffer_test_fails_init_broken_parens_right, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, ADValue<double>> res = ad.Derive("(x^1.4)+3.7)");
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+    ASSERT_EQ(res.first.message, "Unbalanced parentheses -- too many \')\'");
+}
+
+TEST(autodiffer_test_fails_init_no_parens, double){
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/2., /*dval=*/1.);
+
+    std::pair<Status, ADValue<double>> res = ad.Derive("x+5");
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+    ASSERT_EQ(res.first.message, "No parentheses found.");
 }
 
 TEST(autodiffer_test_fails_run_invalid, double){
