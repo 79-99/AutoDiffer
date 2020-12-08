@@ -887,20 +887,36 @@ TEST(autodiffer_vector_in_LONG, double) {
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
     std::vector<std::string> equations;
-    for (int i = 0; i < 1000; i++) {
-        equations.push_back("((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)"); 
+    for (int i = 0; i < 100; i++) {
+        equations.push_back("((((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)+((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x))+((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x))"); 
     }
-    // equations.push_back("(2*(x+5))"); 
     auto start = std::chrono::high_resolution_clock::now();
     std::vector<std::pair<Status, ADValue<double>>> res = ad.Derive(equations);
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start); 
     std::cout << duration.count() << std::endl; 
-    // EXPECT_EQ(res[0].first.code, ReturnCode::success);
-    // EXPECT_NEAR(res[0].second.val(), -0.8414, 0.001);
-    // EXPECT_EQ(res[0].second.dval(0), 0);
-    // EXPECT_EQ(res[1].first.code, ReturnCode::success);
-    // EXPECT_EQ(res[1].second.val(), 10.888);
-    // EXPECT_EQ(res[1].second.dval(0), 2);
 }
 
+TEST(autodiffer_vector_in_LONG_seeds, double) {
+    AutoDiffer<double> ad;
+    std::vector<std::vector<std::pair<std::string, ADValue<double>>>> seeds; 
+
+    std::vector<double> x_seed = { 1, 1 };
+    std::vector<double> y_seed = { 1, 1 };
+    ADValue<double> seed_val1(0.444, x_seed);
+    std::vector<std::pair<std::string, ADValue<double>>> single_seed_list; 
+    single_seed_list.push_back(std::pair<std::string, ADValue<double>>("x", seed_val1));
+    ADValue<double> seed_val2(0.444, y_seed);
+    single_seed_list.emplace_back(std::pair<std::string, ADValue<double>>("y", seed_val2));
+
+    for (int i = 0; i < 10; i++) {
+        seeds.push_back(single_seed_list); 
+    }
+
+    std::string equation = "((((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)+((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x))+((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x))";
+    auto start = std::chrono::high_resolution_clock::now();
+    std::vector<std::pair<Status, ADValue<double>>> res = ad.Derive(equation, seeds);
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start); 
+    std::cout << duration.count() << std::endl; 
+}
