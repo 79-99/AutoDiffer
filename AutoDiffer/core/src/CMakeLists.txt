@@ -9,6 +9,13 @@ set(AUTODIFFER_SRC
 # ==================== #
 add_library(AutoDiffer SHARED ${AUTODIFFER_SRC} ${AUTODIFFER_H})
 
+OPTION(THREAD "Link against openmp" OFF)
+if(THREAD)
+	find_package(OpenMP REQUIRED)
+	target_link_libraries(AutoDiffer OpenMP::OpenMP_CXX)
+	target_compile_definitions(AutoDiffer PUBLIC USE_THREAD)
+endif()
+
 # Install targets into specific directories
 install(TARGETS AutoDiffer 
     RUNTIME DESTINATION bin/

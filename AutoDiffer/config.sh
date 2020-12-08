@@ -64,6 +64,10 @@ FC_FLAGS=
 # =========================
 COVERAGE=OFF
 
+# =========================
+# Thread Flag
+# =========================
+THREAD=OFF
 # ======================== 
 # compiler option defaults
 # ======================== 
@@ -199,6 +203,13 @@ do
     CXX=g++
     FC=gfortran
 
+  elif [ "$var" == "--fopenmp" ]; then
+    CC=gcc
+    CXX=g++
+    CXX_FLAGS="${CXX_FLAGS}"
+    FC=gfortran
+    THREAD=ON
+
   elif [ "$var" == "-intel" ]; then
     CC=icc
     CXX=icpc
@@ -323,6 +334,7 @@ if [ $BUILD_MAL == 1 ]; then
         -D gtest_dir=${GTEST_DIRECTORY}                             \
         -D UNIT_TEST=${UNIT_TEST}                                   \
         -D COVERAGE=${COVERAGE}                                     \
+        -D THREAD=${THREAD}                                         \
         -G "Unix Makefiles" ${MAL_DIRECTORY} | tee cmake_config.out
 
   ${MAKE_CMD}
