@@ -236,3 +236,16 @@ TEST(parser_test_invalid_sin, double){
     std::pair<Status,ADValue<double>> res = parser.Run();
     ASSERT_EQ(res.first.code, ReturnCode::parse_error);
 }
+
+TEST(parser_test_invalid_sin_no_parens, double){
+    std::string equation = "(siny)";
+    Parser<double> parser(equation);
+
+    ADValue<double> seed_value(/*value=*/1.9, /*seed=*/1.0);
+    std::pair<std::string, ADValue<double>> seed("x", seed_value);
+    std::vector<std::pair<std::string, ADValue<double>>> seeds = { seed };
+    ASSERT_EQ(parser.Init(seeds).code, ReturnCode::success);
+    std::pair<Status,ADValue<double>> res = parser.Run();
+    ASSERT_EQ(res.first.code, ReturnCode::parse_error);
+    ASSERT_EQ(res.first.message, "Invalid argument to sin");
+}
