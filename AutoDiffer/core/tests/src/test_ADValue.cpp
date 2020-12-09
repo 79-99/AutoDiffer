@@ -28,7 +28,7 @@ void All_testcheck(){
  * 
 */
 
-TEST(Getter,int){
+TEST(Getter_int,int){
     int value = 3;
     int seed = 7;
     ADValue<int> x1(value,seed);
@@ -38,7 +38,7 @@ TEST(Getter,int){
     EXPECT_EQ(x1.dval(0),seed);
 }
 
-TEST(Getter,float){
+TEST(Getter_float,float){
     float value = 9.8f;
     float seed = 1.0f;
     ADValue<float> x(value,seed);
@@ -48,7 +48,7 @@ TEST(Getter,float){
     EXPECT_NEAR(x.dval(0), seed, DTOL);
 }
 
-TEST(Getter,double){
+TEST(Getter_double,double){
     double value = 9.8;
     double seed = 1.0;
     ADValue<double> x(value,seed);
