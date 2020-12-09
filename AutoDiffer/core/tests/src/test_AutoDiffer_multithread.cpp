@@ -35,7 +35,7 @@ std::string CreateStringEq(int n) {
     return ret;
 }
 
-// Test Std Thread version for currectness.
+// Test Std Thread version for correctness. multi function derive.
 TEST(autodiffer_multithread_std_correctness_multifunc, double) {
     AutoDifferStdThread<double> ad(/*numthreads=*/6);
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
@@ -52,6 +52,7 @@ TEST(autodiffer_multithread_std_correctness_multifunc, double) {
     }
 }
 
+// Test Std Thread version for correctness. multi seed derive.
 TEST(autodiffer_multithread_std_correctness_multiseed, double) {
     AutoDifferStdThread<double> ad(/*numthreads=*/6);
     
@@ -76,7 +77,7 @@ TEST(autodiffer_multithread_std_correctness_multiseed, double) {
     }
 }
 
-// Test Std Thread version for currectness.
+// Test openmp version for correctness. multi function derive.
 TEST(autodiffer_multithread_openmp_correctness_multifunc, double) {
     AutoDifferOpenMp<double> ad(/*numthreads=*/6);
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
@@ -93,6 +94,7 @@ TEST(autodiffer_multithread_openmp_correctness_multifunc, double) {
     }
 }
 
+// Test openmp version for correctness. multi seed derive.
 TEST(autodiffer_multithread_openmp_correctness_multiseed, double) {
     AutoDifferOpenMp<double> ad(/*numthreads=*/6);
     
@@ -117,7 +119,7 @@ TEST(autodiffer_multithread_openmp_correctness_multiseed, double) {
     }
 }
 
-// Testing OpenMp version.
+// Testing OpenMp version. Timing
 TEST(autodiffer_vector_in_LONG, double) {
     AutoDifferOpenMp<double> ad(/*num_threads=*/6);
     ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
