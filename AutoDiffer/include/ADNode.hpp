@@ -16,6 +16,7 @@
 # include <vector>
 #endif
 
+// Scoped enum representing all the elementary functions we support.
 enum class Operation {
   addition = 1,
   subtraction = 2,
@@ -37,21 +38,53 @@ enum class Operation {
   sqrt = 18,
 };
 
+/**
+ * The ADNode class is the handler for evaluating ADValues given an operation.
+ * It handles both binary and unary operations by having a self and auxilary
+ * ADValue. The auxilary value will be zero and unused in case of unary ops.
+ * Once the ADNode is constructed, the Evaluate() function will return a new
+ * ADValue that the result of the operation.
+ */
 template <class T>
 class ADNode {
   private:
+    // The main value of the operation.
     ADValue<T> self_vertex_;
+
+    // The auxilary value of the operation. Will only be used for binary
+    // functions and will be ignored in unary case.
     ADValue<T> aux_vertex_;
+
+    // A boolean to represent if the auxilary vertex is present.
     bool aux_exists_;
+
+    // One of the operations represented above. 
     Operation op_;
   
   public:
+    /**
+     * The main constructor of ADNode that takes multiple ADValues and an
+     * operation.
+     *
+     * @param self: the main value of the operation. 
+     * @param aux: the auxilary value of the operation. Only used in binary 
+     * functions.
+     * @param op: the op to use on the main (and potentiall aux) ADValues.
+     */
     ADNode(ADValue<T> self, ADValue<T> aux, Operation op) : 
                            self_vertex_(self),
                            aux_vertex_(aux), 
                            aux_exists_(true),
                            op_(op) {}
     
+    /**
+     * An overload constructor for unary operations that do not require an
+     * auxilary ADValue. It assert that the op that is passed in is unary
+     * and throws an error if not.
+     *
+     * @param self: the main value of the operation. 
+     * @param op: the op to use on the main (and potentiall aux) ADValues.
+     */
     ADNode(ADValue<T> self, Operation op) : 
                            self_vertex_(self),
                            aux_exists_(false),
@@ -71,6 +104,12 @@ class ADNode {
       }
     }
     
+    /**
+     * The handler of operations. This function is responsible for calling the
+     * correct operation on the self (and aux in case of binary ops) ADValue(s). 
+     *
+     * @returns : an ADValue with the result of the operation being executed.
+     */
     ADValue<T> Evaluate() {
       switch(op_) {
         case Operation::addition : {
