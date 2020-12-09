@@ -27,6 +27,8 @@ enum class ReturnCode {
   parse_error = 2,
 };
 
+// Error handling object. If code != ReturnCode::success, then message will be
+// filled with an appropriate error.
 struct Status {
   ReturnCode code = ReturnCode::success;
   std::string message = "";
@@ -209,10 +211,53 @@ class Parser {
                               const std::string& op_name, 
                               const std::string& sub_str);
 
-  public:
-    Parser(std::string equation) : equation_(equation) {}
-    Status Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
+    /**
+     * Evaluate the current part of the equation that is within the left and 
+     * right cursor. This function will call HandleStringOps or HandleCharOps
+     * depending on the operation that it parses. The new ADValue created from
+     * the result of the evaluation of the ADNode will be stored in the values
+     * table under a unique name (e.g., "x4"). The cursor values will then be
+     * reset and the status of the parser returned.
+     *
+     * @returns: a status to indicate success or failure with a message.
+     */
     Status Next();
+
+  public:
+    /**
+     * Parser constructor.
+     *
+     * @param equation: a string representation of the equation.
+     */
+    Parser(std::string equation) : equation_(equation) {}
+
+    /**
+     * Initialize the state of the parser. Using the provided seed values and 
+     * seed names, fill the values_ hash map. Init also checks to ensure that
+     * the provided equation has balanced parentheses, and sets the initial
+     * values of the left and right cursor objects.
+     *
+     * @param seed_values: a vector of string -> ADValue pairs. These will be
+     * used to initialize the hash map the represents the values of intermediate
+     * objects.
+     * @returns: a status to indicate success or failure with a message.
+     */
+    Status Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
+
+    
+
+    /**
+     * Run the entire parsing flow. Run() calls Next until there is no 
+     * parentheses left in the equation (each call to next removes one set).
+     * Once the final result is available, Run returns this ADValue object as 
+     * well as a status. After calling Init(), Run should be the only function
+     * that the user calls.
+     *
+     * @returns: a pair of status and ADValue. If the status is success, then
+     * the ADValue object will contain the result of the AutoDifferentiation.
+     * If the status is a failure, then the ADValue object will be initialzed to
+     * zero. It is up to the user to check the status before using the object.
+     */
     std::pair<Status,ADValue<T>> Run();
 };
 
@@ -414,12 +459,14 @@ Status Parser<T>::CheckValidArgument(ADValue<T>& left_val,
                                      const std::string& op_name,
                                      const std::string& sub_str) {
     Status status;
+    // Check if the argument is found in the table.
     auto stored_val = values_.find(sub_str.substr(op_name.length())); 
     if (stored_val == values_.end()) {
         status.code = ReturnCode::parse_error; 
         status.message = "Invalid argument to " + op_name; 
         return status; 
     }
+    // Initialize right val to zero because it will not be used by unary ops.
     left_val = stored_val->second; 
     right_val = GetValue("0").second;
     return status;
@@ -444,7 +491,7 @@ Status Parser<T>::HandleThreeLetterOps(ADValue<T>& left_val,
     } else if (three_letter.compare("exp") == 0) {
         op = Operation::exp; 
         return CheckValidArgument(left_val, right_val, "exp", sub_str);
-    } else if (three_letter.compare("log") == 0) {
+    } else /* Must be log. */{
         // Log is more complicated because we need to parse the base.
         op = Operation::log;
         int right_marker = sub_str.substr(4).find('_');
@@ -459,9 +506,6 @@ Status Parser<T>::HandleThreeLetterOps(ADValue<T>& left_val,
             return status; 
         }
         left_val = stored_val->second;
-    } else {
-        status.code = ReturnCode::parse_error; 
-        status.message = "Unrecognized three letter operation: " + three_letter; 
     }
     return status; 
 }
@@ -471,7 +515,6 @@ Status Parser<T>::HandleFourLetterOps(ADValue<T>& left_val,
                                       ADValue<T>& right_val, 
                                       std::string sub_str, 
                                       Operation& op) {
-    Status status;
     std::string four_letter = sub_str.substr(0,4);
     if (four_letter.compare("sinh") == 0) {
         op = Operation::sinh; 
@@ -482,20 +525,15 @@ Status Parser<T>::HandleFourLetterOps(ADValue<T>& left_val,
     } else if (four_letter.compare("tanh") == 0) {
         op = Operation::tanh; 
         return CheckValidArgument(left_val, right_val, "tanh", sub_str);               
-    } else if (four_letter.compare("sqrt") == 0) {
+    } else /* Must be sqrt. */ {
         op = Operation::sqrt; 
         return CheckValidArgument(left_val, right_val, "sqrt", sub_str);                
-    } else {
-        status.code = ReturnCode::parse_error; 
-        status.message = "Unrecognized four letter operation: " + four_letter;  
     }
-    return status;
 }
 
 template <class T>
 Status Parser<T>::HandleSixLetterOps(ADValue<T>& left_val, 
             ADValue<T>& right_val, std::string sub_str, Operation& op) {
-    Status status;
     std::string inv_trig_str = sub_str.substr(0,6);
     if (inv_trig_str.compare("arcsin") == 0) {
         op = Operation::arcsin; 
@@ -503,14 +541,10 @@ Status Parser<T>::HandleSixLetterOps(ADValue<T>& left_val,
     } else if (inv_trig_str.compare("arccos") == 0) {
         op = Operation::arccos; 
         return CheckValidArgument(left_val, right_val, "arccos", sub_str);
-    } else if (inv_trig_str.compare("arctan") == 0) {
+    } else /* Must be arctan. */ {
         op = Operation::arctan; 
         return CheckValidArgument(left_val, right_val, "arctan", sub_str);
-    } else {
-        status.code = ReturnCode::parse_error;
-        status.message = "Unable to parse six letter function.";
     }
-    return status;
 }
 
 template <class T>
@@ -573,6 +607,7 @@ Status Parser<T>::Next() {
 template <class T>
 std::pair<Status,ADValue<T>> Parser<T>::GetValue(const std::string& key) {
     Status status;
+    // Check for empty key.
     if (key.empty()) {
         return std::pair<Status, ADValue<T>>(status, ADValue<T>(0, 0));
     }
@@ -582,9 +617,12 @@ std::pair<Status,ADValue<T>> Parser<T>::GetValue(const std::string& key) {
         return std::pair<Status, ADValue<T>>(status, values_[key]);
     }
 
+    // Key is not in table, so try to cast the string to type T through use of
+    // stringstream.
     std::istringstream ss(key);
     T num;
     ss >> num;
+    // Casting failed.
     if (!ss.eof() || ss.fail()){
         status.code = ReturnCode::parse_error;
         status.message = "Key not found: " + key;
@@ -598,6 +636,9 @@ template <class T>
 bool Parser<T>::SetCursor() {
     int depth = 0;
     int max_depth = 0;
+    // Look through equation and calculate the max depth (e.g., most nested
+    // set of parens). Once this is found, update the values of the left and
+    // right cursor. 
     for (int i = 0; i < equation_.length(); ++i) {
         if (equation_[i] == '(') {
             depth += 1;
