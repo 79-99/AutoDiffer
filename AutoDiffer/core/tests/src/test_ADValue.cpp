@@ -58,36 +58,6 @@ TEST(Getter,double){
     EXPECT_NEAR(x.dval(0), seed, DTOL);
 }
 
-TEST(Setter,int){
-    int value = 2;
-    int seed = 1;
-    ADValue<int> x(value,seed);
-
-    /* test getters */
-    x.setval(3);
-    EXPECT_EQ(x.val(), 3);
-}
-
-TEST(Setter,float){
-    float value = 1.8f;
-    float seed = 1.2f;
-    ADValue<float> x(value,seed);
-
-    /* test getters */
-    x.setval(3.3);
-    EXPECT_NEAR(x.val(), 3.3, 1E-6);
-}
-
-TEST(Setter,double){
-    double value = 1.8;
-    double seed = 1.2;
-    ADValue<double> x(value,seed);
-
-    /* test getters */
-    x.setval(3.3);
-    EXPECT_NEAR(x.val(), 3.3, 1E-6);
-}
-
 TEST(Operators,Add_double){
     double seed1 = 1.9;
     double seed2 = 4.4;
