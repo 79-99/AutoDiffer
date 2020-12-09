@@ -30,7 +30,7 @@ class ADValue {
     T v;
     
     // Derivative values.
-    std::vector<T> dvs;   /**< derivative values */
+    std::vector<T> dvs;
 
   public:
     /**
@@ -107,7 +107,6 @@ class ADValue {
     /**
      * Exponentiation operator.
      * 
-     * @param: other: the denominator.
      * @returns: ADValue with the result of the division.
      */
     ADValue<T> ADexp();
