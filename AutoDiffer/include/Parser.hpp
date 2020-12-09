@@ -337,12 +337,12 @@ int Parser<T>::GetOpIndex(const std::string& sub_str, Operation& op) {
             } else if (op_char == '^') {
                 op = Operation::power;
             } else if (op_char == '-') {
-		        op = Operation::subtraction;
-	        } else if (op_char == '/') {
-		        op = Operation::division;
-	        } else if (op_char == '*') {
-		        op = Operation::multiplication;
-	        }
+                op = Operation::subtraction;
+            } else if (op_char == '/') {
+                op = Operation::division;
+            } else if (op_char == '*') {
+                op = Operation::multiplication;
+            }
             op_index = i;
             break;
         }
