@@ -37,7 +37,7 @@ std::string CreateStringEq(int n) {
 
 // Test Std Thread version for correctness. multi function derive.
 TEST(autodiffer_multithread_std_correctness_multifunc, double) {
-    AutoDifferStdThread<double> ad(/*numthreads=*/6);
+    AutoDifferStdThread<double> ad;
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
     
     // Create string eq and vector.
@@ -54,7 +54,7 @@ TEST(autodiffer_multithread_std_correctness_multifunc, double) {
 
 // Test Std Thread version for correctness. multi seed derive.
 TEST(autodiffer_multithread_std_correctness_multiseed, double) {
-    AutoDifferStdThread<double> ad(/*numthreads=*/6);
+    AutoDifferStdThread<double> ad;
     
     // Create string eq and vector.
     std::string eq = CreateStringEq(100);
