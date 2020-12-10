@@ -26,13 +26,13 @@ std::string CreateStringEq(int n) {
     return ret;
 }
 
-void TimeStdThreadAD(int num_eqs, bool verbose) {
+void TimeStdThreadAD(int num_eqs, int num_ops, bool verbose) {
     // Create Std Thread Autodiffer. 
     AutoDifferStdThread<double> ad;
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
     // Create large equation and make copies of it.
-    std::string eq = CreateStringEq(1500);
+    std::string eq = CreateStringEq(num_ops);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
     // Time the multithreaded derive.
@@ -49,13 +49,13 @@ void TimeStdThreadAD(int num_eqs, bool verbose) {
     }   
 }
 
-void TimeSingleThreadAD(int num_eqs, bool verbose) {
+void TimeSingleThreadAD(int num_eqs, int num_ops, bool verbose) {
     // Create Autodiffer. 
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
     // Create large equation and make copies of it.
-    std::string eq = CreateStringEq(1500);
+    std::string eq = CreateStringEq(num_ops);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
     // Time the single threaded derive.
@@ -74,14 +74,14 @@ void TimeSingleThreadAD(int num_eqs, bool verbose) {
 }
 
 int main(int argc, char **argv) {
-    if (argc < 2) {
-        std::cout << "Please specify number of equations: ";
-        std::cout << "Example Usage: ./example_std_thread 4" << std::endl;
+    if (argc < 3) {
+        std::cout << "Please specify number of equations and operations: ";
+        std::cout << "Example Usage: ./example_std_thread 4 100" << std::endl;
         return 0;
     }
 
     bool verbose = true;
-    if (argc == 3 && std::strcmp(argv[2], "-nv") == 0) {
+    if (argc == 4 && std::strcmp(argv[3], "-nv") == 0) {
         verbose = false;
     }
 
@@ -96,7 +96,18 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    // Get number of ops.
+    std::istringstream ss2(argv[2]);
+    int num_ops;
+    if (!(ss2 >> num_ops)) {
+        std::cerr << "Invalid number: " << argv[2] << '\n';
+        return 0;
+    } else if (!ss2.eof()) {
+        std::cerr << "Trailing characters after number: " << argv[1] << '\n';
+        return 0;
+    }
+
     // By changing the number of equations we can see speedup.
-    TimeSingleThreadAD(num_eqs, verbose);
-    TimeStdThreadAD(num_eqs, verbose);
+    TimeSingleThreadAD(num_eqs, num_ops, verbose);
+    TimeStdThreadAD(num_eqs, num_ops, verbose);
 }
