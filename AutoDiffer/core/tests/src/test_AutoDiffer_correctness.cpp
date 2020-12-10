@@ -162,7 +162,6 @@ TEST(autodiffer_tanh_simple, double) {
 
 TEST(autodiffer_logistic_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.92, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(logistic(0.3))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.574443, 0.001);
@@ -208,7 +207,6 @@ TEST(autodiffer_log_simple, double) {
 
 TEST(autodiffer_log_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.4321, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(log_5.8_(3))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.624972, 0.001);
@@ -225,7 +223,6 @@ TEST(autodiffer_log_negative, double) {
 
 TEST(autodiffer_sqrt_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/5.3, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(sqrt(5.5))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 2.34521, 0.001);
@@ -261,7 +258,6 @@ TEST(autodiffer_sqrt_fcn, double) {
 
 TEST(autodiffer_arcsin_of_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(arcsin(0.56))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.594386, 0.001);
@@ -296,7 +292,6 @@ TEST(autodiffer_arcsin_of_func, double) {
 
 TEST(autodiffer_arccos_of_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(arccos(0.56))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.976411, 0.001);
@@ -331,7 +326,6 @@ TEST(autodiffer_arccos_of_func, double) {
 
 TEST(autodiffer_arctan_of_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(arctan(0.56))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.510488, 0.001);
@@ -358,7 +352,6 @@ TEST(autodiffer_arctan_of_func, double) {
 
 TEST(autodiffer_sinh_of_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(sinh(0.56))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.589732, 0.001);
@@ -386,7 +379,7 @@ TEST(autodiffer_sinh_of_func, double) {
 
 TEST(autodiffer_cosh_of_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
+    // ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(cosh(0.73))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 1.27849, 0.001);
@@ -413,7 +406,6 @@ TEST(autodiffer_cosh_of_func, double) {
 
 TEST(autodiffer_tanh_of_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.9, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(tanh(0.73))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.623065, 0.001);
@@ -458,7 +450,6 @@ TEST(autodiffer_log_of_func, double) {
 
 TEST(autodiffer_exp_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.3, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(3^(-0.5))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.57735, 0.001);
@@ -494,7 +485,6 @@ TEST(autodiffer_exp_both_fcns, double) {
 
 TEST(autodiffer_sin_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(sin(-1))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), -0.8414, 0.001);
@@ -531,7 +521,6 @@ TEST(autodiffer_sin_fcn_in, double) {
 
 TEST(autodiffer_cos_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(cos(1))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), 0.540302, 0.001);
@@ -567,7 +556,6 @@ TEST(autodiffer_cos_fcn_in, double) {
 
 TEST(autodiffer_tan_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(tan(1.73))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), -6.2281, 0.001);
@@ -601,9 +589,58 @@ TEST(autodiffer_tan_fcn_in, double) {
     EXPECT_NEAR(res.second.dval(0), 0.231721, 0.001);
 }
 
-TEST(autodiffer_div_two_const, double) {
+TEST(autodiffer_neg_const, double) {
+    AutoDiffer<double> ad;
+    std::pair<Status, ADValue<double>> res = ad.Derive("(-(-1.2))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), 1.2, 0.001);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
+TEST(autodiffer_neg_const_lots_negs, double) {
+    AutoDiffer<double> ad;
+    std::pair<Status, ADValue<double>> res = ad.Derive("(-(-(-(-1.2))))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), 1.2, 0.001);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
+TEST(autodiffer_sub_const, double) {
+    AutoDiffer<double> ad;
+    std::pair<Status, ADValue<double>> res = ad.Derive("(1.99-1.2)");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), .79, 0.001);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
+TEST(autodiffer_sub_const_neg, double) {
+    AutoDiffer<double> ad;
+    std::pair<Status, ADValue<double>> res = ad.Derive("((-1.)-1.2)");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), -2.2, 0.001);
+    EXPECT_EQ(res.second.dval(0), 0);
+}
+
+TEST(autodiffer_log_long, double) {
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/0.37, /*dval=*/1.);
+    std::pair<Status, ADValue<double>> res = ad.Derive("(log_1.299491_(x))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), -3.79525, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 10.3167, 0.001);
+}
+
+TEST(autodiffer_log_short, double) {
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/0.37, /*dval=*/1.);
+    std::pair<Status, ADValue<double>> res = ad.Derive("(log_3_(x))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), -.905007, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 2.46011, 0.001);
+}
+
+TEST(autodiffer_div_two_const, double) {
+    AutoDiffer<double> ad;
     std::pair<Status, ADValue<double>> res = ad.Derive("(0.45/(-0.33))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.val(), -1.36364, 0.001);
@@ -648,7 +685,6 @@ TEST(autodiffer_div_both_fcn, double) {
 
 TEST(autodiffer_negation_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.37, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(-2020)");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_EQ(res.second.val(), -2020);
@@ -666,7 +702,6 @@ TEST(autodiffer_negation_fcn, double) {
 
 TEST(autodiffer_add_two_const, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.37, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(2019+(-2020))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_EQ(res.second.val(), -1);
@@ -702,7 +737,6 @@ TEST(autodiffer_basic_nop, double) {
 
 TEST(autodiffer_const_nop, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(5)");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_EQ(res.second.val(), 5);
@@ -711,7 +745,6 @@ TEST(autodiffer_const_nop, double) {
 
 TEST(autodiffer_const_nop_long, double) {
     AutoDiffer<double> ad;
-    ad.SetSeed("x", /*value=*/0.444, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(6160)");
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_EQ(res.second.val(), 6160);

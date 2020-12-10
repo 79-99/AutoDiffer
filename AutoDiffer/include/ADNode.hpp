@@ -129,6 +129,7 @@ class ADNode {
         }
 
         case Operation::subtraction : {
+
           return self_vertex_ - aux_vertex_; 
         }
 
