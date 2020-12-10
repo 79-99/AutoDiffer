@@ -52,7 +52,6 @@ help() {
     echo "  [OPTION]:"
     echo "    --3pl       -3pl    build the 3rd party libraries:  gtest"
     echo "    --library   -lib    build AutoDiffer"
-    echo "    --app       -app    build the App which uses AutoDiffer"
     echo " "
     echo "    --help      -h      displays this help message"
     echo "    --clean     -c      removes local build directories"
@@ -117,10 +116,6 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_LIB=1
 
-  elif [ "$var" == "--app" -o "$var" == "-app" ]; then
-    echo -e "Found known argument: ${gC}$var${eC}"
-    BUILD_APP=1
-
   elif [ "$var" == "--release" -o "$var" == "-release" -o "$var" == "-opt" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_TYPE=0
@@ -183,7 +178,7 @@ fi
 # =================================================================== #
 if [ $BUILD_TYPE == 2 -a $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
   echo "================================================"
-  echo "Building the GTest, AutoDiffer, and App with OpenMP..."
+  echo "Building the GTest and AutoDiffer with OpenMP..."
   echo "================================================"
   echo " "
 
@@ -197,13 +192,6 @@ if [ $BUILD_TYPE == 2 -a $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]
 
   # build library with OpenMP flag
   ./config.sh --fopenmp $cmd_args
-
-  cd ..
-  cd App
-
-  # build app
-  ./config.sh $cmd_args
-
   cd ..
 
   echo
@@ -215,7 +203,7 @@ fi
 
 if [ $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
   echo "================================================"
-  echo "Building the GTest, AutoDiffer, and App..."
+  echo "Building the GTest and AutoDiffer ..."
   echo "================================================"
   echo " "
 
@@ -229,13 +217,6 @@ if [ $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
 
   # build library
   ./config.sh $cmd_args
-
-  cd ..
-  cd App
-
-  # build app
-  ./config.sh $cmd_args
-
   cd ..
 
   echo
@@ -261,16 +242,6 @@ if [ $BUILD_LIB == 1 ]; then
   echo "============================"
 
   cd AutoDiffer
-  ./config.sh $cmd_args
-  cd ..
-fi
-
-if [ $BUILD_APP == 1 ]; then
-  echo "==============="
-  echo "Building App..."
-  echo "==============="
-
-  cd App
   ./config.sh $cmd_args
   cd ..
 fi
