@@ -4,13 +4,11 @@
 #ifndef AUTODIFFER_H
 #define AUTODIFFER_H
 /* header files */
-#include "ADNode.hpp"
-#include "ADValue.hpp"
-#include "Parser.hpp"
+#include "../include/ADNode.hpp"
+#include "../include/ADValue.hpp"
+#include "../include/Parser.hpp"
 
-#ifdef USE_THREAD
 #include <omp.h>
-#endif
 /* system header files */
 #ifndef DOXYGEN_IGNORE
 #include <iostream>
@@ -208,18 +206,14 @@ class AutoDifferOpenMp : public AutoDiffer<T> {
 template <class T>
 std::vector<std::pair<Status,ADValue<T>>> AutoDifferOpenMp<T>::DeriveOpenMp(
     std::vector<std::string> equations) {
-    #ifdef USE_THREAD
-        // Set the number of theads.
-        omp_set_num_threads(num_threads_);
-    #endif
+    // Set the number of theads.
+    omp_set_num_threads(num_threads_);
     std::vector<std::pair<Status,ADValue<T>>> return_values(equations.size()); 
     #pragma omp parallel for
     for (int i = 0; i < equations.size(); i++) { 
-        #ifdef USE_THREAD
-            // Uncomment this line to verify if OpenMP is working
-            // Should print out a number more than 1 
-            // std::cout << "*** num_threads:" <<omp_get_num_threads()<< std::endl;
-        #endif
+        // Uncomment this line to verify if OpenMP is working
+        // Should print out a number more than 1 
+        // std::cout << "*** num_threads:" << omp_get_num_threads() << std::endl;
         Parser<T> parser(equations[i]);
         Status status = parser.Init(this->seeds_);
         if (status.code != ReturnCode::success) {
@@ -236,18 +230,14 @@ template <class T>
 std::vector<std::pair<Status,ADValue<T>>> AutoDifferOpenMp<T>::DeriveOpenMp(
     const std::string& equation, 
     std::vector<std::vector<std::pair<std::string, ADValue<T>>>> seeds) {
-    #ifdef USE_THREAD
-        // Set the number of theads.
-        omp_set_num_threads(num_threads_);
-    #endif
+    // Set the number of theads.
+    omp_set_num_threads(num_threads_);
     std::vector<std::pair<Status,ADValue<T>>> return_values(seeds.size()); 
     #pragma omp parallel for
     for (int i = 0; i < seeds.size(); i++) {
-        #ifdef USE_THREAD
-            // Uncomment this line to verify if OpenMP is working
-            // Should print out a number more than 1 
-            // std::cout << "*** num_threads:" <<omp_get_num_threads()<< std::endl;
-        #endif
+        // Uncomment this line to verify if OpenMP is working
+        // Should print out a number more than 1 
+        // std::cout << "*** num_threads:" <<omp_get_num_threads()<< std::endl;
         Parser<T> parser(equation);
         Status status = parser.Init(seeds[i]);
         if (status.code != ReturnCode::success) {
