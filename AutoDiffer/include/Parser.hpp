@@ -62,7 +62,7 @@ class Parser {
     int v_idx_ = 0;
 
     // The size of the seed vector. This will be 1 for scalar functions.
-    int seed_size_;
+    int seed_size_ = 1;
 
     // The special characters representing the elementary operations that we
     // parse for.
@@ -295,7 +295,13 @@ std::pair<Status,ADValue<T>> Parser<T>::Run() {
 template <class T>
 Status Parser<T>::Init(
     std::vector<std::pair<std::string, ADValue<T>>> seed_values) {
-    seed_size_ = seed_values.size();
+    // If seed values has been set to nonzero vector.
+    if (seed_values.size() > 0) {
+        seed_size_ = seed_values.size();
+    } else {
+        // Default is at least 1 for seed size.
+        seed_size_ = 1;
+    }
     // Setting seed values in hash table.
     for (auto& seed_val : seed_values) {
         values_[seed_val.first] = seed_val.second;
