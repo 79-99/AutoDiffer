@@ -196,6 +196,21 @@ class ADValue {
      * @returns: ADValue with the result of the sqrt.
      */
     ADValue<T> ADsqrt();
+
+    /**
+     * Equality comparison operator. Only returns true if value and all dvals
+     * are equal.
+     * 
+     * @returns: bool indicating that other and self are the same.
+     */
+    bool operator==(const ADValue<T> &other) const;
+
+    /**
+     * Neq comparison operator. Returns true if == returns false.
+     * 
+     * @returns: bool indicating that other and self are the different.
+     */
+    bool operator!=(const ADValue<T> &other) const;
 };
 
 // Implementation
@@ -223,6 +238,30 @@ const ADValue<T> ADValue<T>::operator-(const ADValue<T> &other) const {
         new_derivs.emplace_back(dvs[i] - other.dval(i));
     }
     return ADValue<T>(new_val, new_derivs);
+}
+
+template<class T>
+bool ADValue<T>::operator==(const ADValue<T> &other) const {
+    if (v != other.v) {
+        return false;
+    }
+    // Check same size derivative list.
+    if (dvs.size() != other.dvs.size()) {
+        return false;
+    }
+    // Check that each derivative matches.
+    for (int i = 0; i < dvs.size(); ++i) {
+        if (dvs[i] != other.dvs[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template<class T>
+bool ADValue<T>::operator!=(const ADValue<T> &other) const {
+    // Return opposite of ==.
+    return !(*this == other);
 }
 
 template<class T>
