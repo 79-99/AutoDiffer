@@ -4,7 +4,8 @@
  *          templated AutoDiffer multithreaded class.
  *
  *    
- * To run this example run `make` in this directory, followed by `./example_std_thread`
+ * To run this example run `make` in this directory, followed by 
+ * ./example_std_thread num_equations num_ops_per_eq num_threads.
  *
  */
 
