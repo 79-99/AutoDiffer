@@ -220,7 +220,7 @@ TEST(autodiffer_log_negative, double) {
     ad.SetSeed("x", /*value=*/-2.5, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(log_7.8_(x))");
     EXPECT_EQ(res.first.code, ReturnCode::success); 
-    EXPECT_EQ(isnan(res.second.val()), 1);
+    EXPECT_EQ(std::isnan(res.second.val()), 1);
 }
 
 TEST(autodiffer_sqrt_const, double) {
@@ -246,7 +246,7 @@ TEST(autodiffer_sqrt_neg_var, double) {
     ad.SetSeed("x", /*value=*/-5.3, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(sqrt(x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_EQ(isnan(res.second.val()), 1);
+    EXPECT_EQ(std::isnan(res.second.val()), 1);
 }
 
 
@@ -282,7 +282,7 @@ TEST(autodiffer_arcsin_out_of_domain, double) {
     ad.SetSeed("x", /*value=*/-5.3, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(arcsin(x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_EQ(isnan(res.second.val()), 1);
+    EXPECT_EQ(std::isnan(res.second.val()), 1);
 }
 
 TEST(autodiffer_arcsin_of_func, double) {
@@ -317,7 +317,7 @@ TEST(autodiffer_arccos_out_of_domain, double) {
     ad.SetSeed("x", /*value=*/-5.3, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(arccos(x))");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_EQ(isnan(res.second.val()), 1);
+    EXPECT_EQ(std::isnan(res.second.val()), 1);
 }
 
 TEST(autodiffer_arccos_of_func, double) {
@@ -615,7 +615,7 @@ TEST(autodiffer_div_by_zero, double) {
     ad.SetSeed("x", /*value=*/0.37, /*dval=*/1.);
     std::pair<Status, ADValue<double>> res = ad.Derive("(x/0)");
     EXPECT_EQ(res.first.code, ReturnCode::success);
-    EXPECT_EQ(isnan(res.second.val()), 1);
+    EXPECT_EQ(std::isnan(res.second.val()), 1);
 }
 
 TEST(autodiffer_div_num_const, double) {
