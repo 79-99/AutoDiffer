@@ -14,7 +14,7 @@
 #include <vector>
 
 
-#include "../../../AutoDiffer/include_examples/AutoDiffer.hpp"
+#include "../../../AutoDiffer/include/AutoDiffer.hpp"
 
 
 // Helper to create long functions.
@@ -26,19 +26,18 @@ std::string CreateStringEq(int n) {
     return ret;
 }
 
-void TimeOpenMpAD(int num_eqs, int num_threads, bool verbose) {
+void TimeStdThreadAD(int num_eqs, int num_ops, bool verbose) {
     // Create Std Thread Autodiffer. 
-    // std::cout << num_threads << std::endl;
-    AutoDifferOpenMp<double> ad(6);
+    AutoDifferStdThread<double> ad;
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
-    // Create large equation and make 6 copies of it.
-    std::string eq = CreateStringEq(1500);
+    // Create large equation and make copies of it.
+    std::string eq = CreateStringEq(num_ops);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
     // Time the multithreaded derive.
     auto start = std::chrono::high_resolution_clock::now();
-    auto res = ad.DeriveOpenMp(vec_strings);
+    auto res = ad.DeriveStdThread(vec_strings);
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
         stop - start); 
@@ -50,13 +49,13 @@ void TimeOpenMpAD(int num_eqs, int num_threads, bool verbose) {
     }   
 }
 
-void TimeSingleThreadAD(int num_eqs, bool verbose) {
+void TimeSingleThreadAD(int num_eqs, int num_ops, bool verbose) {
     // Create Autodiffer. 
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
-    // Create large equation and make 6 copies of it.
-    std::string eq = CreateStringEq(1500);
+    // Create large equation and make copies of it.
+    std::string eq = CreateStringEq(num_ops);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
     // Time the single threaded derive.
@@ -76,8 +75,8 @@ void TimeSingleThreadAD(int num_eqs, bool verbose) {
 
 int main(int argc, char **argv) {
     if (argc < 3) {
-        std::cout << "Please specify number of equations and threads: ";
-        std::cout << "Example Usage: ./example_std_thread 100 6" << std::endl;
+        std::cout << "Please specify number of equations and operations: ";
+        std::cout << "Example Usage: ./example_std_thread 4 100" << std::endl;
         return 0;
     }
 
@@ -86,7 +85,7 @@ int main(int argc, char **argv) {
         verbose = false;
     }
 
-    // Get number of eqs.
+    // Get number of threads.
     std::istringstream ss(argv[1]);
     int num_eqs;
     if (!(ss >> num_eqs)) {
@@ -97,19 +96,18 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    // Get number of threads.
+    // Get number of ops.
     std::istringstream ss2(argv[2]);
-    int num_threads;
-    if (!(ss2 >> num_threads)) {
+    int num_ops;
+    if (!(ss2 >> num_ops)) {
         std::cerr << "Invalid number: " << argv[2] << '\n';
         return 0;
     } else if (!ss2.eof()) {
-        std::cerr << "Trailing characters after number: " << argv[2] << '\n';
+        std::cerr << "Trailing characters after number: " << argv[1] << '\n';
         return 0;
     }
-    // std::cout << num_threads << std::endl;
 
     // By changing the number of equations we can see speedup.
-    TimeSingleThreadAD(num_eqs, verbose);
-    TimeOpenMpAD(num_eqs, num_threads, verbose);
+    TimeSingleThreadAD(num_eqs, num_ops, verbose);
+    TimeStdThreadAD(num_eqs, num_ops, verbose);
 }
