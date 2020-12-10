@@ -32,7 +32,7 @@ void TimeOpenMpAD(int num_eqs, int num_threads, bool verbose) {
     AutoDifferOpenMp<double> ad(6);
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
-    // Create large equation and make 6 copies of it.
+    // Create large equation and make copies of it.
     std::string eq = CreateStringEq(1500);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
@@ -55,7 +55,7 @@ void TimeSingleThreadAD(int num_eqs, bool verbose) {
     AutoDiffer<double> ad;
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
-    // Create large equation and make 6 copies of it.
+    // Create large equation and make copies of it.
     std::string eq = CreateStringEq(1500);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
@@ -77,7 +77,7 @@ void TimeSingleThreadAD(int num_eqs, bool verbose) {
 int main(int argc, char **argv) {
     if (argc < 3) {
         std::cout << "Please specify number of equations and threads: ";
-        std::cout << "Example Usage: ./example_std_thread 100 6" << std::endl;
+        std::cout << "Example Usage: ./example_openmp 100 6" << std::endl;
         return 0;
     }
 

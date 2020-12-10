@@ -16,6 +16,7 @@
 
 #include "../../../AutoDiffer/include/AutoDiffer.hpp"
 
+const std::string TEST_MEDIUM_EQ = "((((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x)+((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x))+((((-2)/(x^x))*((tan(exp(sin(cos(x)))))+x))/x))";
 
 // Helper to create long functions.
 std::string CreateStringEq(int n) {
@@ -32,7 +33,7 @@ void TimeStdThreadAD(int num_eqs, bool verbose) {
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
     // Create large equation and make copies of it.
-    std::string eq = CreateStringEq(1500);
+    std::string eq = CreateStringEq(5);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
     // Time the multithreaded derive.
@@ -55,7 +56,7 @@ void TimeSingleThreadAD(int num_eqs, bool verbose) {
     ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
 
     // Create large equation and make copies of it.
-    std::string eq = CreateStringEq(1500);
+    std::string eq = CreateStringEq(5);
     std::vector<std::string> vec_strings(num_eqs, eq);
 
     // Time the single threaded derive.
