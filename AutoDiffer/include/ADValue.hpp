@@ -12,6 +12,7 @@
 #ifndef DOXYGEN_IGNORE
 # include <iostream>
 # include <math.h>
+# include <cmath>
 # include <stdio.h>
 # include <vector>
 #endif
@@ -265,7 +266,13 @@ ADValue<T> ADValue<T>::ADmul(const ADValue<T> &other) {
 template<class T>
 ADValue<T> ADValue<T>::ADdiv(const ADValue<T> &other) {
     // Divide values.
-    T new_v = v / other.val();
+    T new_v; 
+    if (other.val() == 0) {
+        new_v = NAN; 
+    } else {
+        new_v = v / other.val();
+    }
+    
     std::vector<T> new_derivs;
     // Quotient rule for each derivative.
     for (int i = 0; i < dvs.size(); ++i) {
