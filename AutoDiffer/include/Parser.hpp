@@ -34,6 +34,17 @@ struct Status {
   std::string message = "";
 };
 
+
+/**
+ * The Parser class handles most of the logic in the AutoDiffer library. The 
+ * parser is constructed with a string representation of the function to derive
+ * (e.g., "((x^2)+(y^2))"). Starting with the deepest set of parentheses, the
+ * parser evaluates the resulting intermediate values until there is only a 
+ * single value left, which is returned. The public interface for the parser
+ * is to construct it with a string, call Init with the appropriate seed values
+ * and then extract the result with a call to Run. The parser should not be used
+ * by clients, and instead should only be used from an AutoDiffer object.
+ */
 template <class T>
 class Parser {
   private:
@@ -244,7 +255,6 @@ class Parser {
      */
     Status Init(std::vector<std::pair<std::string, ADValue<T>>> seed_values);
 
-    
 
     /**
      * Run the entire parsing flow. Run() calls Next until there is no 
