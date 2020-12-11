@@ -37,16 +37,24 @@
  */
 
 int main() {
+    // Create AutoDiffer object.
     AutoDiffer<double> ad;
 
+    // Set up seed vectors. Order matters here! The first seed in the seed vector
+    // need to correspond to the first variable that SetSeedVector is called with.
     std::vector<double> x_seed = {1, 0};
     std::vector<double> y_seed = {0, 1};
 
+    // Set the seed vectors (in the correct order).
     ad.SetSeedVector("x", -1, x_seed);
     ad.SetSeedVector("y", 2, y_seed);
 
+    // Run derive.
     std::pair<Status, ADValue<double>> res = ad.Derive("((x^2)+(5*y))");
     
+    // Make sure that no error was returned.
+    assert(res.first.code == ReturnCode::success);
+
     std::cout << "AutoDiffer of function f(x,y) = x^2+5y at x=-1, y=2" << std::endl;
     std::cout << "Expected function value = 11; AutoDiffer function value = "
         << res.second.val() << std::endl;

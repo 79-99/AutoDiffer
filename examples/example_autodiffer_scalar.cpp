@@ -17,10 +17,19 @@
 
 
 int main() {
+    // Create AutoDiffer object.
     AutoDiffer<double> ad;
+
+    // Set seed values for variables in the function.
     ad.SetSeed("x", /*value=*/7, /*dval=*/1);
+
+    // Call derive. 
     std::pair<Status, ADValue<double>> res = ad.Derive("((x+5)^3)");
     
+    // Make sure that no error was returned.
+    assert(res.first.code == ReturnCode::success);
+
+    // Print results.
     std::cout << "AutoDiffer of function f(x) = ((x+5)^3) at x=7" << std::endl;
     std::cout << "Expected function value = 1728; AutoDiffer function value = "
         << res.second.val() << std::endl;
