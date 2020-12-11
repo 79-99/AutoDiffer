@@ -1,10 +1,11 @@
 /**
- * @file    example_adnode1.cpp
+ * @file    example_adnode_scalar.cpp
  * @brief   Demonstrates the used of the
  *          templated ADNode and ADValue classes.
  *
  *    
- * To run this example run `make` in this directory, followed by `./example_adnode1`
+ * To run this example run `make` in this directory, followed by 
+ * `./example_adnode_scalar`
  *
  */
 

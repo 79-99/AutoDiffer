@@ -1,10 +1,11 @@
 /**
- * @file    example_autodiffer2.cpp
+ * @file    example_autodiffer_scalar2.cpp
  * @brief   Demonstrates the used of the
  *          templated AutoDiffer class.
  *
  *    
- * To run this example run `make` in this directory, followed by `./example_autodiffer2`
+ * To run this example run `make` in this directory, followed by 
+ * `./example_autodiffer_scalar2`
  *
  */
 
