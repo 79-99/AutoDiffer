@@ -7,4 +7,16 @@ Group Members
 * Chenguang Li - chenguang_li@fas.harvard.edu
 * Michael Neuder - michaelneuder@g.harvard.edu
 
-[Documentation](docs/documentation.ipynb)
+Dependencies:
+1. g++
+2. CMake
+3. Openmp (optional if you want to run the multithreaded AutoDiffer).
+
+Fast install:
+
+1. Clone this repo.
+2. Run `bash config.sh` in the top level directory. This will build the project and run unit tests.
+3. Include `AutoDiffer.hpp` to use the library. No linking is necessary, because this is a header only library.
+4. Check out [examples README](examples/README.md) for example usage and demo Makefiles.
+
+See [Documentation](docs/documentation.ipynb) for more details.
