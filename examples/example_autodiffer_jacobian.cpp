@@ -1,11 +1,12 @@
 /**
- * @file    example_autodiffer_vector.cpp
+ * @file    example_autodiffer_jacobian.cpp
  * @brief   Demonstrates the used of the
  *          templated AutoDiffer class to calculate
  *          the jacobian of a set vector functions.
  *
  *    
- * To run this example run `make` in this directory, followed by `./example_autodiffer_vector`
+ * To run this example run `make` in this directory, followed by 
+ * `./example_autodiffer_jacobian`
  *
  */
 
