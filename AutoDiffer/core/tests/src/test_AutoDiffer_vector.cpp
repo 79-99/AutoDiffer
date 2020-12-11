@@ -181,3 +181,21 @@ TEST(autodiffer_vector_in, double) {
     EXPECT_EQ(res[1].second.val(), 10.888);
     EXPECT_EQ(res[1].second.dval(0), 2);
 }
+
+TEST(autodiffer_vector_3vars, double) {
+    // (xyz)^(xyz)
+    AutoDiffer<double> ad;
+    std::vector<double> x_seed = { 1, 0, 0 };
+    std::vector<double> y_seed = { 0, 1, 0 };
+    std::vector<double> z_seed = { 0, 0, 1 };
+    ad.SetSeedVector("x", /*value=*/1, x_seed);
+    ad.SetSeedVector("y", /*value=*/2, y_seed);
+    ad.SetSeedVector("z", /*value=*/3, z_seed);
+    std::pair<Status, ADValue<double>> res = ad.Derive(
+        "(((x*y)*z)^((x*y)*z))");
+    ASSERT_EQ(res.first.code, ReturnCode::success);
+    EXPECT_NEAR(res.second.val(), 46656, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 781513.978777, 0.001);
+    EXPECT_NEAR(res.second.dval(1), 390756.9893, 0.001);
+    EXPECT_NEAR(res.second.dval(2), 260504.65959, 0.001);
+}
