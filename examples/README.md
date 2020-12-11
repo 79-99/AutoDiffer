@@ -1,5 +1,5 @@
 This directory holds examples of usage. The directory structure is outlined below. 
-Each subdirectory has a Make file. Examples can be built by running `Make` followed
+Each subdirectory has a Make file. Examples can be built by running `make` followed
 by the name of the example. For example: `./example_ad_node_scalar`.
 
 ```
