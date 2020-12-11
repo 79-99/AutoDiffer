@@ -122,7 +122,7 @@ on a 1.4 GHz Quad-Core Intel Core i5, so 4x is expected.
 ![std_caseB](multithreading/benchmark/data/caseB_std.png)
 
 We see that for case B, the std thread implementation is actually doing *worse* 
-than the single threaded version (emphasized by the left plot approaching 0). The 
+than the single threaded version (emphasized by the right plot approaching 0). The 
 reason it does worse is because the overhead of spinning up so many threads overwhelms 
 the performance improvement from the parallelization.  
 
