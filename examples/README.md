@@ -84,6 +84,9 @@ Collecting data for openmp Case B ..................... done!
 Data written to data/ directory!
 ```
 
+Data is written to data/ and in the jupyter notebook [data.ipynb](multithreading/benchmark/data/data.ipynb) has
+functions to plot the data that was generated. 
+
 We collect data for two broad cases:
 1. Case A: Large equations (in number of ops), but relatively few of them.
 2. Case B: Small equations, but many of them.
