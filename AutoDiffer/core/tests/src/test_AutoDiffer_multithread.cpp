@@ -52,6 +52,28 @@ TEST(autodiffer_multithread_std_correctness_multifunc, double) {
     }
 }
 
+TEST(autodiffer_multithread_std_correctness_multifunc_diff_func, double) {
+    AutoDifferStdThread<double> ad;
+    ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
+    
+    // Create string eq and vector.
+    std::vector<std::string> vec_strings; 
+    vec_strings.push_back("(2*x)");
+    vec_strings.push_back("(cos(2*x))");
+    vec_strings.push_back("(sin(2*x))");
+
+    auto res = ad.DeriveStdThread(vec_strings);
+    EXPECT_EQ(res[0].first.code, ReturnCode::success);
+    EXPECT_EQ(res[0].second.val(), 1);
+    EXPECT_EQ(res[0].second.dval(0), 2);
+    EXPECT_EQ(res[1].first.code, ReturnCode::success);
+    EXPECT_NEAR(res[1].second.val(), 0.540302, 0.001);
+    EXPECT_NEAR(res[1].second.dval(0), -1.68294, 0.001);
+    EXPECT_EQ(res[2].first.code, ReturnCode::success);
+    EXPECT_NEAR(res[2].second.val(), 0.841471, 0.001);
+    EXPECT_NEAR(res[2].second.dval(0), 1.0806, 0.001);
+}
+
 // Test Std Thread version for correctness. multi seed derive.
 TEST(autodiffer_multithread_std_correctness_multiseed, double) {
     AutoDifferStdThread<double> ad;
@@ -92,6 +114,29 @@ TEST(autodiffer_multithread_openmp_correctness_multifunc, double) {
         EXPECT_NEAR(r.second.val(), 100 * 0.5, 0.001);
         EXPECT_NEAR(r.second.dval(0), 100, 0.001);
     }
+}
+
+// Test openmp version for correctness. multi function derive.
+TEST(autodiffer_multithread_openmp_correctness_multifunc_diff_funcs, double) {
+    AutoDifferOpenMp<double> ad(/*numthreads=*/6);
+    ad.SetSeed("x", /*value=*/0.5, /*dval=*/1);
+    
+    // Create string eq and vector.
+    std::vector<std::string> vec_strings; 
+    vec_strings.push_back("(2*x)");
+    vec_strings.push_back("(cos(2*x))");
+    vec_strings.push_back("(sin(2*x))");
+
+    auto res = ad.DeriveOpenMp(vec_strings);
+    EXPECT_EQ(res[0].first.code, ReturnCode::success);
+    EXPECT_EQ(res[0].second.val(), 1);
+    EXPECT_EQ(res[0].second.dval(0), 2);
+    EXPECT_EQ(res[1].first.code, ReturnCode::success);
+    EXPECT_NEAR(res[1].second.val(), 0.540302, 0.001);
+    EXPECT_NEAR(res[1].second.dval(0), -1.68294, 0.001);
+    EXPECT_EQ(res[2].first.code, ReturnCode::success);
+    EXPECT_NEAR(res[2].second.val(), 0.841471, 0.001);
+    EXPECT_NEAR(res[2].second.dval(0), 1.0806, 0.001);
 }
 
 // Test openmp version for correctness. multi seed derive.
