@@ -7,6 +7,11 @@ Group Members
 * Chenguang Li - chenguang_li@fas.harvard.edu
 * Michael Neuder - michaelneuder@g.harvard.edu
 
+# Overview
+Our software implements forward mode automatic differentiation (AD) in C++. Briefly, AD is a method of finding the derivatives of functions quickly and to machine precision. Our group's extension was to incorporate multithreading to improve performance. See the Introduction and Background section of our [documentation](docs/documentation.ipynb) for more information. 
+
+For a video introduction and some demonstrations, see [this link](https://youtu.be/EvIuxCbVNGU).
+
 Dependencies:
 1. g++
 2. CMake
