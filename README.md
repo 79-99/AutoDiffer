@@ -12,6 +12,8 @@ Our software implements forward mode automatic differentiation (AD) in C++. Brie
 
 For a video introduction and some demonstrations, see [this link](https://youtu.be/EvIuxCbVNGU).
 
+For users who want to add features or make edits to the library, please submit a pull request and our team will review it. We will abide by the principles outlined in the Broader Impact and Inclusivity statement below.
+
 Dependencies:
 1. g++
 2. CMake
