@@ -19,4 +19,4 @@ Fast install:
 3. Include `AutoDiffer.hpp` to use the library. No linking is necessary, because this is a header only library.
 4. Check out [examples README](examples/README.md) for example usage and demo Makefiles.
 
-See [Documentation](docs/documentation.md) for more details.
+See [Documentation](docs/documentation.ipynb) for more details.
