@@ -834,3 +834,15 @@ TEST(autodiffer_hayoun, double){
     EXPECT_EQ(res.first.code, ReturnCode::success);
     EXPECT_NEAR(res.second.dval(0), -0.63952, 0.001);
 }
+
+TEST(autodiffer_mult_logs, double) {
+    AutoDiffer<double> ad;
+    ad.SetSeed("x", /*value=*/3., /*dval=*/1.);
+
+    std::pair<Status, ADValue<double>> res = ad.Derive(
+        "((log_4_(x))*(log_5_(5)))");
+    EXPECT_EQ(res.first.code, ReturnCode::success);
+    std::cout << res.first.message << std::endl;
+    EXPECT_NEAR(res.second.val(), 0.79248, 0.001);
+    EXPECT_NEAR(res.second.dval(0), 0.24044, 0.001);
+}
