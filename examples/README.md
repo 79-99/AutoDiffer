@@ -183,4 +183,4 @@ Both require command line arguments.
 - `./example_std_thread 100 100`
 
 
-See [Documentation](https://github.com/79-99/cs107-FinalProject/blob/master/docs/documentation.ipynb).
+See [Documentation](https://github.com/79-99/cs107-FinalProject/blob/master/docs/documentation.md).
