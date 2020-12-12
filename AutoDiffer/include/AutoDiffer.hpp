@@ -40,6 +40,8 @@
  * // Now can use the result.second (the ADValue object).
  * assert(result.second.val() == 2.25); // check value
  * assert(result.second.dval(0) == 3);  // check derivative
+ * 
+ * See examples/README.md for documentation about more extensive examples.
  */
 template <class T>
 class AutoDiffer {
